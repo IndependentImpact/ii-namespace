@@ -5,7 +5,7 @@ TODO: This document was migrated as-is from ii-backend/docs/tech-specs/. It need
 
 ## Overview
 
-[ADR-0005](../adrs/adr-0005-one-fluree-ledger-private-standard-shacl-graphs.md) decides that II's default graph holds "the ordinary RDF relationships" connecting activities, agents, projects, standards, methodologies, indicators, instruments, evidence, reviews, claims, and reputation — but does not name which ontologies define those relationships. This tech-spec names them.
+[II backend ADR-0005](https://github.com/IndependentImpact/ii-backend/docs/adrs/adr-0005-one-fluree-ledger-private-standard-shacl-graphs.md) decides that II's default graph holds "the ordinary RDF relationships" connecting activities, agents, projects, standards, methodologies, indicators, instruments, evidence, reviews, claims, and reputation — but does not name which ontologies define those relationships. This tech-spec names them.
 
 ## Ontologies and vocabularies in use
 
@@ -32,30 +32,30 @@ II reuses classes/properties from existing vocabularies where possible rather th
 - **Schema.org** — candidate reusable vocabulary for standard-specific classes/properties, before a standard mints new ones of its own.
 - **SKOS** — concept schemes for a standard's own vocabulary (enables broader/narrower comparison across standards); also underlies the SDG Indicators vocabulary above.
 - **RDF** (`rdf:`) — base reification (`rdf:Statement`, `rdf:subject`, `rdf:predicate`, `rdf:object`) that claims (`claimont:Claim`) are built on top of.
-- **SHACL** — not a domain ontology, but the constraint/shape language used throughout (see [ts-0003](./ts-0003-workflows.md)) to validate instances of the above.
+- **SHACL** — not a domain ontology, but the constraint/shape language used throughout (see [ts-0003](https://github.com/IndependentImpact/ii-backend/docs/tech-specs/ts-0003-workflows.md)) to validate instances of the above.
 
 `LegalRuleML` is flagged in `ii-arch` as a candidate for future use (e.g. for standards' rule-based provisions) but is not yet integrated.
 
 ## Which ontology models which entity type
 
 - **Agent** — AIAO (`aiao:agent`) for identity/interaction modelling; the Hedera Ontology for the agent's on-chain account representation.
-- **Activity** — AIAO (`aiao:Activity`) for the activity itself; the Impact Ontology (`impactont:Event`, `impactont:Process`) for the causal/process layer connecting an activity to its impact outcomes (see [ts-0003](./ts-0003-workflows.md)'s workflow/process-step examples, which are AIAO/Impact Ontology nodes in practice).
+- **Activity** — AIAO (`aiao:Activity`) for the activity itself; the Impact Ontology (`impactont:Event`, `impactont:Process`) for the causal/process layer connecting an activity to its impact outcomes (see [ts-0003](https://github.com/IndependentImpact/ii-backend/docs/tech-specs/ts-0003-workflows.md)'s workflow/process-step examples, which are AIAO/Impact Ontology nodes in practice).
 - **Claim** — the Claims Ontology (`claimont:Claim`, `claimont:Attestation`, `claimont:hasSubject`, `claimont:hasPropertyPredicate`, `claimont:hasObject`, `claimont:hasClaimant`, `claimont:isSupportedBy`), built on RDF reification.
 - **Indicator** — the Indicator Ontology and, for SDG-aligned indicators specifically, the SDG Indicators SKOS vocabulary.
-- **Methodology** — the Methodology Ontology (not yet published; see [Methodology Management](../capabilities/methodology-management.md)).
-- **Standard** — the Standard Ontology (not yet published). Each onboarded standard additionally gets its own OWL extension of AIAO plus a SKOS concept scheme built from AIAO, DC Terms, and Schema.org classes/properties, reusing existing terms and minting new ones only where the standard genuinely needs them (see [Standards Management](../capabilities/standards-management.md)).
+- **Methodology** — the Methodology Ontology (not yet published; see [Methodology Management](https://github.com/IndependentImpact/ii-backend/docs/capabilities/methodology-management.md)).
+- **Standard** — the Standard Ontology (not yet published). Each onboarded standard additionally gets its own OWL extension of AIAO plus a SKOS concept scheme built from AIAO, DC Terms, and Schema.org classes/properties, reusing existing terms and minting new ones only where the standard genuinely needs them (see [Standards Management](https://github.com/IndependentImpact/ii-backend/docs/capabilities/standards-management.md)).
 
-Note: `nias:` (as in `nias:ProjectDesign`, seen in [ts-0003](./ts-0003-workflows.md)'s examples) is not itself a published ontology — it is a worked example of what a standard's own onboarded, standard-specific extension of the Standard Ontology looks like once instantiated.
+Note: `nias:` (as in `nias:ProjectDesign`, seen in [ts-0003](https://github.com/IndependentImpact/ii-backend/docs/tech-specs/ts-0003-workflows.md)'s examples) is not itself a published ontology — it is a worked example of what a standard's own onboarded, standard-specific extension of the Standard Ontology looks like once instantiated.
 
 ## Open gaps
 
 - The **Standard Ontology** and **Methodology Ontology** have no published URI yet — both are marked planned/under-development in `ii-arch`, and remain so in II's own model. A concrete namespace and publication location should be decided before either is relied on for cross-standard interoperability.
-- The **Information Communication Ontology** (`infocomm`) is referenced only via its w3id link in `ii-arch` — no concrete class or property from it appears in any worked example. Its actual coverage (documents, questions, information corpora — the "infotrip"/"infocorp" vocabulary described in [ts-0003](./ts-0003-workflows.md)) is inferred, not confirmed from source.
+- The **Information Communication Ontology** (`infocomm`) is referenced only via its w3id link in `ii-arch` — no concrete class or property from it appears in any worked example. Its actual coverage (documents, questions, information corpora — the "infotrip"/"infocorp" vocabulary described in [ts-0003](https://github.com/IndependentImpact/ii-backend/docs/tech-specs/ts-0003-workflows.md)) is inferred, not confirmed from source.
 
 ## Related Documentation
 
-- [ADR-0005 — One Fluree ledger, private standard-specific SHACL and FSF named graphs](../adrs/adr-0005-one-fluree-ledger-private-standard-shacl-graphs.md)
-- [ts-0003 — Workflow definition and enforcement](./ts-0003-workflows.md)
-- [Standards Management](../capabilities/standards-management.md)
-- [Methodology Management](../capabilities/methodology-management.md)
-- [Indicator Management](../capabilities/indicator-management.md)
+- [ADR-0005 — One Fluree ledger, private standard-specific SHACL and FSF named graphs](https://github.com/IndependentImpact/ii-backend/docs/adrs/adr-0005-one-fluree-ledger-private-standard-shacl-graphs.md)
+- [ts-0003 — Workflow definition and enforcement](https://github.com/IndependentImpact/ii-backend/docs/tech-specs/ts-0003-workflows.md)
+- [Standards Management](https://github.com/IndependentImpact/ii-backend/docs/capabilities/standards-management.md)
+- [Methodology Management](https://github.com/IndependentImpact/ii-backend/docs/capabilities/methodology-management.md)
+- [Indicator Management](https://github.com/IndependentImpact/ii-backend/docs/capabilities/indicator-management.md)
