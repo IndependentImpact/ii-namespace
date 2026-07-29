@@ -1,0 +1,160 @@
+@prefix dcat:    <http://www.w3.org/ns/dcat#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix foaf:    <http://xmlns.com/foaf/0.1/> .
+@prefix schema:  <https://schema.org/> .
+@prefix vann:    <http://purl.org/vocab/vann/> .
+@prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
+@base            <https://independentimpact.org/ns/catalog> .
+
+# Registry of every semantic web artifact the Independent Impact Platform
+# recognizes. The storage service resolves this catalog first at bootstrap,
+# then fetches each artifact by the IPFS CID recorded on its distribution
+# (see ii-backend#82). HTTPS URLs are human conveniences; CIDs are
+# authoritative. Statuses follow ts-0006: prototype | planned | under development.
+#
+# Each released version of an artifact adds a dcat:distribution carrying
+# dcterms:hasVersion and a dcat:downloadURL of the form <ipfs://<CID>>.
+# Entries without distributions are not yet loadable.
+
+<> a dcat:Catalog ;
+    dcterms:title "Independent Impact semantic artifact registry" ;
+    dcterms:description "Machine-readable registry of the semantic web artifacts used by the Independent Impact Platform: the platform's own artifacts (this repo) and the external ontologies, vocabularies, and libraries it depends on. Supersedes the inventory table in ts-0006." ;
+    dcterms:publisher <https://independentimpact.org/> ;
+    dcterms:source <https://github.com/IndependentImpact/ii-namespace> ;
+    dcat:dataset
+        <#vocab-platform> , <#config-schemes> , <#shapes-platform> ,
+        <#contexts-platform> , <#policies-fluree> , <#alignments> ,
+        <#ont-aiao> , <#ont-claimont> , <#ont-impactont> , <#ont-infocomm> ,
+        <#ont-indicator> , <#ont-methodology> , <#ont-standard> ,
+        <#vocab-sdg-indicators> , <#ont-hashgraph> ,
+        <#lib-indicators> , <#lib-methodologies> .
+
+## ---------------------------------------------------------------------------
+## Internal artifacts — authored in this repo (IndependentImpact/ii-namespace),
+## loaded in bootstrap phase 1 except where noted. All planned pending the
+## post-ADR-0001 rebuild.
+## ---------------------------------------------------------------------------
+
+<#vocab-platform> a dcat:Dataset ;
+    dcterms:title "II Platform vocabulary" ;
+    dcterms:description "Classes and properties the platform needs that no domain ontology covers: platform users and roles, agent licenses, resource-to-storage provenance, entity-to-Hedera links. Successor to the deprecated legacy /ns/ vocabulary (ADR-0001)." ;
+    vann:preferredNamespacePrefix "iiplat" ;
+    vann:preferredNamespaceUri "https://independentimpact.org/ns/vocab/" ;
+    dcterms:source <https://github.com/IndependentImpact/ii-namespace/tree/main/ns/vocab> ;
+    schema:creativeWorkStatus "planned" .
+
+<#config-schemes> a dcat:Dataset ;
+    dcterms:title "II Platform config concept schemes" ;
+    dcterms:description "SKOS concept schemes for the platform's controlled enumerations (user types, license scopes, workflow states, document types, review outcomes, monitoring flags). One scheme per file under ns/config/." ;
+    vann:preferredNamespaceUri "https://independentimpact.org/ns/config/" ;
+    dcterms:source <https://github.com/IndependentImpact/ii-namespace/tree/main/ns/config> ;
+    schema:creativeWorkStatus "planned" .
+
+<#shapes-platform> a dcat:Dataset ;
+    dcterms:title "II Platform SHACL shapes" ;
+    dcterms:description "Platform-level shapes: config-conformance, workflow definitions (ii-backend ts-0003), and HCS message payload validation (ts-0002). Standard-specific shapes are excluded (ADR-0005)." ;
+    vann:preferredNamespaceUri "https://independentimpact.org/ns/shapes/" ;
+    dcterms:source <https://github.com/IndependentImpact/ii-namespace/tree/main/ns/shapes> ;
+    schema:creativeWorkStatus "planned" .
+
+<#contexts-platform> a dcat:Dataset ;
+    dcterms:title "II Platform JSON-LD contexts" ;
+    dcterms:description "Published, versioned @context documents used by HCS message payloads (ii-backend ts-0002), pinned by CID so historical messages remain interpretable." ;
+    vann:preferredNamespaceUri "https://independentimpact.org/ns/contexts/" ;
+    dcterms:source <https://github.com/IndependentImpact/ii-namespace/tree/main/ns/contexts> ;
+    schema:creativeWorkStatus "planned" .
+
+<#policies-fluree> a dcat:Dataset ;
+    dcterms:title "II Platform Fluree policies" ;
+    dcterms:description "Access policies and roles for the Fluree ledger (JSON-LD). Loaded in bootstrap phase 2, before the API opens to users. Security-sensitive: changes require mandatory review." ;
+    vann:preferredNamespaceUri "https://independentimpact.org/ns/policies/" ;
+    dcterms:source <https://github.com/IndependentImpact/ii-namespace/tree/main/ns/policies> ;
+    schema:creativeWorkStatus "planned" .
+
+<#alignments> a dcat:Dataset ;
+    dcterms:title "II Platform vocabulary alignments" ;
+    dcterms:description "Mappings (skos:exactMatch, owl:equivalentProperty) between platform terms and external vocabularies, e.g. config concepts to the SDG indicators vocabulary." ;
+    vann:preferredNamespaceUri "https://independentimpact.org/ns/alignments/" ;
+    dcterms:source <https://github.com/IndependentImpact/ii-namespace/tree/main/ns/alignments> ;
+    schema:creativeWorkStatus "planned" .
+
+## ---------------------------------------------------------------------------
+## External artifacts — own repos and namespaces; catalogued here so the
+## bootstrap knows the full estate. Entries seeded from ts-0006.
+## ---------------------------------------------------------------------------
+
+<#ont-aiao> a dcat:Dataset ;
+    dcterms:title "AIAO Ontology" ;
+    dcterms:description "Actors, interactions, activities, outcomes/artifacts. Part of the AIAO Ontology Suite." ;
+    vann:preferredNamespacePrefix "aiao" ;
+    vann:preferredNamespaceUri "https://w3id.org/aiao/" ;
+    dcat:landingPage <https://w3id.org/aiao> ;
+    schema:creativeWorkStatus "prototype" .
+
+<#ont-claimont> a dcat:Dataset ;
+    dcterms:title "Claims Ontology" ;
+    dcterms:description "Claims and attestations, built on RDF reification. Part of the AIAO Ontology Suite." ;
+    vann:preferredNamespacePrefix "claimont" ;
+    vann:preferredNamespaceUri "https://w3id.org/claimont/" ;
+    dcat:landingPage <https://w3id.org/claimont> ;
+    schema:creativeWorkStatus "prototype" .
+
+<#ont-impactont> a dcat:Dataset ;
+    dcterms:title "Impact Ontology" ;
+    dcterms:description "Impact events and processes; causal state-change. Part of the AIAO Ontology Suite." ;
+    vann:preferredNamespacePrefix "impactont" ;
+    vann:preferredNamespaceUri "https://w3id.org/impactont/" ;
+    dcat:landingPage <https://w3id.org/impactont> ;
+    schema:creativeWorkStatus "prototype" .
+
+<#ont-infocomm> a dcat:Dataset ;
+    dcterms:title "Information Communication Ontology" ;
+    dcterms:description "Information and communication concepts (documents, questions, corpora). Part of the AIAO Ontology Suite; coverage inferred, not yet confirmed from source (ts-0006 open gap)." ;
+    vann:preferredNamespacePrefix "infocomm" ;
+    vann:preferredNamespaceUri "https://w3id.org/infocomm/" ;
+    dcat:landingPage <https://w3id.org/infocomm> ;
+    schema:creativeWorkStatus "prototype" .
+
+<#ont-indicator> a dcat:Dataset ;
+    dcterms:title "Indicator Ontology" ;
+    dcterms:description "Indicators and metrics. w3id publication planned; currently in the skos_SDG repo." ;
+    dcterms:source <https://github.com/IndependentImpact/skos_SDG/blob/main/ontologies/core/indicator.ttl> ;
+    schema:creativeWorkStatus "prototype" .
+
+<#ont-methodology> a dcat:Dataset ;
+    dcterms:title "Methodology Ontology" ;
+    dcterms:description "Methodologies: procedures, rules, controls. No published URI yet; w3id publication planned." ;
+    schema:creativeWorkStatus "under development" .
+
+<#ont-standard> a dcat:Dataset ;
+    dcterms:title "Standard Ontology" ;
+    dcterms:description "Classes and properties for standards. No published URI yet. Each onboarded standard extends it with its own OWL extension and SKOS concept scheme (ii-backend ts-0009)." ;
+    schema:creativeWorkStatus "planned" .
+
+<#vocab-sdg-indicators> a dcat:Dataset ;
+    dcterms:title "SDG Indicators vocabulary" ;
+    dcterms:description "SKOS vocabulary of SDG indicators." ;
+    dcterms:source <https://github.com/IndependentImpact/skos_SDG/tree/main/ontologies/vocabularies> ;
+    schema:creativeWorkStatus "under development" .
+
+<#ont-hashgraph> a dcat:Dataset ;
+    dcterms:title "Hashgraph Ontology" ;
+    dcterms:description "Hedera accounts, transactions, tokens, topics, smart contracts. The platform vocabulary reuses this rather than minting its own Hedera terms." ;
+    dcat:landingPage <https://hashgraphontology.xyz/> ;
+    schema:creativeWorkStatus "prototype" .
+
+## ---------------------------------------------------------------------------
+## Content libraries — own repos and domains. Individual entries (indicators,
+## methodologies) are approved via HCS with content on IPFS and live in
+## Fluree, not in this catalog; these entries identify the collections only.
+## ---------------------------------------------------------------------------
+
+<#lib-indicators> a dcat:Dataset ;
+    dcterms:title "II Indicator Library" ;
+    dcterms:description "Instance data conforming to the Indicator Ontology. Repo and domain to be established." ;
+    schema:creativeWorkStatus "planned" .
+
+<#lib-methodologies> a dcat:Dataset ;
+    dcterms:title "II Methodology Library" ;
+    dcterms:description "Instance data conforming to the Methodology Ontology. Repo and domain to be established." ;
+    schema:creativeWorkStatus "planned" .
