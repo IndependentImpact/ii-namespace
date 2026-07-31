@@ -1,0 +1,114 @@
+@prefix sh:      <http://www.w3.org/ns/shacl#> .
+@prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix skos:    <http://www.w3.org/2004/02/skos/core#> .
+@prefix data:    <https://jellyfiiish.xyz/ns/> .
+@prefix impact:  <https://w3id.org/impactont/> .
+@prefix iiplat:  <https://independentimpact.org/ns/vocab/> .
+@prefix iishape: <https://independentimpact.org/ns/shapes/> .
+
+# The nine SHACL shapes that were inlined in the legacy /ns/ JSON-LD
+# (reference/ns.jsonld), separated from the vocabulary per ADR-0001/ADR-0002
+# and carried forward verbatim as prune candidates. Platform-only (ADR-0002
+# visibility section). Most exist to enforce enumerations via sh:in; those
+# value lists become SKOS concept schemes in ns/config/, after which these
+# shapes should validate scheme membership instead of inline lists —
+# reassessed per shape during carry-forward review.
+
+iishape:userTypeShape a sh:NodeShape ;
+    skos:editorialNote "Carry-forward review: sh:in values become the user-types concept scheme in ns/config/." ;
+    sh:targetClass iiplat:PlatformUser ;
+    sh:property [
+        sh:path iiplat:userType ;
+        sh:datatype xsd:string ;
+        sh:in ( "STANDARD_REGISTRY" "USER" ) ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+    ] .
+
+iishape:LicenseNumberShape a sh:NodeShape ;
+    sh:targetClass iiplat:AgentLicense ;
+    sh:property [
+        sh:path iiplat:licenseNumber ;
+        sh:datatype xsd:string ;
+        sh:pattern "^II-(PD|PV|MV)-[0-9]{2}X[0-9]{2}X[0-9]{11}-[0-9]{8}$" ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+    ] .
+
+iishape:licenseScopeShape a sh:NodeShape ;
+    skos:editorialNote "Carry-forward review: sh:in values become the license-scopes concept scheme in ns/config/." ;
+    sh:targetClass iiplat:AgentLicense ;
+    sh:property [
+        sh:path iiplat:licenseScope ;
+        sh:datatype xsd:string ;
+        sh:in ( "PROJECT_DEVELOPER" "PDD_VALIDATOR" "MR_VERIFIER" ) ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+    ] .
+
+iishape:resourceIpfsUriShape a sh:NodeShape ;
+    skos:editorialNote "Carry-forward review: legacy shape makes resourceIpfsUri mandatory on every dcterms:Resource, contradicting the property's own 'if any' definition." ;
+    sh:targetClass dcterms:Resource ;
+    sh:property [
+        sh:path iiplat:resourceIpfsUri ;
+        sh:datatype xsd:string ;
+        sh:pattern "^(ipfs|ipns)://[a-zA-Z0-9]+(?:/[a-zA-Z0-9/._-]*)?$" ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+    ] .
+
+iishape:authProofShape a sh:NodeShape ;
+    skos:editorialNote "Carry-forward review: sh:in values become the auth-proof concept scheme in ns/config/." ;
+    sh:targetClass data:Document ;
+    sh:property [
+        sh:path iiplat:authProof ;
+        sh:datatype xsd:string ;
+        sh:in ( "NONE" "EDDSA_SIGNATURE" "RSA_SIGNATURE" "VC" ) ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+    ] .
+
+iishape:techMeasTypeShape a sh:NodeShape ;
+    skos:editorialNote "Carry-forward review: sh:in values become the technology-measure-types concept scheme in ns/config/." ;
+    sh:targetClass iiplat:TechnologyOrMeasure ;
+    sh:property [
+        sh:path iiplat:techMeasType ;
+        sh:datatype xsd:string ;
+        sh:in ( "FACILITY" "SYSTEM" "EQUIPMENT" "OTHER" ) ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+    ] .
+
+iishape:impactIntentionalityShape a sh:NodeShape ;
+    skos:editorialNote "Carry-forward review: sh:in values become the impact-intentionality concept scheme in ns/config/." ;
+    sh:targetClass impact:Impact ;
+    sh:property [
+        sh:path iiplat:impactIntentionality ;
+        sh:datatype xsd:string ;
+        sh:in ( "INTENTIONAL" "UNINTENTIONAL" ) ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+    ] .
+
+iishape:beneficialOrAdverseShape a sh:NodeShape ;
+    skos:editorialNote "Carry-forward review: sh:in values become the beneficial-adverse concept scheme in ns/config/." ;
+    sh:targetClass impact:Impact ;
+    sh:property [
+        sh:path iiplat:beneficialOrAdverse ;
+        sh:datatype xsd:string ;
+        sh:in ( "BENEFICIAL" "ADVERSE" ) ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+    ] .
+
+iishape:monitoredShape a sh:NodeShape ;
+    skos:editorialNote "Carry-forward review: sh:in values become the monitored concept scheme in ns/config/, or the property becomes boolean." ;
+    sh:targetClass impact:Impact ;
+    sh:property [
+        sh:path iiplat:monitored ;
+        sh:datatype xsd:string ;
+        sh:in ( "YES" "NO" ) ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+    ] .

@@ -1,0 +1,438 @@
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl:     <http://www.w3.org/2002/07/owl#> .
+@prefix skos:    <http://www.w3.org/2004/02/skos/core#> .
+@prefix schema:  <https://schema.org/> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix vann:    <http://purl.org/vocab/vann/> .
+@prefix vcdm:    <https://www.w3.org/ns/credentials/v2/> .
+@prefix aiao:    <https://w3id.org/aiao/> .
+@prefix impact:  <https://w3id.org/impactont/> .
+@prefix data:    <https://jellyfiiish.xyz/ns/> .
+@prefix hed:     <https://independentimpact.org/ns/hedera/> .
+@prefix time:    <http://www.w3.org/2006/time#> .
+@prefix iiplat:  <https://independentimpact.org/ns/vocab/> .
+
+# II Platform vocabulary — carried forward from the legacy /ns/ JSON-LD
+# (reference/ns.jsonld) per ADR-0001: every legacy class and property is
+# preserved; terms whose retention is in question carry a skos:editorialNote
+# beginning "Carry-forward review:" and are removed (or kept) per-term during
+# review, not silently. The legacy inline SHACL shapes are converted
+# separately in ns/shapes/ (platform-only, ADR-0002). Enumerated allowed
+# values (the legacy shapes' sh:in lists) become SKOS concept schemes in
+# ns/config/ (ADR-0002 §3).
+#
+# Open question (flagged for review): the legacy terms lived at
+# https://independentimpact.org/ns/ with prefix indimp:. This file places
+# them at /ns/vocab/ with prefix iiplat: per the PR #4 scaffold; existing
+# data referencing the legacy URIs is unaffected until this is settled.
+
+<https://independentimpact.org/ns/vocab/> a owl:Ontology ;
+    dcterms:title "II Platform vocabulary" ;
+    dcterms:description "Classes and properties the Independent Impact Platform needs that no domain ontology covers. Carries forward the legacy /ns/ vocabulary in governed Turtle form (ADR-0001)." ;
+    dcterms:source <https://github.com/IndependentImpact/ii-namespace> ;
+    vann:preferredNamespacePrefix "iiplat" ;
+    vann:preferredNamespaceUri "https://independentimpact.org/ns/vocab/" .
+
+## ---------------------------------------------------------------------------
+## Platform users and licenses
+## ---------------------------------------------------------------------------
+
+iiplat:PlatformUser a rdfs:Class ;
+    rdfs:label "PlatformUser" ;
+    skos:definition "An actor on the Independent Impact platform." ;
+    rdfs:subClassOf owl:Thing .
+
+iiplat:userType a rdf:Property ;
+    rdfs:label "userType" ;
+    skos:definition "The Independent Impact platform user type." ;
+    schema:domainIncludes iiplat:PlatformUser ;
+    schema:rangeIncludes schema:Text ;
+    skos:editorialNote "Allowed values (legacy shape: STANDARD_REGISTRY, USER) become a SKOS concept scheme in ns/config/." .
+
+iiplat:dateRegistered a rdf:Property ;
+    rdfs:label "dateRegistered" ;
+    skos:definition "The timestamp at which a user account was created on the Independent Impact platform." ;
+    schema:domainIncludes iiplat:PlatformUser ;
+    schema:rangeIncludes schema:DateTime .
+
+iiplat:didDocument a rdf:Property ;
+    rdfs:label "didDocument" ;
+    skos:definition "The document providing a platform user's DID and its associated properties." ;
+    schema:domainIncludes iiplat:PlatformUser ;
+    schema:rangeIncludes data:Document .
+
+iiplat:AgentLicense a rdfs:Class ;
+    rdfs:label "AgentLicense" ;
+    skos:definition "A license that allows a platform user to perform specialised actions on the Independent Impact platform." ;
+    rdfs:subClassOf vcdm:VerifiableCredential .
+
+iiplat:licenseNumber a rdf:Property ;
+    rdfs:label "licenseNumber" ;
+    skos:definition "A unique string identifier for an Independent Impact Agent License." ;
+    schema:domainIncludes iiplat:AgentLicense ;
+    schema:rangeIncludes schema:Text .
+
+iiplat:licenseScope a rdf:Property ;
+    rdfs:label "licenseScope" ;
+    skos:definition "The label of the set of actions that the holder of the license is allowed to perform on the Independent Impact platform." ;
+    schema:domainIncludes iiplat:AgentLicense ;
+    schema:rangeIncludes schema:Text ;
+    skos:editorialNote "Allowed values (legacy shape: PROJECT_DEVELOPER, PDD_VALIDATOR, MR_VERIFIER) become a SKOS concept scheme in ns/config/." .
+
+iiplat:hasAgentLicense a rdf:Property ;
+    rdfs:label "hasAgentLicense" ;
+    skos:definition "An Independent Impact Agent License held by a platform user." ;
+    schema:domainIncludes iiplat:PlatformUser ;
+    schema:rangeIncludes iiplat:AgentLicense .
+
+iiplat:hasVerifiableCredential a rdf:Property ;
+    rdfs:label "hasVerifiableCredential" ;
+    skos:definition "A verifiable credential document held by an entity (e.g., by a user or an activity)." ;
+    schema:domainIncludes iiplat:PlatformUser , aiao:Activity , aiao:Project ;
+    schema:rangeIncludes vcdm:VerifiableCredential ;
+    skos:editorialNote "Legacy source labelled this property 'hasAgentLicense' (copy-paste error); label corrected during carry-forward." .
+
+## ---------------------------------------------------------------------------
+## Resources and documents
+## ---------------------------------------------------------------------------
+
+iiplat:resourceHederaMessageId a rdf:Property ;
+    rdfs:label "hederaMessageId" ;
+    skos:definition "The ID of the Hedera consensus message that recorded the moment of publication, listing or receipt (by the II platform) of the resource in question." ;
+    schema:domainIncludes dcterms:Resource ;
+    schema:rangeIncludes hed:HederaMessageId ;
+    skos:editorialNote "Carry-forward review: range is a legacy hed: term; hed: dissolves into reuse of the Hashgraph Ontology (ADR-0002 §2)." .
+
+iiplat:resourceIpfsUri a rdf:Property ;
+    rdfs:label "ipfsUri" ;
+    skos:definition "The IPFS URI, if any, of the resource in question." ;
+    rdfs:comment "If no value is provided for this property, the content of the resource should be provided via the data:resourceContent property, or the location of the content should be provided via the data:resourceContentLocation property." ;
+    schema:domainIncludes dcterms:Resource ;
+    schema:rangeIncludes schema:Text .
+
+iiplat:documentSchema a rdf:Property ;
+    rdfs:label "documentSchema" ;
+    skos:definition "A schema specifying the format and structure that a document must adhere to." ;
+    schema:domainIncludes data:Document ;
+    schema:rangeIncludes iiplat:DocumentSchema .
+
+iiplat:isEncrypted a rdf:Property ;
+    rdfs:label "isEncrypted" ;
+    skos:definition "Indicates whether the content of a resource is encrypted." ;
+    schema:domainIncludes dcterms:Resource ;
+    schema:rangeIncludes schema:Boolean .
+
+iiplat:documentAuthor a rdf:Property ;
+    rdfs:label "author" ;
+    skos:definition "Identifies an entity responsible for the creation of the content of a document." ;
+    schema:domainIncludes data:Document ;
+    schema:rangeIncludes iiplat:PlatformUser , aiao:Agent , schema:Text ;
+    skos:editorialNote "Carry-forward review: possibly duplicates dcterms:creator / schema:author." .
+
+iiplat:authProof a rdf:Property ;
+    rdfs:label "authProof" ;
+    skos:definition "The mechanism by which the authenticity of a document can be proven." ;
+    schema:domainIncludes data:Document ;
+    schema:rangeIncludes schema:Text ;
+    skos:editorialNote "Allowed values (legacy shape: NONE, EDDSA_SIGNATURE, RSA_SIGNATURE, VC) become a SKOS concept scheme in ns/config/." .
+
+iiplat:DocumentSchema a rdfs:Class ;
+    rdfs:label "DocumentSchema" ;
+    skos:definition "A specification for the structure and data types of a document." ;
+    rdfs:subClassOf dcterms:Resource , aiao:Control .
+
+iiplat:isReviewOf a rdf:Property ;
+    rdfs:label "isReviewOf" ;
+    rdfs:comment "Identifies a document as a review of another document." ;
+    schema:domainIncludes data:Document ;
+    schema:rangeIncludes data:Document .
+
+## ---------------------------------------------------------------------------
+## Workflows
+## ---------------------------------------------------------------------------
+
+iiplat:Workflow a rdfs:Class ;
+    rdfs:label "Workflow" ;
+    skos:definition "A set of actions, processes or procedures that must be executed or performed to achieve a specific outcome." ;
+    rdfs:subClassOf aiao:Control .
+
+iiplat:WorkflowStep a rdfs:Class ;
+    rdfs:label "WorkflowStep" ;
+    skos:definition "A single action, process or procedure of a workflow." ;
+    rdfs:subClassOf aiao:Control .
+
+iiplat:hasWorkflowStep a rdf:Property ;
+    rdfs:label "hasWorkflowStep" ;
+    skos:definition "A specific step of a workflow." ;
+    schema:domainIncludes iiplat:Workflow ;
+    schema:rangeIncludes iiplat:WorkflowStep ;
+    skos:editorialNote "Legacy source labelled this property 'Workflow' (copy-paste error); label corrected during carry-forward." .
+
+iiplat:WorkflowDocumentSubmission a rdfs:Class ;
+    rdfs:label "WorkflowDocumentSubmission" ;
+    skos:definition "Records the submission of a document to a specific step of a specific workflow for a specific workflow subject." ;
+    rdfs:subClassOf owl:Thing .
+
+iiplat:workflow a rdf:Property ;
+    rdfs:label "workflow" ;
+    skos:definition "The workflow to which a document was submitted, or in the context of which an agent-activity relation exists." ;
+    schema:domainIncludes iiplat:WorkflowDocumentSubmission , iiplat:AgentActivityWorkflowRelation ;
+    schema:rangeIncludes iiplat:Workflow .
+
+iiplat:workflowStep a rdf:Property ;
+    rdfs:label "workflowStep" ;
+    skos:definition "The workflow step to which the document was submitted." ;
+    schema:domainIncludes iiplat:WorkflowDocumentSubmission ;
+    schema:rangeIncludes iiplat:WorkflowStep .
+
+iiplat:workflowSubject a rdf:Property ;
+    rdfs:label "workflowSubject" ;
+    skos:definition "The subject of the workflow in respect of which or whom the document was submitted." ;
+    schema:domainIncludes iiplat:WorkflowDocumentSubmission ;
+    schema:rangeIncludes owl:Thing .
+
+iiplat:workflowDocumentSubmittedBy a rdf:Property ;
+    rdfs:label "submittedBy" ;
+    skos:definition "The platform user who submitted the document." ;
+    schema:domainIncludes iiplat:WorkflowDocumentSubmission ;
+    schema:rangeIncludes iiplat:PlatformUser .
+
+iiplat:workflowDocumentSubmissionHederaMessageId a rdf:Property ;
+    rdfs:label "hederaMessageId" ;
+    skos:definition "The ID of the Hedera consensus message that recorded the moment that a document was submitted to a specific workflow." ;
+    schema:domainIncludes iiplat:WorkflowDocumentSubmission ;
+    schema:rangeIncludes hed:HederaMessageId ;
+    skos:editorialNote "Carry-forward review: range is a legacy hed: term; hed: dissolves into reuse of the Hashgraph Ontology (ADR-0002 §2)." .
+
+iiplat:hasWorkflowSubmission a rdf:Property ;
+    rdfs:label "hasWorkflowSubmission" ;
+    rdfs:comment "Provides details about a workflow submission for the document in question." ;
+    schema:domainIncludes data:Document ;
+    schema:rangeIncludes iiplat:WorkflowDocumentSubmission .
+
+iiplat:AgentActivityWorkflowRelation a rdfs:Class ;
+    rdfs:label "AgentActivityWorkflowRelation" ;
+    skos:definition "Relates an agent to an activity in the context of a specific workflow." ;
+    rdfs:subClassOf aiao:AgentActivityRelation .
+
+## ---------------------------------------------------------------------------
+## Hedera links
+## ---------------------------------------------------------------------------
+
+iiplat:PlatformUserXhederaAccountLink a rdfs:Class ;
+    rdfs:label "PlatformUserXhederaAccountLink" ;
+    skos:definition "Links an Independent Impact platform user to a Hedera account." ;
+    rdfs:subClassOf owl:Thing .
+
+iiplat:hederaAccount a rdf:Property ;
+    rdfs:label "hederaAccount" ;
+    skos:definition "A Hedera account." ;
+    schema:domainIncludes iiplat:PlatformUserXhederaAccountLink ;
+    schema:rangeIncludes hed:HederaAccount ;
+    skos:editorialNote "Carry-forward review: range is a legacy hed: term; hed: dissolves into reuse of the Hashgraph Ontology (ADR-0002 §2)." .
+
+iiplat:platformUserXhederaAccountLinkDescription a rdf:Property ;
+    rdfs:label "description" ;
+    skos:definition "A description of the link between a platform user and a Hedera account, e.g., 'PRIMARY_ACCOUNT'." ;
+    schema:domainIncludes iiplat:PlatformUserXhederaAccountLink ;
+    schema:rangeIncludes schema:Text .
+
+iiplat:isLinkedToHederaAccount a rdf:Property ;
+    rdfs:label "isLinkedToHederaAccount" ;
+    rdfs:comment "Links an Independent Impact platform user to a Hedera account." ;
+    schema:domainIncludes iiplat:PlatformUser ;
+    schema:rangeIncludes iiplat:PlatformUserXhederaAccountLink .
+
+iiplat:EntityXhederaTopicLink a rdfs:Class ;
+    rdfs:label "EntityXhederaTopicLink" ;
+    skos:definition "Links an Independent Impact entity (user, project, methodology, etc.) to a Hedera topic." ;
+    rdfs:subClassOf owl:Thing .
+
+iiplat:hederaTopic a rdf:Property ;
+    rdfs:label "hederaTopic" ;
+    skos:definition "A Hedera topic." ;
+    schema:domainIncludes iiplat:EntityXhederaTopicLink ;
+    schema:rangeIncludes hed:HederaTopic ;
+    skos:editorialNote "Carry-forward review: range is a legacy hed: term; hed: dissolves into reuse of the Hashgraph Ontology (ADR-0002 §2)." .
+
+iiplat:entityXhederaTopicLinkDescription a rdf:Property ;
+    rdfs:label "description" ;
+    skos:definition "A description of the link between an entity and a Hedera topic, e.g., 'DID'." ;
+    schema:domainIncludes iiplat:EntityXhederaTopicLink ;
+    schema:rangeIncludes schema:Text .
+
+iiplat:isLinkedToHederaTopic a rdf:Property ;
+    rdfs:label "isLinkedToHederaTopic" ;
+    rdfs:comment "Links an Independent Impact entity to a Hedera topic." ;
+    schema:domainIncludes iiplat:PlatformUser ;
+    schema:rangeIncludes iiplat:EntityXhederaTopicLink ;
+    skos:editorialNote "Carry-forward review: the class links any entity to a topic, but the legacy domain is only PlatformUser — domain likely too narrow." .
+
+## ---------------------------------------------------------------------------
+## Projects and activities
+## ---------------------------------------------------------------------------
+
+iiplat:dateCreated a rdf:Property ;
+    rdfs:label "dateCreated" ;
+    skos:definition "The timestamp at which a project was created on the Independent Impact platform." ;
+    schema:domainIncludes aiao:Project ;
+    schema:rangeIncludes schema:DateTime ;
+    skos:editorialNote "Carry-forward review: possibly duplicates dcterms:created / schema:dateCreated." .
+
+iiplat:createdBy a rdf:Property ;
+    rdfs:label "createdBy" ;
+    skos:definition "The Independent Impact platform user who created the project." ;
+    schema:domainIncludes aiao:Project ;
+    schema:rangeIncludes iiplat:PlatformUser .
+
+iiplat:title a rdf:Property ;
+    rdfs:label "title" ;
+    skos:definition "A human-friendly title for an activity or project." ;
+    schema:domainIncludes aiao:Activity , aiao:Project ;
+    schema:rangeIncludes schema:Text ;
+    skos:editorialNote "Carry-forward review: possibly duplicates dcterms:title / schema:name." .
+
+iiplat:purpose a rdf:Property ;
+    rdfs:label "purpose" ;
+    skos:definition "The purpose of a project or an activity." ;
+    schema:domainIncludes aiao:Activity , aiao:Project ;
+    schema:rangeIncludes aiao:Control .
+
+iiplat:locationShapefile a rdf:Property ;
+    rdfs:label "locationShapefile" ;
+    skos:definition "The shapefile for a physical location of a project or an activity." ;
+    schema:domainIncludes aiao:Activity , aiao:Project ;
+    schema:rangeIncludes dcterms:Resource .
+
+iiplat:TechnologyOrMeasure a rdfs:Class ;
+    rdfs:label "TechnologyOrMeasure" ;
+    skos:definition "A measure or a type of technology that will be implemented or employed by a project or an activity to achieve its purpose." ;
+    rdfs:subClassOf aiao:Instrument .
+
+iiplat:techMeasType a rdf:Property ;
+    rdfs:label "techMeasType" ;
+    skos:definition "The subtype of a technology or measure to be implemented or employed by a project or an activity." ;
+    schema:domainIncludes iiplat:TechnologyOrMeasure ;
+    schema:rangeIncludes schema:Text ;
+    skos:editorialNote "Allowed values (legacy shape: FACILITY, SYSTEM, EQUIPMENT, OTHER) become a SKOS concept scheme in ns/config/." .
+
+iiplat:technologyOrMeasure a rdf:Property ;
+    rdfs:label "technologyOrMeasure" ;
+    skos:definition "The technology or measures to be implemented or employed by a project or an activity." ;
+    schema:domainIncludes aiao:Activity , aiao:Project ;
+    schema:rangeIncludes iiplat:TechnologyOrMeasure .
+
+iiplat:projectHistory a rdf:Property ;
+    rdfs:label "projectHistory" ;
+    skos:definition "The history of the project and its activities." ;
+    schema:domainIncludes aiao:Project ;
+    schema:rangeIncludes schema:Text .
+
+iiplat:monitoringReport a rdf:Property ;
+    rdfs:label "monitoringReport" ;
+    skos:definition "A monitoring report for a project or an activity." ;
+    schema:domainIncludes aiao:Activity , aiao:Project ;
+    schema:rangeIncludes data:Document .
+
+## ---------------------------------------------------------------------------
+## Generic properties
+## ---------------------------------------------------------------------------
+
+iiplat:additionalInfo a rdf:Property ;
+    rdfs:label "additionalInfo" ;
+    skos:definition "Any additional information about a thing." ;
+    schema:domainIncludes owl:Thing ;
+    schema:rangeIncludes schema:Text ;
+    skos:editorialNote "Carry-forward review: very generic (domain owl:Thing); consider rdfs:comment or schema.org reuse." .
+
+iiplat:currentAgeInYears a rdf:Property ;
+    rdfs:label "currentAgeInYears" ;
+    skos:definition "The age of a thing, given in years, at the time of reporting." ;
+    schema:domainIncludes owl:Thing ;
+    schema:rangeIncludes schema:Number .
+
+iiplat:estimatedLifespanInYears a rdf:Property ;
+    rdfs:label "estimatedLifespanInYears" ;
+    skos:definition "The estimated lifespan of a thing, given in years." ;
+    schema:domainIncludes owl:Thing ;
+    schema:rangeIncludes schema:Number .
+
+## ---------------------------------------------------------------------------
+## Impacts and monitoring
+## ---------------------------------------------------------------------------
+
+iiplat:impactIntentionality a rdf:Property ;
+    rdfs:label "intentionality" ;
+    skos:definition "Indicates whether an of a project or activity was an intentional or an unintentional impact." ;
+    rdfs:comment "An unintentional impact (whether beneficial or adverse) is typically referred to as 'leakage'." ;
+    schema:domainIncludes impact:Impact ;
+    schema:rangeIncludes schema:Text ;
+    skos:editorialNote "Allowed values (legacy shape: INTENTIONAL, UNINTENTIONAL) become a SKOS concept scheme in ns/config/. Legacy source spelled the comment key 'rfds:comment'; corrected here." .
+
+iiplat:beneficialOrAdverse a rdf:Property ;
+    rdfs:label "beneficialOrAdverse" ;
+    skos:definition "Indicates whether an impact of a project or an activity (whether intended or unintended) was an environmentally beneficial or environmentally adverse impact." ;
+    schema:domainIncludes impact:Impact ;
+    schema:rangeIncludes schema:Text ;
+    skos:editorialNote "Allowed values (legacy shape: BENEFICIAL, ADVERSE) become a SKOS concept scheme in ns/config/." .
+
+iiplat:monitored a rdf:Property ;
+    rdfs:label "monitored" ;
+    skos:definition "Indicates whether an impact of a project or an activity will be monitored or not." ;
+    schema:domainIncludes impact:Impact ;
+    schema:rangeIncludes schema:Text ;
+    skos:editorialNote "Allowed values (legacy shape: YES, NO) become a SKOS concept scheme in ns/config/ — or the property becomes boolean." .
+
+iiplat:notMonitoredJustification a rdf:Property ;
+    rdfs:label "notMonitoredJustification" ;
+    skos:definition "Provides a justification for why an impact of a project or activity will not be monitored." ;
+    schema:domainIncludes impact:Impact ;
+    schema:rangeIncludes schema:Text .
+
+iiplat:unitOfMeasure a rdf:Property ;
+    rdfs:label "unitOfMeasure" ;
+    skos:definition "A unit of measure." ;
+    schema:domainIncludes impact:Indicator ;
+    schema:rangeIncludes schema:Text ;
+    skos:editorialNote "Carry-forward review: domain is the Indicator Ontology's territory; possibly duplicates a term there or schema:unitText/QUDT." .
+
+iiplat:monitoringPeriod a rdf:Property ;
+    rdfs:label "monitoringPeriod" ;
+    skos:definition "A monitoring period for an impact." ;
+    schema:domainIncludes impact:Impact ;
+    schema:rangeIncludes time:Interval .
+
+iiplat:CreditingPeriod a rdfs:Class ;
+    rdfs:label "CreditingPeriod" ;
+    skos:definition "A crediting period for a monitored impact." ;
+    rdfs:subClassOf time:Interval .
+
+iiplat:creditingPeriodIsRenewable a rdf:Property ;
+    rdfs:label "creditingPeriodIsRenewable" ;
+    skos:definition "Indicates whether a crediting period is renewable or not." ;
+    schema:domainIncludes iiplat:CreditingPeriod ;
+    schema:rangeIncludes schema:Boolean .
+
+iiplat:creditingPeriod a rdf:Property ;
+    rdfs:label "creditingPeriod" ;
+    skos:definition "A crediting period for an impact. Must cover at least one monitoring period." ;
+    schema:domainIncludes impact:Impact ;
+    schema:rangeIncludes iiplat:CreditingPeriod .
+
+iiplat:additionalityJustification a rdf:Property ;
+    rdfs:label "additionalityJustification" ;
+    skos:definition "A justification for why an impact is considered additional." ;
+    schema:domainIncludes impact:Impact ;
+    schema:rangeIncludes schema:Text .
+
+## ---------------------------------------------------------------------------
+## Methodology
+## ---------------------------------------------------------------------------
+
+iiplat:Methodology a rdfs:Class ;
+    rdfs:label "Methodology" ;
+    skos:definition "'A system of methods used in a particular area of study or activity.' (Oxford Languages)" ;
+    rdfs:subClassOf aiao:Control ;
+    skos:editorialNote "Carry-forward review: the Methodology Ontology (catalogued, under development) is this term's territory." .
