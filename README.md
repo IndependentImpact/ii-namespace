@@ -11,22 +11,22 @@ Domain ontologies (AIAO, claimont, impactont, infocomm, the Indicator and Method
 | [`ns/catalog.ttl`](ns/catalog.ttl) | DCAT registry of every semantic artifact the platform recognizes, internal and external. The bootstrap root. |
 | [`ns/vocab/`](ns/vocab/) | Platform vocabulary: classes and properties no domain ontology covers |
 | [`ns/config/`](ns/config/) | SKOS config concept schemes (controlled enumerations for UI and validation) |
-| [`ns/shapes/`](ns/shapes/) | Platform-level SHACL shapes |
+| [`ns/shapes/`](ns/shapes/) | Platform-level SHACL shapes (platform-only) |
 | [`ns/contexts/`](ns/contexts/) | Published JSON-LD `@context` documents for HCS message payloads |
-| [`ns/policies/`](ns/policies/) | Fluree access policies and roles (security-sensitive) |
+| [`ns/policies/`](ns/policies/) | Fluree access policies and roles (security-sensitive, platform-only) |
 | [`ns/alignments/`](ns/alignments/) | Mappings between platform terms and external vocabularies |
-| [`archive/`](archive/) | Verbatim snapshots of the deprecated legacy `/ns/` vocabulary |
+| [`reference/`](reference/) | Snapshots of the deployed legacy `/ns/` source, pending conversion to Turtle |
 | [`docs/adr/`](docs/adr/) | Architectural decision records for this repo |
 
 The full inventory, with the ii-backend ADRs and tech-specs that determine each artifact's content, is in [ADR-0002](docs/adr/0002-platform-semantic-artifact-inventory.md).
 
 ## How artifacts are published and loaded
 
-Every released artifact version is pinned to IPFS and registered in `ns/catalog.ttl` with its CID. The storage service bootstrap ([ii-backend#82](https://github.com/IndependentImpact/ii-backend/issues/82)) resolves the catalog first, fetches each artifact by CID — HTTPS URLs are human conveniences; CIDs are authoritative — loads it into Fluree, and validates it. Fluree policies load in a later phase than vocabularies, schemes, and shapes, before the API opens to users. This is the same HCS→IPFS→Fluree path used for all third-party content, which keeps the entire Fluree state rebuildable from HCS replay.
+Every released artifact version is registered in `ns/catalog.ttl`, which records each artifact's access level (`dcterms:accessRights`). Public artifacts are pinned to IPFS — HTTPS URLs are human conveniences; CIDs are authoritative. Platform-only artifacts (shapes, policies) are not publicly pinned; a release hash may be anchored on Hedera, or pinned content encrypted. The storage service bootstrap ([ii-backend#82](https://github.com/IndependentImpact/ii-backend/issues/82)) resolves the catalog first, fetches each artifact, loads it into Fluree, and validates it; Fluree policies load in a later phase, via the platform's private channel, before the API opens to users. Public artifacts travel the same HCS→IPFS→Fluree path used for all third-party content, which keeps the Fluree state rebuildable from HCS replay. Fluree data-level permissions filter catalog triples per requester, so API users see only the entries they may see.
 
-## Deprecation notice
+## Legacy form
 
-Everything served at `https://independentimpact.org/ns/` before this repo took over belongs to a previous architecture and is **deprecated** — see [ADR-0001](docs/adr/0001-deprecate-legacy-ns-vocabulary.md). Do not reference its terms (e.g. `indimp:PlatformUser`) in new work; the [`archive/`](archive/) snapshots are the reference for what they meant.
+The JSON-LD currently served at `https://independentimpact.org/ns/` predates this repo's governance: it has no source under version control, no versioning, and mixes vocabulary with inline SHACL. Its terms **carry forward** — they are being converted to governed Turtle here, pruned per-term, per [ADR-0001](docs/adr/0001-rebuild-legacy-ns-vocabulary-in-governed-form.md). The [`reference/`](reference/) snapshots are the conversion input.
 
 ## Related
 
