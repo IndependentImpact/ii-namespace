@@ -4,7 +4,7 @@
 
 ### Issue tracker
 
-Issues live in GitHub Issues for `IndependentImpact/ii-namespace` via the `gh` CLI; external PRs are not a triage surface. See `docs/agents/issue-tracker.md`.
+Issues live in GitHub Issues for `IndependentImpact/ii-namespace` via the `gh` CLI; external PRs are a triage surface, treated as feature requests. See `docs/agents/issue-tracker.md`.
 
 ### Triage labels
 
