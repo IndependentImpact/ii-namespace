@@ -39,7 +39,7 @@
 
 ## ---------------------------------------------------------------------------
 ## Internal artifacts — authored in this repo (IndependentImpact/ii-namespace),
-## loaded in bootstrap phase 1 except where noted. All planned pending the
+## loaded in bootstrap phase 1 except where noted. Statuses track the
 ## post-ADR-0001 rebuild.
 ## ---------------------------------------------------------------------------
 
@@ -50,7 +50,7 @@
     vann:preferredNamespacePrefix "iiplat" ;
     vann:preferredNamespaceUri "https://independentimpact.org/ns/vocab/" ;
     dcterms:source <https://github.com/IndependentImpact/ii-namespace/tree/main/ns/vocab> ;
-    schema:creativeWorkStatus "planned" .
+    schema:creativeWorkStatus "under development" .
 
 <#config-schemes> a dcat:Dataset ;
     dcterms:accessRights "public" ;
@@ -58,7 +58,7 @@
     dcterms:description "SKOS concept schemes for the platform's controlled enumerations (user types, license scopes, workflow states, document types, review outcomes, monitoring flags). One scheme per file under ns/config/." ;
     vann:preferredNamespaceUri "https://independentimpact.org/ns/config/" ;
     dcterms:source <https://github.com/IndependentImpact/ii-namespace/tree/main/ns/config> ;
-    schema:creativeWorkStatus "planned" .
+    schema:creativeWorkStatus "under development" .
 
 <#shapes-platform> a dcat:Dataset ;
     dcterms:accessRights "platform-only" ;

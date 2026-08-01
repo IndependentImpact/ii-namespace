@@ -1,0 +1,19 @@
+@prefix skos:    <http://www.w3.org/2004/02/skos/core#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+
+<https://independentimpact.org/ns/config/monitored> a skos:ConceptScheme ;
+    dcterms:title "II impact monitored flag" ;
+    dcterms:description "Whether an impact of a project or activity will be monitored. Values of iiplat:monitored (legacy shape: monitoredShape). Review question (issue #7): a two-value YES/NO scheme may better be a boolean property." ;
+    skos:hasTopConcept <https://independentimpact.org/ns/config/monitored#YES> , <https://independentimpact.org/ns/config/monitored#NO> .
+
+<https://independentimpact.org/ns/config/monitored#YES> a skos:Concept ;
+    skos:inScheme <https://independentimpact.org/ns/config/monitored> ;
+    skos:topConceptOf <https://independentimpact.org/ns/config/monitored> ;
+    skos:notation "YES" ;
+    skos:prefLabel "Yes"@en .
+
+<https://independentimpact.org/ns/config/monitored#NO> a skos:Concept ;
+    skos:inScheme <https://independentimpact.org/ns/config/monitored> ;
+    skos:topConceptOf <https://independentimpact.org/ns/config/monitored> ;
+    skos:notation "NO" ;
+    skos:prefLabel "No"@en .

@@ -1,0 +1,35 @@
+@prefix skos:    <http://www.w3.org/2004/02/skos/core#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+
+<https://independentimpact.org/ns/config/auth-proofs> a skos:ConceptScheme ;
+    dcterms:title "II document authenticity proof mechanisms" ;
+    dcterms:description "Mechanisms by which the authenticity of a document can be proven. Values of iiplat:authProof (legacy shape: authProofShape)." ;
+    skos:hasTopConcept <https://independentimpact.org/ns/config/auth-proofs#NONE> , <https://independentimpact.org/ns/config/auth-proofs#EDDSA_SIGNATURE> , <https://independentimpact.org/ns/config/auth-proofs#RSA_SIGNATURE> , <https://independentimpact.org/ns/config/auth-proofs#VC> .
+
+<https://independentimpact.org/ns/config/auth-proofs#NONE> a skos:Concept ;
+    skos:inScheme <https://independentimpact.org/ns/config/auth-proofs> ;
+    skos:topConceptOf <https://independentimpact.org/ns/config/auth-proofs> ;
+    skos:notation "NONE" ;
+    skos:prefLabel "None"@en ;
+    skos:definition "No authenticity proof is provided." .
+
+<https://independentimpact.org/ns/config/auth-proofs#EDDSA_SIGNATURE> a skos:Concept ;
+    skos:inScheme <https://independentimpact.org/ns/config/auth-proofs> ;
+    skos:topConceptOf <https://independentimpact.org/ns/config/auth-proofs> ;
+    skos:notation "EDDSA_SIGNATURE" ;
+    skos:prefLabel "EdDSA signature"@en ;
+    skos:definition "Authenticity proven by an EdDSA signature." .
+
+<https://independentimpact.org/ns/config/auth-proofs#RSA_SIGNATURE> a skos:Concept ;
+    skos:inScheme <https://independentimpact.org/ns/config/auth-proofs> ;
+    skos:topConceptOf <https://independentimpact.org/ns/config/auth-proofs> ;
+    skos:notation "RSA_SIGNATURE" ;
+    skos:prefLabel "RSA signature"@en ;
+    skos:definition "Authenticity proven by an RSA signature." .
+
+<https://independentimpact.org/ns/config/auth-proofs#VC> a skos:Concept ;
+    skos:inScheme <https://independentimpact.org/ns/config/auth-proofs> ;
+    skos:topConceptOf <https://independentimpact.org/ns/config/auth-proofs> ;
+    skos:notation "VC" ;
+    skos:prefLabel "Verifiable credential"@en ;
+    skos:definition "Authenticity proven by a W3C verifiable credential." .

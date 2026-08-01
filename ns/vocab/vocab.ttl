@@ -20,8 +20,8 @@
 # beginning "Carry-forward review:" and are removed (or kept) per-term during
 # review, not silently. The legacy inline SHACL shapes are converted
 # separately in ns/shapes/ (platform-only, ADR-0002). Enumerated allowed
-# values (the legacy shapes' sh:in lists) become SKOS concept schemes in
-# ns/config/ (ADR-0002 §3).
+# values (the legacy shapes' sh:in lists) are SKOS concept schemes in
+# ns/config/ (ADR-0002 §3, issue #7).
 #
 # Open question (flagged for review): the legacy terms lived at
 # https://independentimpact.org/ns/ with prefix indimp:. This file places
@@ -49,7 +49,7 @@ iiplat:userType a rdf:Property ;
     skos:definition "The Independent Impact platform user type." ;
     schema:domainIncludes iiplat:PlatformUser ;
     schema:rangeIncludes schema:Text ;
-    skos:editorialNote "Allowed values (legacy shape: STANDARD_REGISTRY, USER) become a SKOS concept scheme in ns/config/." .
+    skos:editorialNote "Allowed values are the ns/config/user-types.ttl concept scheme (issue #7)." .
 
 iiplat:dateRegistered a rdf:Property ;
     rdfs:label "dateRegistered" ;
@@ -79,7 +79,7 @@ iiplat:licenseScope a rdf:Property ;
     skos:definition "The label of the set of actions that the holder of the license is allowed to perform on the Independent Impact platform." ;
     schema:domainIncludes iiplat:AgentLicense ;
     schema:rangeIncludes schema:Text ;
-    skos:editorialNote "Allowed values (legacy shape: PROJECT_DEVELOPER, PDD_VALIDATOR, MR_VERIFIER) become a SKOS concept scheme in ns/config/." .
+    skos:editorialNote "Allowed values are the ns/config/license-scopes.ttl concept scheme (issue #7)." .
 
 iiplat:hasAgentLicense a rdf:Property ;
     rdfs:label "hasAgentLicense" ;
@@ -136,7 +136,7 @@ iiplat:authProof a rdf:Property ;
     skos:definition "The mechanism by which the authenticity of a document can be proven." ;
     schema:domainIncludes data:Document ;
     schema:rangeIncludes schema:Text ;
-    skos:editorialNote "Allowed values (legacy shape: NONE, EDDSA_SIGNATURE, RSA_SIGNATURE, VC) become a SKOS concept scheme in ns/config/." .
+    skos:editorialNote "Allowed values are the ns/config/auth-proofs.ttl concept scheme (issue #7)." .
 
 iiplat:DocumentSchema a rdfs:Class ;
     rdfs:label "DocumentSchema" ;
@@ -316,7 +316,7 @@ iiplat:techMeasType a rdf:Property ;
     skos:definition "The subtype of a technology or measure to be implemented or employed by a project or an activity." ;
     schema:domainIncludes iiplat:TechnologyOrMeasure ;
     schema:rangeIncludes schema:Text ;
-    skos:editorialNote "Allowed values (legacy shape: FACILITY, SYSTEM, EQUIPMENT, OTHER) become a SKOS concept scheme in ns/config/." .
+    skos:editorialNote "Allowed values are the ns/config/technology-measure-types.ttl concept scheme (issue #7)." .
 
 iiplat:technologyOrMeasure a rdf:Property ;
     rdfs:label "technologyOrMeasure" ;
@@ -369,21 +369,21 @@ iiplat:impactIntentionality a rdf:Property ;
     rdfs:comment "An unintentional impact (whether beneficial or adverse) is typically referred to as 'leakage'." ;
     schema:domainIncludes impact:Impact ;
     schema:rangeIncludes schema:Text ;
-    skos:editorialNote "Allowed values (legacy shape: INTENTIONAL, UNINTENTIONAL) become a SKOS concept scheme in ns/config/. Legacy source spelled the comment key 'rfds:comment'; corrected here." .
+    skos:editorialNote "Allowed values are the ns/config/impact-intentionality.ttl concept scheme (issue #7). Legacy source spelled the comment key 'rfds:comment'; corrected here." .
 
 iiplat:beneficialOrAdverse a rdf:Property ;
     rdfs:label "beneficialOrAdverse" ;
     skos:definition "Indicates whether an impact of a project or an activity (whether intended or unintended) was an environmentally beneficial or environmentally adverse impact." ;
     schema:domainIncludes impact:Impact ;
     schema:rangeIncludes schema:Text ;
-    skos:editorialNote "Allowed values (legacy shape: BENEFICIAL, ADVERSE) become a SKOS concept scheme in ns/config/." .
+    skos:editorialNote "Allowed values are the ns/config/beneficial-adverse.ttl concept scheme (issue #7)." .
 
 iiplat:monitored a rdf:Property ;
     rdfs:label "monitored" ;
     skos:definition "Indicates whether an impact of a project or an activity will be monitored or not." ;
     schema:domainIncludes impact:Impact ;
     schema:rangeIncludes schema:Text ;
-    skos:editorialNote "Allowed values (legacy shape: YES, NO) become a SKOS concept scheme in ns/config/ — or the property becomes boolean." .
+    skos:editorialNote "Allowed values are the ns/config/monitored.ttl concept scheme (issue #7) — or the property becomes boolean." .
 
 iiplat:notMonitoredJustification a rdf:Property ;
     rdfs:label "notMonitoredJustification" ;

@@ -5,23 +5,28 @@
 @prefix data:    <https://jellyfiiish.xyz/ns/> .
 @prefix impact:  <https://w3id.org/impactont/> .
 @prefix iiplat:  <https://independentimpact.org/ns/vocab/> .
+@prefix iicfg:   <https://independentimpact.org/ns/config/> .
 @prefix iishape: <https://independentimpact.org/ns/shapes/> .
 
 # The nine SHACL shapes that were inlined in the legacy /ns/ JSON-LD
 # (reference/ns.jsonld), separated from the vocabulary per ADR-0001/ADR-0002
-# and carried forward verbatim as prune candidates. Platform-only (ADR-0002
-# visibility section). Most exist to enforce enumerations via sh:in; those
-# value lists become SKOS concept schemes in ns/config/, after which these
-# shapes should validate scheme membership instead of inline lists —
-# reassessed per shape during carry-forward review.
+# and carried forward as prune candidates. Platform-only (ADR-0002 visibility
+# section).
+#
+# The legacy sh:in string enumerations are replaced by scheme-membership
+# validation against the SKOS concept schemes in ns/config/ (issue #7): a
+# value must be an IRI whose skos:inScheme is the named scheme. REVIEW
+# ASSUMPTION: this presumes data carries concept IRIs; legacy data carried
+# raw strings matching the concepts' skos:notation. If string values must
+# stay valid, revert to sh:in lists of notations per shape.
 
 iishape:userTypeShape a sh:NodeShape ;
-    skos:editorialNote "Carry-forward review: sh:in values become the user-types concept scheme in ns/config/." ;
+    skos:editorialNote "Carry-forward review: values are concepts of iicfg:user-types (was inline sh:in)." ;
     sh:targetClass iiplat:PlatformUser ;
     sh:property [
         sh:path iiplat:userType ;
-        sh:datatype xsd:string ;
-        sh:in ( "STANDARD_REGISTRY" "USER" ) ;
+        sh:nodeKind sh:IRI ;
+        sh:node [ sh:property [ sh:path skos:inScheme ; sh:hasValue iicfg:user-types ; sh:minCount 1 ] ] ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
     ] .
@@ -37,12 +42,12 @@ iishape:LicenseNumberShape a sh:NodeShape ;
     ] .
 
 iishape:licenseScopeShape a sh:NodeShape ;
-    skos:editorialNote "Carry-forward review: sh:in values become the license-scopes concept scheme in ns/config/." ;
+    skos:editorialNote "Carry-forward review: values are concepts of iicfg:license-scopes (was inline sh:in)." ;
     sh:targetClass iiplat:AgentLicense ;
     sh:property [
         sh:path iiplat:licenseScope ;
-        sh:datatype xsd:string ;
-        sh:in ( "PROJECT_DEVELOPER" "PDD_VALIDATOR" "MR_VERIFIER" ) ;
+        sh:nodeKind sh:IRI ;
+        sh:node [ sh:property [ sh:path skos:inScheme ; sh:hasValue iicfg:license-scopes ; sh:minCount 1 ] ] ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
     ] .
@@ -59,56 +64,56 @@ iishape:resourceIpfsUriShape a sh:NodeShape ;
     ] .
 
 iishape:authProofShape a sh:NodeShape ;
-    skos:editorialNote "Carry-forward review: sh:in values become the auth-proof concept scheme in ns/config/." ;
+    skos:editorialNote "Carry-forward review: values are concepts of iicfg:auth-proofs (was inline sh:in)." ;
     sh:targetClass data:Document ;
     sh:property [
         sh:path iiplat:authProof ;
-        sh:datatype xsd:string ;
-        sh:in ( "NONE" "EDDSA_SIGNATURE" "RSA_SIGNATURE" "VC" ) ;
+        sh:nodeKind sh:IRI ;
+        sh:node [ sh:property [ sh:path skos:inScheme ; sh:hasValue iicfg:auth-proofs ; sh:minCount 1 ] ] ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
     ] .
 
 iishape:techMeasTypeShape a sh:NodeShape ;
-    skos:editorialNote "Carry-forward review: sh:in values become the technology-measure-types concept scheme in ns/config/." ;
+    skos:editorialNote "Carry-forward review: values are concepts of iicfg:technology-measure-types (was inline sh:in)." ;
     sh:targetClass iiplat:TechnologyOrMeasure ;
     sh:property [
         sh:path iiplat:techMeasType ;
-        sh:datatype xsd:string ;
-        sh:in ( "FACILITY" "SYSTEM" "EQUIPMENT" "OTHER" ) ;
+        sh:nodeKind sh:IRI ;
+        sh:node [ sh:property [ sh:path skos:inScheme ; sh:hasValue iicfg:technology-measure-types ; sh:minCount 1 ] ] ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
     ] .
 
 iishape:impactIntentionalityShape a sh:NodeShape ;
-    skos:editorialNote "Carry-forward review: sh:in values become the impact-intentionality concept scheme in ns/config/." ;
+    skos:editorialNote "Carry-forward review: values are concepts of iicfg:impact-intentionality (was inline sh:in)." ;
     sh:targetClass impact:Impact ;
     sh:property [
         sh:path iiplat:impactIntentionality ;
-        sh:datatype xsd:string ;
-        sh:in ( "INTENTIONAL" "UNINTENTIONAL" ) ;
+        sh:nodeKind sh:IRI ;
+        sh:node [ sh:property [ sh:path skos:inScheme ; sh:hasValue iicfg:impact-intentionality ; sh:minCount 1 ] ] ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
     ] .
 
 iishape:beneficialOrAdverseShape a sh:NodeShape ;
-    skos:editorialNote "Carry-forward review: sh:in values become the beneficial-adverse concept scheme in ns/config/." ;
+    skos:editorialNote "Carry-forward review: values are concepts of iicfg:beneficial-adverse (was inline sh:in)." ;
     sh:targetClass impact:Impact ;
     sh:property [
         sh:path iiplat:beneficialOrAdverse ;
-        sh:datatype xsd:string ;
-        sh:in ( "BENEFICIAL" "ADVERSE" ) ;
+        sh:nodeKind sh:IRI ;
+        sh:node [ sh:property [ sh:path skos:inScheme ; sh:hasValue iicfg:beneficial-adverse ; sh:minCount 1 ] ] ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
     ] .
 
 iishape:monitoredShape a sh:NodeShape ;
-    skos:editorialNote "Carry-forward review: sh:in values become the monitored concept scheme in ns/config/, or the property becomes boolean." ;
+    skos:editorialNote "Carry-forward review: values are concepts of iicfg:monitored (was inline sh:in) — or the property becomes boolean, retiring this shape." ;
     sh:targetClass impact:Impact ;
     sh:property [
         sh:path iiplat:monitored ;
-        sh:datatype xsd:string ;
-        sh:in ( "YES" "NO" ) ;
+        sh:nodeKind sh:IRI ;
+        sh:node [ sh:property [ sh:path skos:inScheme ; sh:hasValue iicfg:monitored ; sh:minCount 1 ] ] ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
     ] .
