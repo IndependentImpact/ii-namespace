@@ -33,7 +33,7 @@
         <#vocab-platform> , <#config-schemes> , <#shapes-platform> ,
         <#contexts-platform> , <#policies-fluree> , <#alignments> ,
         <#ont-aiao> , <#ont-claimont> , <#ont-impactont> , <#ont-infocomm> ,
-        <#ont-hadeda> , <#ont-indicator> , <#ont-methodology> , <#ont-standard> ,
+        <#ont-indicator> , <#ont-methodology> , <#ont-standard> ,
         <#vocab-sdg-indicators> , <#ont-hashgraph> , <#vocab-dcterms> ,
         <#lib-indicators> , <#lib-methodologies> .
 
@@ -128,12 +128,6 @@
     vann:preferredNamespacePrefix "infocomm" ;
     vann:preferredNamespaceUri "https://w3id.org/infocomm/" ;
     dcat:landingPage <https://w3id.org/infocomm> ;
-    schema:creativeWorkStatus "prototype" .
-
-<#ont-hadeda> a dcat:Dataset ;
-    dcterms:title "Hadeda Ontology" ;
-    dcterms:description "Domain ontology in II's semantic estate. Namespace URI and landing page to be confirmed." ;
-    vann:preferredNamespacePrefix "hadeda" ;
     schema:creativeWorkStatus "prototype" .
 
 <#ont-indicator> a dcat:Dataset ;

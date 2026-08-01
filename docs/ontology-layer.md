@@ -36,7 +36,7 @@ II reuses classes/properties from existing vocabularies where possible rather th
 - The **Standard Ontology** and **Methodology Ontology** have no published URI yet — both are marked planned/under-development in `ii-arch`, and remain so in II's own model (and in the catalog). A concrete namespace and publication location should be decided before either is relied on for cross-standard interoperability.
 - The **Information Communication Ontology** (`infocomm`) is referenced only via its w3id link in `ii-arch` — no concrete class or property from it appears in any worked example. Its actual coverage (documents, questions, information corpora — the "infotrip"/"infocorp" vocabulary described in [BE ts-0003](https://github.com/IndependentImpact/ii-backend/blob/develop/docs/tech-specs/ts-0003-workflows.md)) is inferred, not confirmed from source.
 - **Bhash account→network link**: `hgo:registeredIn` relates Artefacts (topics) to a network, but `hgo:Account` is an Actor — no property links an account to its network (issues #5/#6; candidate upstream fix in Bhash).
-- **"hadeda"**: named in review as a domain ontology to reuse, but no such semantic namespace exists — `NovaInstitute/Hadeda` is an R SDK for Hedera, not an ontology. Pending clarification whether Bhash was meant (issue #5).
+- **"hadeda" naming**: the review wording named "hadeda" as a domain ontology; no such semantic namespace exists (`NovaInstitute/Hadeda` is an R SDK for Hedera). Resolved as meaning Bhash — pending Alex's confirmation on issue #5.
 
 ## Related Documentation
 

@@ -30,7 +30,7 @@ Sources:
 
 ### 2. `ns/vocab/` — platform vocabulary
 
-Classes and properties the platform needs that no domain ontology covers, e.g., platform users and roles. Define nothing that aiao, claimont, impactont, infocomm, hadeda, or dcterms already provide. The legacy `hed:` namespace dissolves into reuse of the Hashgraph Ontology. Loaded in phase 1.
+Classes and properties the platform needs that no domain ontology covers, e.g., platform users and roles. Define nothing that aiao, claimont, impactont, infocomm, Bhash (the Hashgraph Ontology — "hadeda" in the original review wording, see issue #5), or dcterms already provide. The legacy `hed:` namespace dissolves into reuse of Bhash. Loaded in phase 1.
 
 Sources:
 
@@ -114,7 +114,7 @@ Acknowledged trade-offs of this model:
 
 ### Explicitly excluded from this repo
 
-- Domain ontologies (aiao, claimont, impactont, infocomm, hadeda, Indicator Ontology, Methodology Ontology) — w3id-hosted, own repos
+- Domain ontologies (aiao, claimont, impactont, infocomm, Bhash, Indicator Ontology, Methodology Ontology) — own repos and namespaces
 - Standard-specific extensions and SHACL — per-standard, private graphs (BE ADR-0005, BE ts-0009)
 - Instance data of any kind — lives in Fluree, arrives via HCS
 - Genesis config (topic IDs, trusted keys) — deliberately out-of-band, in ii-backend deployment (#82)
