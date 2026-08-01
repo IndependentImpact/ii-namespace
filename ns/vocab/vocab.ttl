@@ -10,7 +10,7 @@
 @prefix aiao:    <https://w3id.org/aiao/> .
 @prefix impact:  <https://w3id.org/impactont/> .
 @prefix data:    <https://jellyfiiish.xyz/ns/> .
-@prefix hed:     <https://independentimpact.org/ns/hedera/> .
+@prefix hgo:     <https://hashgraphontology.xyz/core/> .
 @prefix time:    <http://www.w3.org/2006/time#> .
 @prefix iiplat:  <https://independentimpact.org/ns/vocab/> .
 
@@ -102,8 +102,8 @@ iiplat:resourceHederaMessageId a rdf:Property ;
     rdfs:label "hederaMessageId" ;
     skos:definition "The ID of the Hedera consensus message that recorded the moment of publication, listing or receipt (by the II platform) of the resource in question." ;
     schema:domainIncludes dcterms:Resource ;
-    schema:rangeIncludes hed:HederaMessageId ;
-    skos:editorialNote "Carry-forward review: range is a legacy hed: term; hed: dissolves into reuse of the Hashgraph Ontology (ADR-0002 §2)." .
+    schema:rangeIncludes hgo:TopicMessage ;
+    skos:editorialNote "Carry-forward review: re-ranged from the legacy string-class hed:HederaMessageId to hgo:TopicMessage (issue #6, see ns/alignments/hed-hashgraph.ttl); alternative is a plain string ID." .
 
 iiplat:resourceIpfsUri a rdf:Property ;
     rdfs:label "ipfsUri" ;
@@ -203,8 +203,8 @@ iiplat:workflowDocumentSubmissionHederaMessageId a rdf:Property ;
     rdfs:label "hederaMessageId" ;
     skos:definition "The ID of the Hedera consensus message that recorded the moment that a document was submitted to a specific workflow." ;
     schema:domainIncludes iiplat:WorkflowDocumentSubmission ;
-    schema:rangeIncludes hed:HederaMessageId ;
-    skos:editorialNote "Carry-forward review: range is a legacy hed: term; hed: dissolves into reuse of the Hashgraph Ontology (ADR-0002 §2)." .
+    schema:rangeIncludes hgo:TopicMessage ;
+    skos:editorialNote "Carry-forward review: re-ranged from the legacy string-class hed:HederaMessageId to hgo:TopicMessage (issue #6, see ns/alignments/hed-hashgraph.ttl); alternative is a plain string ID." .
 
 iiplat:hasWorkflowSubmission a rdf:Property ;
     rdfs:label "hasWorkflowSubmission" ;
@@ -230,8 +230,8 @@ iiplat:hederaAccount a rdf:Property ;
     rdfs:label "hederaAccount" ;
     skos:definition "A Hedera account." ;
     schema:domainIncludes iiplat:PlatformUserXhederaAccountLink ;
-    schema:rangeIncludes hed:HederaAccount ;
-    skos:editorialNote "Carry-forward review: range is a legacy hed: term; hed: dissolves into reuse of the Hashgraph Ontology (ADR-0002 §2)." .
+    schema:rangeIncludes hgo:Account ;
+    skos:editorialNote "Range updated from legacy hed:HederaAccount to hgo:Account per ADR-0002 §2 (issue #6; mapping in ns/alignments/hed-hashgraph.ttl)." .
 
 iiplat:platformUserXhederaAccountLinkDescription a rdf:Property ;
     rdfs:label "description" ;
@@ -254,8 +254,8 @@ iiplat:hederaTopic a rdf:Property ;
     rdfs:label "hederaTopic" ;
     skos:definition "A Hedera topic." ;
     schema:domainIncludes iiplat:EntityXhederaTopicLink ;
-    schema:rangeIncludes hed:HederaTopic ;
-    skos:editorialNote "Carry-forward review: range is a legacy hed: term; hed: dissolves into reuse of the Hashgraph Ontology (ADR-0002 §2)." .
+    schema:rangeIncludes hgo:ConsensusTopic ;
+    skos:editorialNote "Range updated from legacy hed:HederaTopic to hgo:ConsensusTopic per ADR-0002 §2 (issue #6; mapping in ns/alignments/hed-hashgraph.ttl)." .
 
 iiplat:entityXhederaTopicLinkDescription a rdf:Property ;
     rdfs:label "description" ;

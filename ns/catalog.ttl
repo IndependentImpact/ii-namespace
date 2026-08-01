@@ -158,8 +158,10 @@
     schema:creativeWorkStatus "under development" .
 
 <#ont-hashgraph> a dcat:Dataset ;
-    dcterms:title "Hashgraph Ontology" ;
-    dcterms:description "Hedera accounts, transactions, tokens, topics, smart contracts. The platform vocabulary reuses this rather than minting its own Hedera terms." ;
+    dcterms:title "Hashgraph Ontology (Bhash Core Ontology)" ;
+    dcterms:description "Hedera/Hiero network concepts in modules (core, consensus, token, smart-contract): accounts, transactions, topics, messages, tokens, contracts. The platform vocabulary reuses this rather than minting its own Hedera terms; the legacy hed: namespace is aligned to it in ns/alignments/hed-hashgraph.ttl. The source declares no preferred prefix; 'hgo' is II's convention." ;
+    vann:preferredNamespacePrefix "hgo" ;
+    vann:preferredNamespaceUri "https://hashgraphontology.xyz/core/" ;
     dcat:landingPage <https://hashgraphontology.xyz/> ;
     schema:creativeWorkStatus "prototype" .
 
