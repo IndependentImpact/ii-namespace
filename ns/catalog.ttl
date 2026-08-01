@@ -10,7 +10,7 @@
 # recognizes. The storage service resolves this catalog first at bootstrap,
 # then fetches each artifact by the IPFS CID recorded on its distribution
 # (see ii-backend#82). HTTPS URLs are human conveniences; CIDs are
-# authoritative. Statuses follow ts-0006: prototype | planned | under development.
+# authoritative. Statuses: prototype | planned | under development.
 #
 # Each released version of an artifact adds a dcat:distribution carrying
 # dcterms:hasVersion and a dcat:downloadURL of the form <ipfs://<CID>>.
@@ -26,7 +26,7 @@
 
 <> a dcat:Catalog ;
     dcterms:title "Independent Impact semantic artifact registry" ;
-    dcterms:description "Machine-readable registry of the semantic web artifacts used by the Independent Impact Platform: the platform's own artifacts (this repo) and the external ontologies, vocabularies, and libraries it depends on. Supersedes the inventory table in ts-0006." ;
+    dcterms:description "Machine-readable registry of the semantic web artifacts used by the Independent Impact Platform: the platform's own artifacts (this repo) and the external ontologies, vocabularies, and libraries it depends on. Supersedes the inventory table formerly in ts-0006 (now docs/ontology-layer.md)." ;
     dcterms:publisher <https://independentimpact.org/> ;
     dcterms:source <https://github.com/IndependentImpact/ii-namespace> ;
     dcat:dataset
@@ -94,7 +94,8 @@
 
 ## ---------------------------------------------------------------------------
 ## External artifacts — own repos and namespaces; catalogued here so the
-## bootstrap knows the full estate. Entries seeded from ts-0006.
+## bootstrap knows the full estate. Entries seeded from the ontology layer
+## (docs/ontology-layer.md, formerly ts-0006).
 ## ---------------------------------------------------------------------------
 
 <#ont-aiao> a dcat:Dataset ;
@@ -123,7 +124,7 @@
 
 <#ont-infocomm> a dcat:Dataset ;
     dcterms:title "Information Communication Ontology" ;
-    dcterms:description "Information and communication concepts (documents, questions, corpora). Part of the AIAO Ontology Suite; coverage inferred, not yet confirmed from source (ts-0006 open gap)." ;
+    dcterms:description "Information and communication concepts (documents, questions, corpora). Part of the AIAO Ontology Suite; coverage inferred, not yet confirmed from source (open gap in docs/ontology-layer.md)." ;
     vann:preferredNamespacePrefix "infocomm" ;
     vann:preferredNamespaceUri "https://w3id.org/infocomm/" ;
     dcat:landingPage <https://w3id.org/infocomm> ;
