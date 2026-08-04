@@ -1,0 +1,21 @@
+@prefix skos:    <http://www.w3.org/2004/02/skos/core#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+
+<https://independentimpact.org/ns/config/impact-intentionality> a skos:ConceptScheme ;
+    dcterms:title "II impact intentionality" ;
+    dcterms:description "Whether an impact of a project or activity was intentional. Values of iiplat:impactIntentionality (legacy shape: impactIntentionalityShape). An unintentional impact (beneficial or adverse) is typically referred to as leakage." ;
+    skos:hasTopConcept <https://independentimpact.org/ns/config/impact-intentionality#INTENTIONAL> , <https://independentimpact.org/ns/config/impact-intentionality#UNINTENTIONAL> .
+
+<https://independentimpact.org/ns/config/impact-intentionality#INTENTIONAL> a skos:Concept ;
+    skos:inScheme <https://independentimpact.org/ns/config/impact-intentionality> ;
+    skos:topConceptOf <https://independentimpact.org/ns/config/impact-intentionality> ;
+    skos:notation "INTENTIONAL" ;
+    skos:prefLabel "Intentional"@en ;
+    skos:definition "The impact was intended by the project or activity." .
+
+<https://independentimpact.org/ns/config/impact-intentionality#UNINTENTIONAL> a skos:Concept ;
+    skos:inScheme <https://independentimpact.org/ns/config/impact-intentionality> ;
+    skos:topConceptOf <https://independentimpact.org/ns/config/impact-intentionality> ;
+    skos:notation "UNINTENTIONAL" ;
+    skos:prefLabel "Unintentional"@en ;
+    skos:definition "The impact was not intended by the project or activity (leakage)." .

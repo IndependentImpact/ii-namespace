@@ -26,16 +26,16 @@ Sources:
 - [BE ts-0011 storage service](https://github.com/IndependentImpact/ii-backend/blob/develop/docs/tech-specs/ts-0011-storage-service.md) — the component that consumes the catalog
 - [BE ADR-0006 IPFS via Lighthouse](https://github.com/IndependentImpact/ii-backend/blob/develop/docs/adrs/adr-0006-a-ipfs-via-lighthouse-public-file-storage.md) — pinning infrastructure
 - [BE ADR-0015 ledger integrity anchoring](https://github.com/IndependentImpact/ii-backend/blob/develop/docs/adrs/adr-0015-a-ledger-integrity-anchoring.md) — anchoring pattern the catalog CID follows
-- [`ts-0006-semantic-web-ontologies.md`](../../ts-0006-semantic-web-ontologies.md) (this repo) — the inventory table that seeds the external entries
+- [`docs/ontology-layer.md`](../ontology-layer.md) (this repo, formerly ts-0006) — the ontology-layer inventory that seeded the external entries
 
 ### 2. `ns/vocab/` — platform vocabulary
 
-Classes and properties the platform needs that no domain ontology covers, e.g., platform users and roles. Define nothing that aiao, claimont, impactont, infocomm, hadeda, or dcterms already provide. The legacy `hed:` namespace dissolves into reuse of the Hashgraph Ontology. Loaded in phase 1.
+Classes and properties the platform needs that no domain ontology covers, e.g., platform users and roles. Define nothing that aiao, claimont, impactont, infocomm, Bhash (the Hashgraph Ontology — "hadeda" in the original review wording, see issue #5), or dcterms already provide. The legacy `hed:` namespace dissolves into reuse of Bhash. Loaded in phase 1.
 
 Sources:
 
 - [`reference/ns.jsonld`](../../reference/ns.jsonld) — the deployed vocabulary; carry-forward source per ADR-0001
-- [`ts-0006-semantic-web-ontologies.md`](../../ts-0006-semantic-web-ontologies.md) (this repo) — which ontology models which entity type; reuse-before-minting rules
+- [`docs/ontology-layer.md`](../ontology-layer.md) (this repo, formerly ts-0006) — which ontology models which entity type; reuse-before-minting rules
 - [BE CONTEXT.md](https://github.com/IndependentImpact/ii-backend/blob/develop/CONTEXT.md) — actors and system flow the vocabulary must describe
 - [BE ADR-0002 DIDs as primary identifiers](https://github.com/IndependentImpact/ii-backend/blob/develop/docs/adrs/adr-0002-use-dids-as-primary-ii-identifiers.md) and [BE ADR-0016 DID method](https://github.com/IndependentImpact/ii-backend/blob/develop/docs/adrs/adr-0016-did-method.md) — identifier model for user/agent terms
 - [BE ADR-0010 Hedera topic structure](https://github.com/IndependentImpact/ii-backend/blob/develop/docs/adrs/adr-0010-hedera-topic-structure.md) and [BE ts-0007 Hedera interaction patterns](https://github.com/IndependentImpact/ii-backend/blob/develop/docs/tech-specs/ts-0007-hedera-interaction-patterns.md) — entity↔topic/account link semantics
@@ -43,7 +43,7 @@ Sources:
 
 ### 3. `ns/config/` — config concept schemes (SKOS)
 
-One SKOS concept scheme per file: the controlled enumerations that populate UI elements and constrain values. Candidate schemes (settled per scheme during rebuild): user types, license scopes, workflow states, document/schema types, review outcomes, monitoring flags (impact intentionality, beneficial/adverse, monitored). This is the "Config Concept Schemes" row of ts-0006. Loaded in phase 1.
+One SKOS concept scheme per file: the controlled enumerations that populate UI elements and constrain values. Candidate schemes (settled per scheme during rebuild): user types, license scopes, workflow states, document/schema types, review outcomes, monitoring flags (impact intentionality, beneficial/adverse, monitored). This is the config-schemes entry of the ontology layer (formerly the "Config Concept Schemes" row of ts-0006). Loaded in phase 1.
 
 Sources (tech specs name the enumerations; capability docs give context only):
 
@@ -90,7 +90,7 @@ Sources:
 
 Sources:
 
-- [`ts-0006-semantic-web-ontologies.md`](../../ts-0006-semantic-web-ontologies.md) (this repo) — reused third-party vocabularies (DC Terms, Schema.org, SKOS)
+- [`docs/ontology-layer.md`](../ontology-layer.md) (this repo, formerly ts-0006) — reused third-party vocabularies (DC Terms, Schema.org, SKOS)
 - [skos_SDG](https://github.com/IndependentImpact/skos_SDG) — SDG indicators vocabulary, first alignment target
 
 ## Repo visibility and per-artifact access
@@ -114,7 +114,7 @@ Acknowledged trade-offs of this model:
 
 ### Explicitly excluded from this repo
 
-- Domain ontologies (aiao, claimont, impactont, infocomm, hadeda, Indicator Ontology, Methodology Ontology) — w3id-hosted, own repos
+- Domain ontologies (aiao, claimont, impactont, infocomm, Bhash, Indicator Ontology, Methodology Ontology) — own repos and namespaces
 - Standard-specific extensions and SHACL — per-standard, private graphs (BE ADR-0005, BE ts-0009)
 - Instance data of any kind — lives in Fluree, arrives via HCS
 - Genesis config (topic IDs, trusted keys) — deliberately out-of-band, in ii-backend deployment (#82)

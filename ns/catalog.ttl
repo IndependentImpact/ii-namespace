@@ -10,7 +10,7 @@
 # recognizes. The storage service resolves this catalog first at bootstrap,
 # then fetches each artifact by the IPFS CID recorded on its distribution
 # (see ii-backend#82). HTTPS URLs are human conveniences; CIDs are
-# authoritative. Statuses follow ts-0006: prototype | planned | under development.
+# authoritative. Statuses: prototype | planned | under development.
 #
 # Each released version of an artifact adds a dcat:distribution carrying
 # dcterms:hasVersion and a dcat:downloadURL of the form <ipfs://<CID>>.
@@ -26,20 +26,20 @@
 
 <> a dcat:Catalog ;
     dcterms:title "Independent Impact semantic artifact registry" ;
-    dcterms:description "Machine-readable registry of the semantic web artifacts used by the Independent Impact Platform: the platform's own artifacts (this repo) and the external ontologies, vocabularies, and libraries it depends on. Supersedes the inventory table in ts-0006." ;
+    dcterms:description "Machine-readable registry of the semantic web artifacts used by the Independent Impact Platform: the platform's own artifacts (this repo) and the external ontologies, vocabularies, and libraries it depends on. Supersedes the inventory table formerly in ts-0006 (now docs/ontology-layer.md)." ;
     dcterms:publisher <https://independentimpact.org/> ;
     dcterms:source <https://github.com/IndependentImpact/ii-namespace> ;
     dcat:dataset
         <#vocab-platform> , <#config-schemes> , <#shapes-platform> ,
         <#contexts-platform> , <#policies-fluree> , <#alignments> ,
         <#ont-aiao> , <#ont-claimont> , <#ont-impactont> , <#ont-infocomm> ,
-        <#ont-hadeda> , <#ont-indicator> , <#ont-methodology> , <#ont-standard> ,
+        <#ont-indicator> , <#ont-methodology> , <#ont-standard> ,
         <#vocab-sdg-indicators> , <#ont-hashgraph> , <#vocab-dcterms> ,
         <#lib-indicators> , <#lib-methodologies> .
 
 ## ---------------------------------------------------------------------------
 ## Internal artifacts — authored in this repo (IndependentImpact/ii-namespace),
-## loaded in bootstrap phase 1 except where noted. All planned pending the
+## loaded in bootstrap phase 1 except where noted. Statuses track the
 ## post-ADR-0001 rebuild.
 ## ---------------------------------------------------------------------------
 
@@ -50,7 +50,7 @@
     vann:preferredNamespacePrefix "iiplat" ;
     vann:preferredNamespaceUri "https://independentimpact.org/ns/vocab/" ;
     dcterms:source <https://github.com/IndependentImpact/ii-namespace/tree/main/ns/vocab> ;
-    schema:creativeWorkStatus "planned" .
+    schema:creativeWorkStatus "under development" .
 
 <#config-schemes> a dcat:Dataset ;
     dcterms:accessRights "public" ;
@@ -58,7 +58,7 @@
     dcterms:description "SKOS concept schemes for the platform's controlled enumerations (user types, license scopes, workflow states, document types, review outcomes, monitoring flags). One scheme per file under ns/config/." ;
     vann:preferredNamespaceUri "https://independentimpact.org/ns/config/" ;
     dcterms:source <https://github.com/IndependentImpact/ii-namespace/tree/main/ns/config> ;
-    schema:creativeWorkStatus "planned" .
+    schema:creativeWorkStatus "under development" .
 
 <#shapes-platform> a dcat:Dataset ;
     dcterms:accessRights "platform-only" ;
@@ -94,7 +94,8 @@
 
 ## ---------------------------------------------------------------------------
 ## External artifacts — own repos and namespaces; catalogued here so the
-## bootstrap knows the full estate. Entries seeded from ts-0006.
+## bootstrap knows the full estate. Entries seeded from the ontology layer
+## (docs/ontology-layer.md, formerly ts-0006).
 ## ---------------------------------------------------------------------------
 
 <#ont-aiao> a dcat:Dataset ;
@@ -123,16 +124,10 @@
 
 <#ont-infocomm> a dcat:Dataset ;
     dcterms:title "Information Communication Ontology" ;
-    dcterms:description "Information and communication concepts (documents, questions, corpora). Part of the AIAO Ontology Suite; coverage inferred, not yet confirmed from source (ts-0006 open gap)." ;
+    dcterms:description "Information and communication concepts (documents, questions, corpora). Part of the AIAO Ontology Suite; coverage inferred, not yet confirmed from source (open gap in docs/ontology-layer.md)." ;
     vann:preferredNamespacePrefix "infocomm" ;
     vann:preferredNamespaceUri "https://w3id.org/infocomm/" ;
     dcat:landingPage <https://w3id.org/infocomm> ;
-    schema:creativeWorkStatus "prototype" .
-
-<#ont-hadeda> a dcat:Dataset ;
-    dcterms:title "Hadeda Ontology" ;
-    dcterms:description "Domain ontology in II's semantic estate. Namespace URI and landing page to be confirmed." ;
-    vann:preferredNamespacePrefix "hadeda" ;
     schema:creativeWorkStatus "prototype" .
 
 <#ont-indicator> a dcat:Dataset ;
@@ -158,8 +153,10 @@
     schema:creativeWorkStatus "under development" .
 
 <#ont-hashgraph> a dcat:Dataset ;
-    dcterms:title "Hashgraph Ontology" ;
-    dcterms:description "Hedera accounts, transactions, tokens, topics, smart contracts. The platform vocabulary reuses this rather than minting its own Hedera terms." ;
+    dcterms:title "Hashgraph Ontology (Bhash Core Ontology)" ;
+    dcterms:description "Hedera/Hiero network concepts in modules (core, consensus, token, smart-contract): accounts, transactions, topics, messages, tokens, contracts. The platform vocabulary reuses this rather than minting its own Hedera terms; the legacy hed: namespace is aligned to it in ns/alignments/hed-hashgraph.ttl. The source declares no preferred prefix; 'hgo' is II's convention." ;
+    vann:preferredNamespacePrefix "hgo" ;
+    vann:preferredNamespaceUri "https://hashgraphontology.xyz/core/" ;
     dcat:landingPage <https://hashgraphontology.xyz/> ;
     schema:creativeWorkStatus "prototype" .
 

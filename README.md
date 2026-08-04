@@ -30,6 +30,6 @@ The JSON-LD currently served at `https://independentimpact.org/ns/` predates thi
 
 ## Related
 
-- [`ts-0006-semantic-web-ontologies.md`](ts-0006-semantic-web-ontologies.md) — migrated inventory of the ontology layer; superseded by `ns/catalog.ttl` as entries are confirmed
+- [`docs/ontology-layer.md`](docs/ontology-layer.md) — how II uses each ontology; prose companion to `ns/catalog.ttl` (formerly ts-0006)
 - [IndependentImpact/ii-backend](https://github.com/IndependentImpact/ii-backend) — the platform backend whose ADRs and tech-specs source the artifacts here
 - [IndependentImpact/skos_SDG](https://github.com/IndependentImpact/skos_SDG) — SDG indicators vocabulary and Indicator Ontology (pending w3id publication)
