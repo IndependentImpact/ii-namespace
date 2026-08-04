@@ -1,0 +1,48 @@
+@prefix skos:    <http://www.w3.org/2004/02/skos/core#> .
+@prefix owl:     <http://www.w3.org/2002/07/owl#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix hed:     <https://independentimpact.org/ns/hedera/> .
+@prefix hgo:     <https://hashgraphontology.xyz/core/> .
+
+# Alignment of the legacy hed: namespace (reference/ns-hedera.jsonld) to the
+# Hashgraph Ontology ("Bhash Core Ontology", https://hashgraphontology.xyz/,
+# core + consensus modules, v0.1.0-dev), executing ADR-0002 §2's decision that
+# hed: dissolves into Hashgraph Ontology reuse (issue #6). Existing data may
+# reference the hed: URIs; these mappings are the interpretation key.
+#
+# The Hashgraph Ontology declares no vann:preferredNamespacePrefix; "hgo" is
+# II's local convention, recorded in ns/catalog.ttl.
+
+<https://independentimpact.org/ns/alignments/hed-hashgraph> a owl:Ontology ;
+    dcterms:title "Legacy hed: to Hashgraph Ontology alignment" ;
+    dcterms:source <https://github.com/IndependentImpact/ii-namespace> .
+
+## Classes with direct counterparts
+
+hed:HederaAccount skos:exactMatch hgo:Account ;
+    skos:editorialNote "Legacy: 'An account on a Hedera network.' hgo:Account is subclass of hgo:Actor / prov:Agent." .
+
+hed:HederaTopic skos:exactMatch hgo:ConsensusTopic ;
+    skos:editorialNote "Legacy: 'A topic on a Hedera network.' hgo:ConsensusTopic is subclass of hgo:Artefact / prov:Entity." .
+
+## Properties with direct counterparts
+
+hed:hederaAccountId skos:closeMatch hgo:hasAccountId ;
+    skos:editorialNote "Legacy range was the string-class hed:HederaAccountId; hgo:hasAccountId is a datatype property ranging xsd:string. Format constraint carried as a shape in ns/shapes/hedera-id-shapes.ttl." .
+
+hed:hederaTopicId skos:closeMatch hgo:hasTopicId ;
+    skos:editorialNote "Legacy range was the string-class hed:HederaTopicId; hgo:hasTopicId is a datatype property ranging xsd:string. Format constraint carried as a shape in ns/shapes/hedera-id-shapes.ttl." .
+
+## Terms without direct counterparts — disposition
+
+hed:HederaMessageId skos:closeMatch hgo:TopicMessage ;
+    skos:editorialNote "Inexact by design: the legacy class is the timestamp-string ID of a consensus message (pattern ^[0-9]{4,}\\.[0-9]{4,}$); the Hashgraph Ontology models the message itself (hgo:TopicMessage) identified by hgo:hasConsensusTimestamp (xsd:dateTime) and hgo:hasSequenceNumber. Platform properties formerly ranging on hed:HederaMessageId now range on hgo:TopicMessage — review this re-ranging (issue #6): the alternative is keeping a plain string ID." .
+
+hed:HederaAccountId skos:editorialNote "Not carried: string-class subsumed by hgo:hasAccountId values; format enforced by shape instead." .
+
+hed:HederaTopicId skos:editorialNote "Not carried: string-class subsumed by hgo:hasTopicId values; format enforced by shape instead." .
+
+hed:HederaNetworkName skos:editorialNote "No counterpart: the Hashgraph Ontology models hgo:Network as an entity, not a name string. The testnet/previewnet/mainnet enumeration becomes a SKOS concept scheme in ns/config/ (issue #7), or Network individuals — review decision." .
+
+hed:hederaNetworkName skos:closeMatch hgo:registeredIn ;
+    skos:editorialNote "Partial: hgo:registeredIn (Artefact -> Network) covers topics (ConsensusTopic is an Artefact) but not accounts (Account is an Actor, not an Artefact). Gap flagged for review; may warrant an upstream issue on the Hashgraph Ontology." .

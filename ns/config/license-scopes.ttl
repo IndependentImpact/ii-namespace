@@ -1,0 +1,28 @@
+@prefix skos:    <http://www.w3.org/2004/02/skos/core#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+
+<https://independentimpact.org/ns/config/license-scopes> a skos:ConceptScheme ;
+    dcterms:title "II Agent License scopes" ;
+    dcterms:description "Sets of actions an Agent License permits its holder to perform. Values of iiplat:licenseScope (legacy shape: licenseScopeShape)." ;
+    skos:hasTopConcept <https://independentimpact.org/ns/config/license-scopes#PROJECT_DEVELOPER> , <https://independentimpact.org/ns/config/license-scopes#PDD_VALIDATOR> , <https://independentimpact.org/ns/config/license-scopes#MR_VERIFIER> .
+
+<https://independentimpact.org/ns/config/license-scopes#PROJECT_DEVELOPER> a skos:Concept ;
+    skos:inScheme <https://independentimpact.org/ns/config/license-scopes> ;
+    skos:topConceptOf <https://independentimpact.org/ns/config/license-scopes> ;
+    skos:notation "PROJECT_DEVELOPER" ;
+    skos:prefLabel "Project developer"@en ;
+    skos:definition "Licensed to develop projects on the platform." .
+
+<https://independentimpact.org/ns/config/license-scopes#PDD_VALIDATOR> a skos:Concept ;
+    skos:inScheme <https://independentimpact.org/ns/config/license-scopes> ;
+    skos:topConceptOf <https://independentimpact.org/ns/config/license-scopes> ;
+    skos:notation "PDD_VALIDATOR" ;
+    skos:prefLabel "PDD validator"@en ;
+    skos:definition "Licensed to validate project design documents." .
+
+<https://independentimpact.org/ns/config/license-scopes#MR_VERIFIER> a skos:Concept ;
+    skos:inScheme <https://independentimpact.org/ns/config/license-scopes> ;
+    skos:topConceptOf <https://independentimpact.org/ns/config/license-scopes> ;
+    skos:notation "MR_VERIFIER" ;
+    skos:prefLabel "MR verifier"@en ;
+    skos:definition "Licensed to verify monitoring reports." .
