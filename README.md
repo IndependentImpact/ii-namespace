@@ -8,7 +8,8 @@ Home of the semantic web artifacts the Independent Impact Platform itself needs 
 
 | Path                               | Artifact                                                                                                     |
 | ---------------------------------- | ------------------------------------------------------------------------------------------------------------ | --- |
-| [`ns/catalog.ttl`](ns/catalog.ttl) | DCAT registry of every semantic artifact the platform recognizes, internal and external. The bootstrap root. |
+| [`ns/contexts.jsonld`](ns/contexts.jsonld) | JSON-LD list of all the contexts that users will encounter in II's Fluree ledger |
+| [`ns/contexts.md`](ns/contexts.md) | Prose companion to `ns/contexts.jsonld` |
 | [`ns/vocab/`](ns/vocab/)           | Platform vocabulary: classes and properties no domain ontology covers                                        |
 | [`ns/config/`](ns/config/)         | SKOS config concept schemes (controlled enumerations for UI and validation)                                  |     |
 | [`ns/alignments/`](ns/alignments/) | Mappings between platform terms and external vocabularies                                                    |
