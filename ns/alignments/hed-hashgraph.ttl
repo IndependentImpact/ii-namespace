@@ -6,9 +6,8 @@
 
 # Alignment of the legacy hed: namespace (reference/ns-hedera.jsonld) to the
 # Hashgraph Ontology ("Bhash Core Ontology", https://hashgraphontology.xyz/,
-# core + consensus modules, v0.1.0-dev), executing ADR-0002 §2's decision that
-# hed: dissolves into Hashgraph Ontology reuse (issue #6). Existing data may
-# reference the hed: URIs; these mappings are the interpretation key.
+# core + consensus modules, v0.1.0-dev). Existing data may # reference the 
+# hed: URIs; these mappings are the interpretation key.
 #
 # The Hashgraph Ontology declares no vann:preferredNamespacePrefix; "hgo" is
 # II's local convention, recorded in ns/catalog.ttl.
