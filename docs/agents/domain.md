@@ -7,7 +7,7 @@ How the engineering skills should consume this repo's domain documentation when 
 - **`CONTEXT.md`** at the repo root.
 - **`docs/adr/`** — read ADRs that touch the area you're about to work in.
 
-If any of these files don't exist, **proceed silently**. Don't flag their absence; don't suggest creating them upfront. The `/domain-modeling` skill (reached via `/grill-with-docs` and `/improve-codebase-architecture`) creates them lazily when terms or decisions actually get resolved.
+If any of these files don't exist, do **not** proceed silently. Flag their absence, because without them you will be stumbling about in the dark. Yes, the `/domain-modeling` skill (reached via `/grill-with-docs` and `/improve-codebase-architecture`) is supposed to create them lazily when terms or decisions actually get resolved, but by now there should already have been something.
 
 ## File structure
 
