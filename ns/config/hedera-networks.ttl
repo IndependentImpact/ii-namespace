@@ -1,0 +1,28 @@
+@prefix skos:    <http://www.w3.org/2004/02/skos/core#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+
+<https://independentimpact.org/ns/config/hedera-networks> a skos:ConceptScheme ;
+    dcterms:title "Hedera network names" ;
+    dcterms:description "Names of Hedera networks, from the legacy hed:HederaNetworkNameShape enumeration. Review question (issues #6/#7): these may better be modelled as hgo:Network individuals than as a concept scheme (see ns/alignments/hed-hashgraph.ttl)." ;
+    skos:hasTopConcept <https://independentimpact.org/ns/config/hedera-networks#mainnet> , <https://independentimpact.org/ns/config/hedera-networks#testnet> , <https://independentimpact.org/ns/config/hedera-networks#previewnet> .
+
+<https://independentimpact.org/ns/config/hedera-networks#mainnet> a skos:Concept ;
+    skos:inScheme <https://independentimpact.org/ns/config/hedera-networks> ;
+    skos:topConceptOf <https://independentimpact.org/ns/config/hedera-networks> ;
+    skos:notation "mainnet" ;
+    skos:prefLabel "Mainnet"@en ;
+    skos:definition "The Hedera main network." .
+
+<https://independentimpact.org/ns/config/hedera-networks#testnet> a skos:Concept ;
+    skos:inScheme <https://independentimpact.org/ns/config/hedera-networks> ;
+    skos:topConceptOf <https://independentimpact.org/ns/config/hedera-networks> ;
+    skos:notation "testnet" ;
+    skos:prefLabel "Testnet"@en ;
+    skos:definition "The Hedera test network." .
+
+<https://independentimpact.org/ns/config/hedera-networks#previewnet> a skos:Concept ;
+    skos:inScheme <https://independentimpact.org/ns/config/hedera-networks> ;
+    skos:topConceptOf <https://independentimpact.org/ns/config/hedera-networks> ;
+    skos:notation "previewnet" ;
+    skos:prefLabel "Previewnet"@en ;
+    skos:definition "The Hedera preview network." .

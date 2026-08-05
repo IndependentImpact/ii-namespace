@@ -1,0 +1,21 @@
+@prefix skos:    <http://www.w3.org/2004/02/skos/core#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+
+<https://independentimpact.org/ns/config/beneficial-adverse> a skos:ConceptScheme ;
+    dcterms:title "II impact direction (beneficial or adverse)" ;
+    dcterms:description "Whether an impact (intended or unintended) was environmentally beneficial or adverse. Values of iiplat:beneficialOrAdverse (legacy shape: beneficialOrAdverseShape)." ;
+    skos:hasTopConcept <https://independentimpact.org/ns/config/beneficial-adverse#BENEFICIAL> , <https://independentimpact.org/ns/config/beneficial-adverse#ADVERSE> .
+
+<https://independentimpact.org/ns/config/beneficial-adverse#BENEFICIAL> a skos:Concept ;
+    skos:inScheme <https://independentimpact.org/ns/config/beneficial-adverse> ;
+    skos:topConceptOf <https://independentimpact.org/ns/config/beneficial-adverse> ;
+    skos:notation "BENEFICIAL" ;
+    skos:prefLabel "Beneficial"@en ;
+    skos:definition "An environmentally beneficial impact." .
+
+<https://independentimpact.org/ns/config/beneficial-adverse#ADVERSE> a skos:Concept ;
+    skos:inScheme <https://independentimpact.org/ns/config/beneficial-adverse> ;
+    skos:topConceptOf <https://independentimpact.org/ns/config/beneficial-adverse> ;
+    skos:notation "ADVERSE" ;
+    skos:prefLabel "Adverse"@en ;
+    skos:definition "An environmentally adverse impact." .

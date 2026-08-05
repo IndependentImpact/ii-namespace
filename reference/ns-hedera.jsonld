@@ -1,0 +1,141 @@
+{
+  "@context": {
+    "dcterms": "http://purl.org/dc/terms/",
+    "owl": "http://www.w3.org/2002/07/owl#",
+    "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+    "schema": "https://schema.org/",
+    "sh": "http://www.w3.org/ns/shacl#",
+    "skos": "http://www.w3.org/2004/02/skos/core#",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+	"hed": "https://independentimpact.org/ns/hedera/"
+  },
+  "@graph": [
+  
+	{
+      "@id": "hed:HederaMessageId",
+	  "@type": "rdfs:Class",
+	  "skos:definition": "The ID (i.e., the timestamp) of a Hedera consensus message",
+      "rdfs:label": "HederaMessageId",
+      "rdfs:subClassOf": {
+        "@id": "schema:Text"
+      }
+    },
+	{
+	  "@id": "hed:HederaMessageIdShape",
+	  "@type": "sh:NodeShape",
+      "sh:targetClass": { "@id": "hed:HederaMessageId" },
+      "sh:datatype": { "@id": "xsd:string" },
+      "sh:pattern": "^[0-9]{4,}\\.[0-9]{4,}$"
+	},
+	
+	{
+      "@id": "hed:HederaAccountId",
+	  "@type": "rdfs:Class",
+	  "skos:definition": "The ID of an account on a Hedera network.",
+      "rdfs:label": "HederaAccountId",
+      "rdfs:subClassOf": {
+        "@id": "schema:Text"
+      }
+    },
+	{
+	  "@id": "hed:HederaAccountIdShape",
+	  "@type": "sh:NodeShape",
+      "sh:targetClass": { "@id": "hed:HederaAccountId" },
+      "sh:datatype": { "@id": "xsd:string" },
+      "sh:pattern": "^[0-9]{1}\\.[0-9]{1}\\.[0-9]{1,}$"
+	},	
+	
+	{
+      "@id": "hed:HederaTopicId",
+	  "@type": "rdfs:Class",
+	  "skos:definition": "The ID of a topic on a Hedera network.",
+      "rdfs:label": "HederaTopicId",
+      "rdfs:subClassOf": {
+        "@id": "schema:Text"
+      }
+    },
+	{
+	  "@id": "hed:HederaTopicIdShape",
+	  "@type": "sh:NodeShape",
+      "sh:targetClass": { "@id": "hed:HederaTopicId" },
+      "sh:datatype": { "@id": "xsd:string" },
+      "sh:pattern": "^[0-9]{1}\\.[0-9]{1}\\.[0-9]{1,}$"
+	},
+
+	{
+      "@id": "hed:HederaNetworkName",
+	  "@type": "rdfs:Class",
+	  "skos:definition": "The name of a Hedera network.",
+      "rdfs:label": "HederaNetworkName",
+      "rdfs:subClassOf": {
+        "@id": "schema:Text"
+      }
+    },
+	{
+ 	  "@id": "hed:HederaNetworkNameShape",
+	  "@type": "sh:NodeShape",
+	  "sh:targetClass": { "@id": "hed:HederaNetworkName" },
+	  "sh:datatype": { "@id": "xsd:string" },
+	  "sh:in": [ "testnet", "previewnet", "mainnet" ]
+	},
+
+	{
+      "@id": "hed:HederaAccount",
+	  "@type": "rdfs:Class",
+	  "skos:definition": "An account on a Hedera network.",
+      "rdfs:label": "HederaAccount",
+      "rdfs:subClassOf": {
+        "@id": "owl:Thing"
+      }
+    },
+	{
+      "@id": "hed:hederaAccountId",
+	  "@type": "rdf:Property",
+	  "skos:definition": "The ID of the account in question.",
+      "rdfs:label": "accountId",
+      "schema:domainIncludes": {
+        "@id": "hed:HederaAccount"
+      },
+      "schema:rangeIncludes": {
+        "@id": "hed:HederaAccountId"
+      }
+    },
+	
+	{
+      "@id": "hed:HederaTopic",
+	  "@type": "rdfs:Class",
+	  "skos:definition": "A topic on a Hedera network.",
+      "rdfs:label": "HederaTopic",
+      "rdfs:subClassOf": {
+        "@id": "owl:Thing"
+      }
+    },
+	{
+      "@id": "hed:hederaTopicId",
+	  "@type": "rdf:Property",
+	  "skos:definition": "The ID of a topic on a Hedera network.",
+      "rdfs:label": "topicId",
+      "schema:domainIncludes": {
+        "@id": "hed:HederaTopic"
+      },
+      "schema:rangeIncludes": {
+        "@id": "hed:HederaTopicId"
+      }
+    },	
+	
+	{
+      "@id": "hed:hederaNetworkName",
+	  "@type": "rdf:Property",
+	  "skos:definition": "The name of the Hedera network on which a Hedera account or Hedera topic exists.",
+      "rdfs:label": "network",
+      "schema:domainIncludes": [
+		{ "@id": "hed:HederaAccount" },
+		{ "@id": "hed:HederaTopic" }
+	  ],
+      "schema:rangeIncludes": {
+        "@id": "hed:HederaNetworkName"
+      }
+    }
+  ]
+}

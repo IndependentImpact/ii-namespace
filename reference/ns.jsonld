@@ -1,0 +1,942 @@
+{
+  "@context": {
+    "dcterms": "http://purl.org/dc/terms/",
+    "owl": "http://www.w3.org/2002/07/owl#",
+    "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+    "schema": "https://schema.org/",
+    "sh": "http://www.w3.org/ns/shacl#",
+    "skos": "http://www.w3.org/2004/02/skos/core#",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "vcdm": "https://www.w3.org/ns/credentials/v2/",
+    "aiao": "https://w3id.org/aiao/",
+    "impact": "https://w3id.org/impactont/",
+    "claim": "https://w3id.org/claimont/",
+    "infocomm": "https://w3id.org/infocomm/",
+    "data": "https://jellyfiiish.xyz/ns/",
+    "indimp": "https://independentimpact.org/ns/",
+    "hed": "https://independentimpact.org/ns/hedera/",
+    "time": "http://www.w3.org/2006/time#"
+  },
+  "@graph": [
+    {
+      "@id": "indimp:PlatformUser",
+      "@type": "rdfs:Class",
+      "skos:definition": "An actor on the Independent Impact platform.",
+      "rdfs:label": "PlatformUser",
+      "rdfs:subClassOf": {
+        "@id": "owl:Thing"
+      }
+    },
+    {
+      "@id": "indimp:userType",
+      "@type": "rdf:Property",
+      "skos:definition": "The Independent Impact platform user type.",
+      "rdfs:label": "userType",
+      "schema:domainIncludes": {
+        "@id": "indimp:PlatformUser"
+      },
+      "schema:rangeIncludes": {
+        "@id": "schema:Text"
+      }
+    },
+    {
+      "@id": "indimp:userTypeShape",
+      "@type": "sh:NodeShape",
+      "sh:targetClass": {
+        "@id": "indimp:PlatformUser"
+      },
+      "sh:property": {
+        "sh:path": {
+          "@id": "indimp:userType"
+        },
+        "sh:datatype": {
+          "@id": "xsd:string"
+        },
+        "sh:in": [
+          "STANDARD_REGISTRY",
+          "USER"
+        ],
+        "sh:minCount": 1,
+        "sh:maxCount": 1
+      }
+    },
+    {
+      "@id": "indimp:dateRegistered",
+      "@type": "rdf:Property",
+      "skos:definition": "The timestamp at which a user account was created on the Independent Impact platform.",
+      "rdfs:label": "dateRegistered",
+      "schema:domainIncludes": {
+        "@id": "indimp:PlatformUser"
+      },
+      "schema:rangeIncludes": {
+        "@id": "schema:DateTime"
+      }
+    },
+    {
+      "@id": "indimp:didDocument",
+      "@type": "rdf:Property",
+      "skos:definition": "The document providing a platform user's DID and its associated properties.",
+      "rdfs:label": "didDocument",
+      "schema:domainIncludes": {
+        "@id": "indimp:PlatformUser"
+      },
+      "schema:rangeIncludes": {
+        "@id": "data:Document"
+      }
+    },
+    {
+      "@id": "indimp:AgentLicense",
+      "@type": "rdfs:Class",
+      "skos:definition": "A license that allows a platform user to perform specialised actions on the Independent Impact platform.",
+      "rdfs:label": "AgentLicense",
+      "rdfs:subClassOf": {
+        "@id": "vcdm:VerifiableCredential"
+      }
+    },
+    {
+      "@id": "indimp:licenseNumber",
+      "@type": "rdf:Property",
+      "skos:definition": "A unique string identifier for an Independent Impact Agent License.",
+      "rdfs:label": "licenseNumber",
+      "schema:domainIncludes": {
+        "@id": "indimp:AgentLicense"
+      },
+      "schema:rangeIncludes": {
+        "@id": "schema:Text"
+      }
+    },
+    {
+      "@id": "indimp:LicenseNumberShape",
+      "@type": "sh:NodeShape",
+      "sh:targetClass": {
+        "@id": "indimp:AgentLicense"
+      },
+      "sh:property": {
+        "sh:path": {
+          "@id": "indimp:licenseNumber"
+        },
+        "sh:datatype": {
+          "@id": "xsd:string"
+        },
+        "sh:pattern": "^II-(PD|PV|MV)-[0-9]{2}X[0-9]{2}X[0-9]{11}-[0-9]{8}$",
+        "sh:minCount": 1,
+        "sh:maxCount": 1
+      }
+    },
+    {
+      "@id": "indimp:licenseScope",
+      "@type": "rdf:Property",
+      "skos:definition": "The label of the set of actions that the holder of the license is allowed to perform on the Independent Impact platform.",
+      "rdfs:label": "licenseScope",
+      "schema:domainIncludes": {
+        "@id": "indimp:AgentLicense"
+      },
+      "schema:rangeIncludes": {
+        "@id": "schema:Text"
+      }
+    },
+    {
+      "@id": "indimp:licenseScopeShape",
+      "@type": "sh:NodeShape",
+      "sh:targetClass": {
+        "@id": "indimp:AgentLicense"
+      },
+      "sh:property": {
+        "sh:path": {
+          "@id": "indimp:licenseScope"
+        },
+        "sh:datatype": {
+          "@id": "xsd:string"
+        },
+        "sh:in": [
+          "PROJECT_DEVELOPER",
+          "PDD_VALIDATOR",
+          "MR_VERIFIER"
+        ],
+        "sh:minCount": 1,
+        "sh:maxCount": 1
+      }
+    },
+    {
+      "@id": "indimp:hasAgentLicense",
+      "@type": "rdf:Property",
+      "skos:definition": "An Independent Impact Agent License held by a platform user.",
+      "rdfs:label": "hasAgentLicense",
+      "schema:domainIncludes": {
+        "@id": "indimp:PlatformUser"
+      },
+      "schema:rangeIncludes": {
+        "@id": "indimp:AgentLicense"
+      }
+    },
+    {
+      "@id": "indimp:hasVerifiableCredential",
+      "@type": "rdf:Property",
+      "skos:definition": "A verifiable credential document held by an entity (e.g., by a user or an activity).",
+      "rdfs:label": "hasAgentLicense",
+      "schema:domainIncludes": [
+		{ "@id": "indimp:PlatformUser" },
+	    { "@id": "aiao:Activity" },
+		{ "@id": "aiao:Project" }
+	  ],
+      "schema:rangeIncludes": {
+        "@id": "vcdm:VerifiableCredential"
+      }
+    },
+    {
+      "@id": "indimp:resourceHederaMessageId",
+      "@type": "rdf:Property",
+      "skos:definition": "The ID of the Hedera consensus message that recorded the moment of publication, listing or receipt (by the II platform) of the resource in question.",
+      "rdfs:label": "hederaMessageId",
+      "schema:domainIncludes": {
+        "@id": "dcterms:Resource"
+      },
+      "schema:rangeIncludes": {
+        "@id": "hed:HederaMessageId"
+      }
+    },
+    {
+      "@id": "indimp:resourceIpfsUri",
+      "@type": "rdf:Property",
+      "skos:definition": "The IPFS URI, if any, of the resource in question.",
+      "rdfs:label": "ipfsUri",
+      "schema:domainIncludes": {
+        "@id": "dcterms:Resource"
+      },
+      "schema:rangeIncludes": {
+        "@id": "schema:Text"
+      },
+      "rdfs:comment": "If no value is provided for this property, the content of the resource should be provided via the data:resourceContent property, or the location of the content should be provided via the data:resourceContentLocation property."
+    },
+    {
+      "@id": "indimp:resourceIpfsUriShape",
+      "@type": "sh:NodeShape",
+      "sh:targetClass": {
+        "@id": "dcterms:Resource"
+      },
+      "sh:property": {
+        "sh:path": {
+          "@id": "indimp:resourceIpfsUri"
+        },
+        "sh:datatype": {
+          "@id": "xsd:string"
+        },
+        "sh:pattern": "^(ipfs|ipns)://[a-zA-Z0-9]+(?:/[a-zA-Z0-9/._-]*)?$",
+        "sh:minCount": 1,
+        "sh:maxCount": 1
+      }
+    },
+    {
+      "@id": "indimp:documentSchema",
+      "@type": "rdf:Property",
+      "skos:definition": "A schema specifying the format and structure that a document must adhere to.",
+      "rdfs:label": "documentSchema",
+      "schema:domainIncludes": {
+        "@id": "data:Document"
+      },
+      "schema:rangeIncludes": {
+        "@id": "indimp:DocumentSchema"
+      }
+    },
+    {
+      "@id": "indimp:isEncrypted",
+      "@type": "rdf:Property",
+      "skos:definition": "Indicates whether the content of a resource is encrypted.",
+      "rdfs:label": "isEncrypted",
+      "schema:domainIncludes": {
+        "@id": "dcterms:Resource"
+      },
+      "schema:rangeIncludes": {
+        "@id": "schema:Boolean"
+      }
+    },
+    {
+      "@id": "indimp:documentAuthor",
+      "@type": "rdf:Property",
+      "skos:definition": "Identifies an entity responsible for the creation of the content of a document.",
+      "rdfs:label": "author",
+      "schema:domainIncludes": {
+        "@id": "data:Document"
+      },
+      "schema:rangeIncludes": [
+        {
+          "@id": "indimp:PlatformUser"
+        },
+        {
+          "@id": "aiao:Agent"
+        },
+        {
+          "@id": "schema:Text"
+        }
+      ]
+    },
+    {
+      "@id": "indimp:authProof",
+      "@type": "rdf:Property",
+      "skos:definition": "The mechanism by which the authenticity of a document can be proven.",
+      "rdfs:label": "authProof",
+      "schema:domainIncludes": {
+        "@id": "data:Document"
+      },
+      "schema:rangeIncludes": {
+        "@id": "schema:Text"
+      }
+    },
+    {
+      "@id": "indimp:authProofShape",
+      "@type": "sh:NodeShape",
+      "sh:targetClass": {
+        "@id": "data:Document"
+      },
+      "sh:property": {
+        "sh:path": {
+          "@id": "indimp:authProof"
+        },
+        "sh:datatype": {
+          "@id": "xsd:string"
+        },
+        "sh:in": [
+          "NONE",
+          "EDDSA_SIGNATURE",
+          "RSA_SIGNATURE",
+          "VC"
+        ],
+        "sh:minCount": 1,
+        "sh:maxCount": 1
+      }
+    },
+    {
+      "@id": "indimp:Workflow",
+      "@type": "rdfs:Class",
+      "skos:definition": "A set of actions, processes or procedures that must be executed or performed to achieve a specific outcome.",
+      "rdfs:label": "Workflow",
+      "rdfs:subClassOf": {
+        "@id": "aiao:Control"
+      }
+    },
+    {
+      "@id": "indimp:WorkflowStep",
+      "@type": "rdfs:Class",
+      "skos:definition": "A single action, process or procedure of a workflow.",
+      "rdfs:label": "WorkflowStep",
+      "rdfs:subClassOf": {
+        "@id": "aiao:Control"
+      }
+    },
+    {
+      "@id": "indimp:hasWorkflowStep",
+      "@type": "rdf:Property",
+      "skos:definition": "A specific step of a workflow.",
+      "rdfs:label": "Workflow",
+      "schema:domainIncludes": {
+        "@id": "indimp:Workflow"
+      },
+      "schema:rangeIncludes": {
+        "@id": "indimp:WorkflowStep"
+      }
+    },
+    {
+      "@id": "indimp:WorkflowDocumentSubmission",
+      "@type": "rdfs:Class",
+      "skos:definition": "Records the submission of a document to a specific step of a specific workflow for a specific workflow subject.",
+      "rdfs:label": "WorkflowDocumentSubmission",
+      "rdfs:subClassOf": {
+        "@id": "owl:Thing"
+      }
+    },
+    {
+      "@id": "indimp:workflow",
+      "@type": "rdf:Property",
+      "skos:definition": "The workflow to which a document was submitted, or in the context of which an agent-activity relation exists.",
+      "rdfs:label": "workflow",
+      "schema:domainIncludes": [
+        {
+          "@id": "indimp:WorkflowDocumentSubmission"
+        },
+        {
+          "@id": "indimp:AgentActivityWorkflowRelation"
+        }
+      ],
+      "schema:rangeIncludes": {
+        "@id": "indimp:Workflow"
+      }
+    },
+    {
+      "@id": "indimp:workflowStep",
+      "@type": "rdf:Property",
+      "skos:definition": "The workflow step to which the document was submitted.",
+      "rdfs:label": "workflowStep",
+      "schema:domainIncludes": {
+        "@id": "indimp:WorkflowDocumentSubmission"
+      },
+      "schema:rangeIncludes": {
+        "@id": "indimp:WorkflowStep"
+      }
+    },
+    {
+      "@id": "indimp:workflowSubject",
+      "@type": "rdf:Property",
+      "skos:definition": "The subject of the workflow in respect of which or whom the document was submitted.",
+      "rdfs:label": "workflowSubject",
+      "schema:domainIncludes": {
+        "@id": "indimp:WorkflowDocumentSubmission"
+      },
+      "schema:rangeIncludes": {
+        "@id": "owl:Thing"
+      }
+    },
+    {
+      "@id": "indimp:workflowDocumentSubmittedBy",
+      "@type": "rdf:Property",
+      "skos:definition": "The platform user who submitted the document.",
+      "rdfs:label": "submittedBy",
+      "schema:domainIncludes": {
+        "@id": "indimp:WorkflowDocumentSubmission"
+      },
+      "schema:rangeIncludes": {
+        "@id": "indimp:PlatformUser"
+      }
+    },
+    {
+      "@id": "indimp:workflowDocumentSubmissionHederaMessageId",
+      "@type": "rdf:Property",
+      "skos:definition": "The ID of the Hedera consensus message that recorded the moment that a document was submitted to a specific workflow.",
+      "rdfs:label": "hederaMessageId",
+      "schema:domainIncludes": {
+        "@id": "indimp:WorkflowDocumentSubmission"
+      },
+      "schema:rangeIncludes": {
+        "@id": "hed:HederaMessageId"
+      }
+    },
+    {
+      "@id": "indimp:hasWorkflowSubmission",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Provides details about a workflow submission for the document in question.",
+      "rdfs:label": "hasWorkflowSubmission",
+      "schema:domainIncludes": {
+        "@id": "data:Document"
+      },
+      "schema:rangeIncludes": {
+        "@id": "indimp:WorkflowDocumentSubmission"
+      }
+    },
+    {
+      "@id": "indimp:PlatformUserXhederaAccountLink",
+      "@type": "rdfs:Class",
+      "skos:definition": "Links an Independent Impact platform user to a Hedera account.",
+      "rdfs:label": "PlatformUserXhederaAccountLink",
+      "rdfs:subClassOf": {
+        "@id": "owl:Thing"
+      }
+    },
+    {
+      "@id": "indimp:hederaAccount",
+      "@type": "rdf:Property",
+      "skos:definition": "A Hedera account.",
+      "rdfs:label": "hederaAccount",
+      "schema:domainIncludes": {
+        "@id": "indimp:PlatformUserXhederaAccountLink"
+      },
+      "schema:rangeIncludes": {
+        "@id": "hed:HederaAccount"
+      }
+    },
+    {
+      "@id": "indimp:platformUserXhederaAccountLinkDescription",
+      "@type": "rdf:Property",
+      "skos:definition": "A description of the link between a platform user and a Hedera account, e.g., 'PRIMARY_ACCOUNT'.",
+      "rdfs:label": "description",
+      "schema:domainIncludes": {
+        "@id": "indimp:PlatformUserXhederaAccountLink"
+      },
+      "schema:rangeIncludes": {
+        "@id": "schema:Text"
+      }
+    },
+    {
+      "@id": "indimp:isLinkedToHederaAccount",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Links an Independent Impact platform user to a Hedera account.",
+      "rdfs:label": "isLinkedToHederaAccount",
+      "schema:domainIncludes": {
+        "@id": "indimp:PlatformUser"
+      },
+      "schema:rangeIncludes": {
+        "@id": "indimp:PlatformUserXhederaAccountLink"
+      }
+    },
+    {
+      "@id": "indimp:EntityXhederaTopicLink",
+      "@type": "rdfs:Class",
+      "skos:definition": "Links an Independent Impact entity (user, project, methodology, etc.) to a Hedera topic.",
+      "rdfs:label": "EntityXhederaTopicLink",
+      "rdfs:subClassOf": {
+        "@id": "owl:Thing"
+      }
+    },
+    {
+      "@id": "indimp:hederaTopic",
+      "@type": "rdf:Property",
+      "skos:definition": "A Hedera topic.",
+      "rdfs:label": "hederaTopic",
+      "schema:domainIncludes": {
+        "@id": "indimp:EntityXhederaTopicLink"
+      },
+      "schema:rangeIncludes": {
+        "@id": "hed:HederaTopic"
+      }
+    },
+    {
+      "@id": "indimp:entityXhederaTopicLinkDescription",
+      "@type": "rdf:Property",
+      "skos:definition": "A description of the link between an entity and a Hedera topic, e.g., 'DID'.",
+      "rdfs:label": "description",
+      "schema:domainIncludes": {
+        "@id": "indimp:EntityXhederaTopicLink"
+      },
+      "schema:rangeIncludes": {
+        "@id": "schema:Text"
+      }
+    },
+    {
+      "@id": "indimp:isLinkedToHederaTopic",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Links an Independent Impact entity to a Hedera topic.",
+      "rdfs:label": "isLinkedToHederaTopic",
+      "schema:domainIncludes": {
+        "@id": "indimp:PlatformUser"
+      },
+      "schema:rangeIncludes": {
+        "@id": "indimp:EntityXhederaTopicLink"
+      }
+    },
+    {
+      "@id": "indimp:isReviewOf",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Identifies a document as a review of another document.",
+      "rdfs:label": "isReviewOf",
+      "schema:domainIncludes": {
+        "@id": "data:Document"
+      },
+      "schema:rangeIncludes": {
+        "@id": "data:Document"
+      }
+    },
+    {
+      "@id": "indimp:AgentActivityWorkflowRelation",
+      "@type": "rdfs:Class",
+      "skos:definition": "Relates an agent to an activity in the context of a specific workflow.",
+      "rdfs:label": "AgentActivityWorkflowRelation",
+      "rdfs:subClassOf": {
+        "@id": "aiao:AgentActivityRelation"
+      }
+    },
+    {
+      "@id": "indimp:dateCreated",
+      "@type": "rdf:Property",
+      "skos:definition": "The timestamp at which a project was created on the Independent Impact platform.",
+      "rdfs:label": "dateCreated",
+      "schema:domainIncludes": {
+        "@id": "aiao:Project"
+      },
+      "schema:rangeIncludes": {
+        "@id": "schema:DateTime"
+      }
+    },
+    {
+      "@id": "indimp:createdBy",
+      "@type": "rdf:Property",
+      "skos:definition": "The Independent Impact platform user who created the project.",
+      "rdfs:label": "createdBy",
+      "schema:domainIncludes": {
+        "@id": "aiao:Project"
+      },
+      "schema:rangeIncludes": {
+        "@id": "indimp:PlatformUser"
+      }
+    },
+    {
+      "@id": "indimp:title",
+      "@type": "rdf:Property",
+      "skos:definition": "A human-friendly title for an activity or project.",
+      "rdfs:label": "title",
+      "schema:domainIncludes": [
+        {
+          "@id": "aiao:Activity"
+        },
+        {
+          "@id": "aiao:Project"
+        }
+      ],
+      "schema:rangeIncludes": {
+        "@id": "schema:Text"
+      }
+    },
+    {
+      "@id": "indimp:DocumentSchema",
+      "@type": "rdfs:Class",
+      "skos:definition": "A specification for the structure and data types of a document.",
+      "rdfs:label": "DocumentSchema",
+      "rdfs:subClassOf": [
+        {
+          "@id": "dcterms:Resource"
+        },
+        {
+          "@id": "aiao:Control"
+        }
+      ]
+    },
+    {
+      "@id": "indimp:purpose",
+      "@type": "rdf:Property",
+      "skos:definition": "The purpose of a project or an activity.",
+      "rdfs:label": "purpose",
+      "schema:domainIncludes": [
+        {
+          "@id": "aiao:Activity"
+        },
+        {
+          "@id": "aiao:Project"
+        }
+      ],
+      "schema:rangeIncludes": {
+        "@id": "aiao:Control"
+      }
+    },
+    {
+      "@id": "indimp:locationShapefile",
+      "@type": "rdf:Property",
+      "skos:definition": "The shapefile for a physical location of a project or an activity.",
+      "rdfs:label": "locationShapefile",
+      "schema:domainIncludes": [
+        {
+          "@id": "aiao:Activity"
+        },
+        {
+          "@id": "aiao:Project"
+        }
+      ],
+      "schema:rangeIncludes": {
+        "@id": "dcterms:Resource"
+      }
+    },
+    {
+      "@id": "indimp:TechnologyOrMeasure",
+      "@type": "rdfs:Class",
+      "skos:definition": "A measure or a type of technology that will be implemented or employed by a project or an activity to achieve its purpose.",
+      "rdfs:label": "TechnologyOrMeasure",
+      "rdfs:subClassOf": {
+        "@id": "aiao:Instrument"
+      }
+    },
+    {
+      "@id": "indimp:additionalInfo",
+      "@type": "rdf:Property",
+      "skos:definition": "Any additional information about a thing.",
+      "rdfs:label": "additionalInfo",
+      "schema:domainIncludes": {
+        "@id": "owl:Thing"
+      },
+      "schema:rangeIncludes": {
+        "@id": "schema:Text"
+      }
+    },
+    {
+      "@id": "indimp:currentAgeInYears",
+      "@type": "rdf:Property",
+      "skos:definition": "The age of a thing, given in years, at the time of reporting.",
+      "rdfs:label": "currentAgeInYears",
+      "schema:domainIncludes": {
+        "@id": "owl:Thing"
+      },
+      "schema:rangeIncludes": {
+        "@id": "schema:Number"
+      }
+    },
+    {
+      "@id": "indimp:estimatedLifespanInYears",
+      "@type": "rdf:Property",
+      "skos:definition": "The estimated lifespan of a thing, given in years.",
+      "rdfs:label": "estimatedLifespanInYears",
+      "schema:domainIncludes": {
+        "@id": "owl:Thing"
+      },
+      "schema:rangeIncludes": {
+        "@id": "schema:Number"
+      }
+    },
+    {
+      "@id": "indimp:techMeasType",
+      "@type": "rdf:Property",
+      "skos:definition": "The subtype of a technology or measure to be implemented or employed by a project or an activity.",
+      "rdfs:label": "techMeasType",
+      "schema:domainIncludes": {
+        "@id": "indimp:TechnologyOrMeasure"
+      },
+      "schema:rangeIncludes": {
+        "@id": "schema:Text"
+      }
+    },
+    {
+      "@id": "indimp:techMeasTypeShape",
+      "@type": "sh:NodeShape",
+      "sh:targetClass": {
+        "@id": "indimp:TechnologyOrMeasure"
+      },
+      "sh:property": {
+        "sh:path": {
+          "@id": "indimp:techMeasType"
+        },
+        "sh:datatype": {
+          "@id": "xsd:string"
+        },
+        "sh:in": [
+          "FACILITY",
+          "SYSTEM",
+          "EQUIPMENT",
+          "OTHER"
+        ],
+        "sh:minCount": 1,
+        "sh:maxCount": 1
+      }
+    },
+    {
+      "@id": "indimp:technologyOrMeasure",
+      "@type": "rdf:Property",
+      "skos:definition": "The technology or measures to be implemented or employed by a project or an activity.",
+      "rdfs:label": "technologyOrMeasure",
+      "schema:domainIncludes": [
+        {
+          "@id": "aiao:Activity"
+        },
+        {
+          "@id": "aiao:Project"
+        }
+      ],
+      "schema:rangeIncludes": {
+        "@id": "indimp:TechnologyOrMeasure"
+      }
+    },
+    {
+      "@id": "indimp:projectHistory",
+      "@type": "rdf:Property",
+      "skos:definition": "The history of the project and its activities.",
+      "rdfs:label": "projectHistory",
+      "schema:domainIncludes": {
+        "@id": "aiao:Project"
+      },
+      "schema:rangeIncludes": {
+        "@id": "schema:Text"
+      }
+    },
+    {
+      "@id": "indimp:impactIntentionality",
+      "@type": "rdf:Property",
+      "skos:definition": "Indicates whether an of a project or activity was an intentional or an unintentional impact.",
+      "rdfs:label": "intentionality",
+      "schema:domainIncludes": {
+        "@id": "impact:Impact"
+      },
+      "schema:rangeIncludes": {
+        "@id": "schema:Text"
+      },
+      "rfds:comment": "An unintentional impact (whether beneficial or adverse) is typically referred to as 'leakage'."
+    },
+    {
+      "@id": "indimp:impactIntentionalityShape",
+      "@type": "sh:NodeShape",
+      "sh:targetClass": {
+        "@id": "impact:Impact"
+      },
+      "sh:property": {
+        "sh:path": {
+          "@id": "indimp:impactIntentionality"
+        },
+        "sh:datatype": {
+          "@id": "xsd:string"
+        },
+        "sh:in": [
+          "INTENTIONAL",
+          "UNINTENTIONAL"
+        ],
+        "sh:minCount": 1,
+        "sh:maxCount": 1
+      }
+    },
+    {
+      "@id": "indimp:beneficialOrAdverse",
+      "@type": "rdf:Property",
+      "skos:definition": "Indicates whether an impact of a project or an activity (whether intended or unintended) was an environmentally beneficial or environmentally adverse impact.",
+      "rdfs:label": "beneficialOrAdverse",
+      "schema:domainIncludes": {
+        "@id": "impact:Impact"
+      },
+      "schema:rangeIncludes": {
+        "@id": "schema:Text"
+      }
+    },
+    {
+      "@id": "indimp:beneficialOrAdverseShape",
+      "@type": "sh:NodeShape",
+      "sh:targetClass": {
+        "@id": "impact:Impact"
+      },
+      "sh:property": {
+        "sh:path": {
+          "@id": "indimp:beneficialOrAdverse"
+        },
+        "sh:datatype": {
+          "@id": "xsd:string"
+        },
+        "sh:in": [
+          "BENEFICIAL",
+          "ADVERSE"
+        ],
+        "sh:minCount": 1,
+        "sh:maxCount": 1
+      }
+    },
+    {
+      "@id": "indimp:monitored",
+      "@type": "rdf:Property",
+      "skos:definition": "Indicates whether an impact of a project or an activity will be monitored or not.",
+      "rdfs:label": "monitored",
+      "schema:domainIncludes": {
+        "@id": "impact:Impact"
+      },
+      "schema:rangeIncludes": {
+        "@id": "schema:Text"
+      }
+    },
+    {
+      "@id": "indimp:monitoredShape",
+      "@type": "sh:NodeShape",
+      "sh:targetClass": {
+        "@id": "impact:Impact"
+      },
+      "sh:property": {
+        "sh:path": {
+          "@id": "indimp:monitored"
+        },
+        "sh:datatype": {
+          "@id": "xsd:string"
+        },
+        "sh:in": [
+          "YES",
+          "NO"
+        ],
+        "sh:minCount": 1,
+        "sh:maxCount": 1
+      }
+    },
+    {
+      "@id": "indimp:notMonitoredJustification",
+      "@type": "rdf:Property",
+      "skos:definition": "Provides a justification for why an impact of a project or activity will not be monitored.",
+      "rdfs:label": "notMonitoredJustification",
+      "schema:domainIncludes": {
+        "@id": "impact:Impact"
+      },
+      "schema:rangeIncludes": {
+        "@id": "schema:Text"
+      }
+    },
+    {
+      "@id": "indimp:unitOfMeasure",
+      "@type": "rdf:Property",
+      "skos:definition": "A unit of measure.",
+      "rdfs:label": "unitOfMeasure",
+      "schema:domainIncludes": {
+        "@id": "impact:Indicator"
+      },
+      "schema:rangeIncludes": {
+        "@id": "schema:Text"
+      }
+    },
+    {
+      "@id": "indimp:monitoringPeriod",
+      "@type": "rdf:Property",
+      "skos:definition": "A monitoring period for an impact.",
+      "rdfs:label": "monitoringPeriod",
+      "schema:domainIncludes": {
+        "@id": "impact:Impact"
+      },
+      "schema:rangeIncludes": {
+        "@id": "time:Interval"
+      }
+    },
+    {
+      "@id": "indimp:CreditingPeriod",
+      "@type": "rdfs:Class",
+      "skos:definition": "A crediting period for a monitored impact.",
+      "rdfs:label": "CreditingPeriod",
+      "rdfs:subClassOf": {
+        "@id": "time:Interval"
+      }
+    },
+    {
+      "@id": "indimp:creditingPeriodIsRenewable",
+      "@type": "rdf:Property",
+      "skos:definition": "Indicates whether a crediting period is renewable or not.",
+      "rdfs:label": "creditingPeriodIsRenewable",
+      "schema:domainIncludes": {
+        "@id": "indimp:CreditingPeriod"
+      },
+      "schema:rangeIncludes": {
+        "@id": "schema:Boolean"
+      }
+    },
+    {
+      "@id": "indimp:creditingPeriod",
+      "@type": "rdf:Property",
+      "skos:definition": "A crediting period for an impact. Must cover at least one monitoring period.",
+      "rdfs:label": "creditingPeriod",
+      "schema:domainIncludes": {
+        "@id": "impact:Impact"
+      },
+      "schema:rangeIncludes": {
+        "@id": "indimp:CreditingPeriod"
+      }
+    },
+    {
+      "@id": "indimp:additionalityJustification",
+      "@type": "rdf:Property",
+      "skos:definition": "A justification for why an impact is considered additional.",
+      "rdfs:label": "additionalityJustification",
+      "schema:domainIncludes": {
+        "@id": "impact:Impact"
+      },
+      "schema:rangeIncludes": {
+        "@id": "schema:Text"
+      }
+    },
+    {
+      "@id": "indimp:Methodology",
+      "@type": "rdfs:Class",
+      "skos:definition": "'A system of methods used in a particular area of study or activity.' (Oxford Languages)",
+      "rdfs:label": "Methodology",
+      "rdfs:subClassOf": {
+        "@id": "aiao:Control"
+      }
+    },
+    {
+      "@id": "indimp:monitoringReport",
+      "@type": "rdf:Property",
+      "skos:definition": "A monitoring report for a project or an activity.",
+      "rdfs:label": "monitoringReport",
+      "schema:domainIncludes": [
+        {
+          "@id": "aiao:Activity"
+        },
+        {
+          "@id": "aiao:Project"
+        }
+      ],
+      "schema:rangeIncludes": {
+        "@id": "data:Document"
+      }
+    }
+  ]
+}
