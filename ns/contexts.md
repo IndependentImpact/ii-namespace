@@ -18,12 +18,12 @@ This document explains _how_ the platform uses each ontology, which entity types
 
 II reuses classes/properties from existing vocabularies where possible rather than defining new ones, and encodes constraints and workflows using standard semantic-web tooling:
 
-- **DC Terms** (`dcterms:`) — provenance/versioning (`dcterms:source`, `dcterms:isVersionOf`, `dcterms:isReplacedBy`, `dcterms:replaces`, `dcterms:isFormatOf`), plus titles, descriptions, and access metadata throughout the catalog. Catalogued as `#vocab-dcterms`.
+- **DC Terms** (`dcterms:`) — provenance/versioning (`dcterms:source`, `dcterms:isVersionOf`, `dcterms:isReplacedBy`, `dcterms:replaces`, `dcterms:isFormatOf`), plus titles, descriptions, and access metadata throughout the estate's catalogued artifacts (registry entry pending the `contexts.jsonld` rebuild, #21).
 - **Schema.org** — candidate reusable vocabulary for standard-specific classes/properties, before a standard defines new ones of its own; also `schema:domainIncludes`/`schema:rangeIncludes` in `/vocab`.
 - **SKOS** — concept schemes for a standard's own vocabulary (enables broader/narrower comparison across standards); also underlies the SDG Indicators vocabulary and the platform's own config schemes in [`/config`](./config).
 - **RDF** (`rdf:`) — base reification (`rdf:Statement`, `rdf:subject`, `rdf:predicate`, `rdf:object`) that claims (`claimont:Claim`) are built on top of.
-- **SHACL** — not a domain ontology, but the constraint/shape language used throughout to validate instances of the above; the platform's own shapes live in [`/shapes`](./shapes).
-- **VANN, DCAT, PROV-O, W3C VCDM, OWL-Time** — annotation/catalog/provenance/credential/temporal vocabularies used where the artifacts need them (the catalog itself is DCAT + VANN; `iiplat:AgentLicense` subclasses `vcdm:VerifiableCredential`; `iiplat:CreditingPeriod` subclasses `time:Interval`).
+- **SHACL** — not a domain ontology, but the constraint/shape language used throughout to validate instances of the above; the platform's own shapes live in ii-backend (`assets/storage-service/shacl-shapes/`) since PR #19.
+- **VANN, DCAT, PROV-O, W3C VCDM, OWL-Time** — annotation/catalog/provenance/credential/temporal vocabularies used where the artifacts need them (the bootstrap catalog in ii-backend is DCAT + VANN; `iiplat:AgentLicense` subclasses `vcdm:VerifiableCredential`; `iiplat:CreditingPeriod` subclasses `time:Interval`).
 
 `LegalRuleML` is flagged as a candidate for future use (e.g. for standards' rule-based provisions) but is not yet integrated.
 

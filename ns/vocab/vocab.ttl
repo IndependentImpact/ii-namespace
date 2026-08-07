@@ -15,13 +15,14 @@
 @prefix iiplat:  <https://independentimpact.org/ns/vocab/> .
 
 # II Platform vocabulary — carried forward from the legacy /ns/ JSON-LD
-# (reference/ns.jsonld) per ADR-0001: every legacy class and property is
-# preserved; terms whose retention is in question carry a skos:editorialNote
-# beginning "Carry-forward review:" and are removed (or kept) per-term during
-# review, not silently. The legacy inline SHACL shapes are converted
-# separately in ns/shapes/ (platform-only, ADR-0002). Enumerated allowed
+# (reference/ns.jsonld) per the carry-forward decision (PRs #3/#9): every
+# legacy class and property is preserved; terms whose retention is in
+# question carry a skos:editorialNote beginning "Carry-forward review:" and
+# are removed (or kept) per-term during review, not silently. The legacy
+# inline SHACL shapes were converted separately and live in ii-backend
+# (assets/storage-service/shacl-shapes/, moved by PR #19). Enumerated allowed
 # values (the legacy shapes' sh:in lists) are SKOS concept schemes in
-# ns/config/ (ADR-0002 §3, issue #7).
+# ns/config/ (issue #7).
 #
 # Open question (flagged for review): the legacy terms lived at
 # https://independentimpact.org/ns/ with prefix indimp:. This file places
@@ -30,7 +31,7 @@
 
 <https://independentimpact.org/ns/vocab/> a owl:Ontology ;
     dcterms:title "II Platform vocabulary" ;
-    dcterms:description "Classes and properties the Independent Impact Platform needs that no domain ontology covers. Carries forward the legacy /ns/ vocabulary in governed Turtle form (ADR-0001)." ;
+    dcterms:description "Classes and properties the Independent Impact Platform needs that no domain ontology covers. Carries forward the legacy /ns/ vocabulary in governed Turtle form." ;
     dcterms:source <https://github.com/IndependentImpact/ii-namespace> ;
     vann:preferredNamespacePrefix "iiplat" ;
     vann:preferredNamespaceUri "https://independentimpact.org/ns/vocab/" .
@@ -231,7 +232,7 @@ iiplat:hederaAccount a rdf:Property ;
     skos:definition "A Hedera account." ;
     schema:domainIncludes iiplat:PlatformUserXhederaAccountLink ;
     schema:rangeIncludes hgo:Account ;
-    skos:editorialNote "Range updated from legacy hed:HederaAccount to hgo:Account per ADR-0002 §2 (issue #6; mapping in ns/alignments/hed-hashgraph.ttl)." .
+    skos:editorialNote "Range updated from legacy hed:HederaAccount to hgo:Account per the hed: dissolution (issue #6; mapping in ns/alignments/hed-hashgraph.ttl)." .
 
 iiplat:platformUserXhederaAccountLinkDescription a rdf:Property ;
     rdfs:label "description" ;
@@ -255,7 +256,7 @@ iiplat:hederaTopic a rdf:Property ;
     skos:definition "A Hedera topic." ;
     schema:domainIncludes iiplat:EntityXhederaTopicLink ;
     schema:rangeIncludes hgo:ConsensusTopic ;
-    skos:editorialNote "Range updated from legacy hed:HederaTopic to hgo:ConsensusTopic per ADR-0002 §2 (issue #6; mapping in ns/alignments/hed-hashgraph.ttl)." .
+    skos:editorialNote "Range updated from legacy hed:HederaTopic to hgo:ConsensusTopic per the hed: dissolution (issue #6; mapping in ns/alignments/hed-hashgraph.ttl)." .
 
 iiplat:entityXhederaTopicLinkDescription a rdf:Property ;
     rdfs:label "description" ;
