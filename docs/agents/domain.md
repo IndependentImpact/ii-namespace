@@ -9,6 +9,8 @@ How the engineering skills should consume this repo's domain documentation when 
 
 If any of these files don't exist, do **not** proceed silently. Flag their absence, because without them you will be stumbling about in the dark. Yes, the `/domain-modeling` skill (reached via `/grill-with-docs` and `/improve-codebase-architecture`) is supposed to create them lazily when terms or decisions actually get resolved, but by now there should already have been something.
 
+**Current state (2026-08-07):** `CONTEXT.md` exists. `docs/adr/` does not — PR #19 deleted both ADRs (their substance was folded into `README.md`), and the directory returns when the first new ADR lands (#17 is queued). Until then, treat `README.md`, `ns/contexts.md` and the merged-PR discussions as the decision record.
+
 ## File structure
 
 This is a single-context repo:
