@@ -1,6 +1,6 @@
 # Reference: deployed /ns/ source snapshots
 
-Verbatim snapshots of the JSON-LD documents deployed at `https://independentimpact.org/ns/`, taken 2026-07-29 (server reported `Last-Modified: Sun, 28 Sep 2025 19:29:59 GMT`). The deployed files are the only copy of this source; these snapshots are the **input for converting the vocabulary to governed Turtle form** — see [ADR-0001](../docs/adr/0001-rebuild-legacy-ns-vocabulary-in-governed-form.md). Once carry-forward into `ns/` is complete, this directory is deleted (git history preserves it).
+Verbatim snapshots of the JSON-LD documents deployed at `https://independentimpact.org/ns/`, taken 2026-07-29 (server reported `Last-Modified: Sun, 28 Sep 2025 19:29:59 GMT`). The source these files were generated from lived in a personal repo with no releases or tags and **diverged** from what is served (the deployed snapshot is 28 nodes richer), so the deployed documents are the authoritative carry-forward input — the **input for converting the vocabulary to governed Turtle form** (the carry-forward decision, PRs #3/#9). Once carry-forward into `ns/` is complete, this directory is deleted (git history preserves it) — see issue #8.
 
 | File | Source URL | Size |
 | --- | --- | --- |

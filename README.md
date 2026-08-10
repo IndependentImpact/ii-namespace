@@ -1,26 +1,27 @@
 # ii-namespace
 
-This repo documents II's **entire semantic estate** (see the repo README): (a) it hosts II's own namespace — terms, classes and properties defined only where no domain ontology covers them — and (b) it identifies every external ontology and vocabulary II uses and how II applies it. II's namespace builds on and extends those external ontologies; it is not separate from them.
+This repo documents II's **entire semantic estate**: (a) it hosts II's own namespace — terms, classes and properties defined only where no domain ontology covers them — and (b) it identifies every external ontology and vocabulary II uses and how II applies it. II's namespace builds on and extends those external ontologies; it is not separate from them.
 
 Home of the semantic web artifacts the Independent Impact Platform itself needs to operate, published under `https://independentimpact.org/ns/`.
 
 ## Repository contents
 
-| Path                               | Artifact                                                                                                     |
-| ---------------------------------- | ------------------------------------------------------------------------------------------------------------ | --- |
-| [`ns/contexts.jsonld`](ns/contexts.jsonld) | JSON-LD list of all the contexts that users will encounter in II's Fluree ledger |
-| [`ns/contexts.md`](ns/contexts.md) | Prose companion to `ns/contexts.jsonld` |
-| [`ns/vocab/`](ns/vocab/)           | Platform vocabulary: classes and properties no domain ontology covers                                        |
-| [`ns/config/`](ns/config/)         | SKOS config concept schemes (controlled enumerations for UI and validation)                                  |     |
-| [`ns/alignments/`](ns/alignments/) | Mappings between platform terms and external vocabularies                                                    |
-| [`reference/`](reference/)         | Snapshots of the deployed legacy `/ns/` source, pending conversion to Turtle                                 |
-| [`docs/adr/`](docs/adr/)           | Architectural decision records for this repo                                                                 |
+| Path                                       | Artifact                                                                          |
+| ------------------------------------------ | --------------------------------------------------------------------------------- |
+| [`CONTEXT.md`](CONTEXT.md)                 | Glossary of this repo's domain language                                            |
+| [`ns/contexts.jsonld`](ns/contexts.jsonld) | JSON-LD list of all the contexts that users will encounter in II's Fluree ledger   |
+| [`ns/contexts.md`](ns/contexts.md)         | Prose companion to `ns/contexts.jsonld`                                            |
+| [`ns/vocab/`](ns/vocab/)                   | Platform vocabulary: classes and properties no domain ontology covers              |
+| [`ns/config/`](ns/config/)                 | SKOS config concept schemes (controlled enumerations for validation)        |
+| [`ns/alignments/`](ns/alignments/)         | Mappings between platform terms and external vocabularies                          |
+| [`reference/`](reference/)                 | Snapshots of the deployed legacy `/ns/` source; carry-forward input, deleted once conversion completes (#8) |
+| [`docs/agents/`](docs/agents/)             | How agent skills use this repo (issue tracker, triage labels, domain docs)         |
 
 ### Content details
 
 ### `ns/contexts.jsonld` — JSON-LD list of all the contexts that users will encounter in II's Fluree ledger
 
-Currently empty. TODO.
+Currently a stub. It is being rebuilt as the public external-ontology registry that `ns/catalog.ttl` provided before PR #19 moved the catalog to ii-backend — see issue #21.
 
 ### `ns/contexts.md`
 
@@ -40,11 +41,11 @@ One SKOS concept scheme per file: the controlled enumerations that populate UI e
 
 ### `reference`
 
-The JSON-LD currently served at `https://independentimpact.org/ns/` predates this repo's governance: it has no source under version control, no versioning, and mixes vocabulary with inline SHACL. Its terms **carry forward** — they are being converted to governed Turtle here, pruned per-term. The [`reference/`](reference/) snapshots are the conversion input.
+The JSON-LD currently served at `https://independentimpact.org/ns/` predates this repo's governance: its source lived in a personal repo with no releases or tags and diverged from what is served (a 28-node gap, one unparseable file), and it mixes vocabulary with inline SHACL. Its terms **carry forward** — they are being converted to governed Turtle here, pruned per-term. The [`reference/`](reference/) snapshots are the conversion input.
 
 ## Explicitly excluded from this repo
 
-- Standard-specific extensions and SHACL — per-standard, private graphs (BE ADR-0005, BE ts-0009)
+- Standard-specific extensions and SHACL — owned per-standard and hosted outside this repo (BE ts-0009; ownership model under amendment in BE #91)
 - Instance data of any kind — lives in Fluree, arrives via HCS
 
 ## Related

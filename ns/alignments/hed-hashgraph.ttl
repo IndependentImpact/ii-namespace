@@ -6,11 +6,12 @@
 
 # Alignment of the legacy hed: namespace (reference/ns-hedera.jsonld) to the
 # Hashgraph Ontology ("Bhash Core Ontology", https://hashgraphontology.xyz/,
-# core + consensus modules, v0.1.0-dev). Existing data may # reference the 
+# core + consensus modules, v0.1.0-dev). Existing data may reference the
 # hed: URIs; these mappings are the interpretation key.
 #
 # The Hashgraph Ontology declares no vann:preferredNamespacePrefix; "hgo" is
-# II's local convention, recorded in ns/catalog.ttl.
+# II's local convention, recorded in the bootstrap catalog (ii-backend
+# assets/storage-service/catalog.ttl since PR #19).
 
 <https://independentimpact.org/ns/alignments/hed-hashgraph> a owl:Ontology ;
     dcterms:title "Legacy hed: to Hashgraph Ontology alignment" ;
@@ -27,10 +28,10 @@ hed:HederaTopic skos:exactMatch hgo:ConsensusTopic ;
 ## Properties with direct counterparts
 
 hed:hederaAccountId skos:closeMatch hgo:hasAccountId ;
-    skos:editorialNote "Legacy range was the string-class hed:HederaAccountId; hgo:hasAccountId is a datatype property ranging xsd:string. Format constraint carried as a shape in ns/shapes/hedera-id-shapes.ttl." .
+    skos:editorialNote "Legacy range was the string-class hed:HederaAccountId; hgo:hasAccountId is a datatype property ranging xsd:string. Format constraint carried as a shape in ii-backend assets/storage-service/shacl-shapes/hedera-shapes.ttl (moved by PR #19)." .
 
 hed:hederaTopicId skos:closeMatch hgo:hasTopicId ;
-    skos:editorialNote "Legacy range was the string-class hed:HederaTopicId; hgo:hasTopicId is a datatype property ranging xsd:string. Format constraint carried as a shape in ns/shapes/hedera-id-shapes.ttl." .
+    skos:editorialNote "Legacy range was the string-class hed:HederaTopicId; hgo:hasTopicId is a datatype property ranging xsd:string. Format constraint carried as a shape in ii-backend assets/storage-service/shacl-shapes/hedera-shapes.ttl (moved by PR #19)." .
 
 ## Terms without direct counterparts — disposition
 
