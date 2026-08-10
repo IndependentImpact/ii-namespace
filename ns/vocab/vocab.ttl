@@ -90,7 +90,7 @@ iiplat:resourceHederaMessageId a rdf:Property ;
     skos:definition "The ID of the Hedera consensus message that recorded the moment of publication, listing or receipt (by the II platform) of the resource in question." ;
     schema:domainIncludes dcterms:Resource ;
     schema:rangeIncludes hgo:TopicMessage ;
-    skos:editorialNote "Carry-forward review: re-ranged from the legacy string-class hed:HederaMessageId to hgo:TopicMessage (issue #6, see ns/alignments/hed-hashgraph.ttl); alternative is a plain string ID." .
+    skos:editorialNote "Re-ranged from the legacy string-class hed:HederaMessageId to hgo:TopicMessage (issue #6, see ns/alignments/hed-hashgraph.ttl). Settled 2026-08-10: Bhash #65 made hgo:hasConsensusTimestamp a native <seconds>.<nanoseconds> string, so the message entity is keyed by exactly the string the legacy class held." .
 
 iiplat:resourceIpfsUri a rdf:Property ;
     rdfs:label "ipfsUri" ;
@@ -191,7 +191,7 @@ iiplat:workflowDocumentSubmissionHederaMessageId a rdf:Property ;
     skos:definition "The ID of the Hedera consensus message that recorded the moment that a document was submitted to a specific workflow." ;
     schema:domainIncludes iiplat:WorkflowDocumentSubmission ;
     schema:rangeIncludes hgo:TopicMessage ;
-    skos:editorialNote "Carry-forward review: re-ranged from the legacy string-class hed:HederaMessageId to hgo:TopicMessage (issue #6, see ns/alignments/hed-hashgraph.ttl); alternative is a plain string ID." .
+    skos:editorialNote "Re-ranged from the legacy string-class hed:HederaMessageId to hgo:TopicMessage (issue #6, see ns/alignments/hed-hashgraph.ttl). Settled 2026-08-10: Bhash #65 made hgo:hasConsensusTimestamp a native <seconds>.<nanoseconds> string, so the message entity is keyed by exactly the string the legacy class held." .
 
 iiplat:hasWorkflowSubmission a rdf:Property ;
     rdfs:label "hasWorkflowSubmission" ;

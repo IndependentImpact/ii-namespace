@@ -36,7 +36,7 @@ hed:hederaTopicId skos:closeMatch hgo:hasTopicId ;
 ## Terms without direct counterparts — disposition
 
 hed:HederaMessageId skos:closeMatch hgo:TopicMessage ;
-    skos:editorialNote "Inexact by design: the legacy class is the timestamp-string ID of a consensus message (pattern ^[0-9]{4,}\\.[0-9]{4,}$); the Hashgraph Ontology models the message itself (hgo:TopicMessage) identified by hgo:hasConsensusTimestamp (xsd:dateTime) and hgo:hasSequenceNumber. Platform properties formerly ranging on hed:HederaMessageId now range on hgo:TopicMessage — review this re-ranging (issue #6): the alternative is keeping a plain string ID." .
+    skos:editorialNote "Inexact by design: the legacy class is the timestamp-string ID of a consensus message (loose legacy pattern ^[0-9]{4,}\\.[0-9]{4,}$); the Hashgraph Ontology models the message itself (hgo:TopicMessage), identified by hgo:hasConsensusTimestamp — since Bhash #65 an xsd:string in the native <seconds>.<nanoseconds> form (nine zero-padded nanosecond digits) — and hgo:hasSequenceNumber. The re-ranging of platform properties from hed:HederaMessageId to hgo:TopicMessage (issue #6) is settled: the message entity is keyed by exactly the string the legacy class held." .
 
 hed:HederaAccountId skos:editorialNote "Not carried: string-class subsumed by hgo:hasAccountId values; format enforced by shape instead." .
 
