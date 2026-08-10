@@ -33,7 +33,7 @@ Classes and properties the platform needs that no domain ontology covers, e.g., 
 
 ### `ns/config/` — config concept schemes (SKOS)
 
-One SKOS concept scheme per file: the controlled enumerations that populate UI elements and constrain values. Candidate schemes (settled per scheme during rebuild): user types, license scopes, workflow states, document/schema types, review outcomes, monitoring flags (impact intentionality, beneficial/adverse, monitored). This is the config-schemes entry of the ontology layer (formerly the "Config Concept Schemes" row of ts-0006).
+One SKOS concept scheme per file: the controlled enumerations that constrain values. Candidate schemes (settled per scheme during rebuild): workflow states, document/schema types, review outcomes, monitoring flags (impact intentionality, beneficial/adverse, monitored). This is the config-schemes entry of the ontology layer (formerly the "Config Concept Schemes" row of ts-0006).
 
 ### `ns/alignments/` — mappings to external vocabularies
 
