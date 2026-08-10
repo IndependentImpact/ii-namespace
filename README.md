@@ -12,7 +12,7 @@ Home of the semantic web artifacts the Independent Impact Platform itself needs 
 | [`ns/contexts.jsonld`](ns/contexts.jsonld) | JSON-LD list of all the contexts that users will encounter in II's Fluree ledger   |
 | [`ns/contexts.md`](ns/contexts.md)         | Prose companion to `ns/contexts.jsonld`                                            |
 | [`ns/vocab/`](ns/vocab/)                   | Platform vocabulary: classes and properties no domain ontology covers              |
-| [`ns/config/`](ns/config/)                 | SKOS config concept schemes (controlled enumerations for UI and validation)        |
+| [`ns/config/`](ns/config/)                 | SKOS config concept schemes (controlled enumerations for validation)        |
 | [`ns/alignments/`](ns/alignments/)         | Mappings between platform terms and external vocabularies                          |
 | [`reference/`](reference/)                 | Snapshots of the deployed legacy `/ns/` source; carry-forward input, deleted once conversion completes (#8) |
 | [`docs/agents/`](docs/agents/)             | How agent skills use this repo (issue tracker, triage labels, domain docs)         |

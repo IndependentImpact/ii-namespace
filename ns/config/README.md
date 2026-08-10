@@ -1,6 +1,6 @@
 # ns/config/ — config concept schemes
 
-One SKOS concept scheme per file: the controlled enumerations that populate UI elements and constrain values. Concepts carry `skos:notation` with the wire value (the string legacy data used) and `skos:prefLabel` for display. Scheme-membership validation lives in ii-backend since PR #19 (`assets/storage-service/shacl-shapes/platform-shapes.ttl`); nothing in this repo validates the schemes — CI parses them for well-formedness only.
+One SKOS concept scheme per file: the controlled enumerations that constrain values. Concepts carry `skos:notation` with the wire value (the string legacy data used) and `skos:prefLabel` for display. Scheme-membership validation lives in ii-backend since PR #19 (`assets/storage-service/shacl-shapes/platform-shapes.ttl`); nothing in this repo validates the schemes — CI parses them for well-formedness only.
 
 | Scheme                                                         | Source                                                                             |
 | -------------------------------------------------------------- | ---------------------------------------------------------------------------------- |

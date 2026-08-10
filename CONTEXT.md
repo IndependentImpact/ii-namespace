@@ -27,7 +27,7 @@ Classes and properties the Independent Impact Platform needs that no domain onto
 _Avoid_: II ontology, platform schema
 
 **Config scheme**:
-A SKOS concept scheme, one per file, holding a controlled enumeration that populates UI elements and constrains values. Renaming to "enums" is under discussion (#15).
+A SKOS concept scheme, one per file, holding a controlled enumeration that constrains values. Renaming to "enums" is under discussion (#15).
 _Avoid_: lookup table, code list
 
 **Wire value**:
@@ -68,13 +68,11 @@ The four ontologies aiao, claimont, impactont and infocomm taken together; the p
 The external ontology modelling Hedera entities (accounts, topics, consensus messages). `hgo` is II's local prefix convention; the ontology declares none itself.
 _Avoid_: hadeda (a misheard review term — resolved to mean this ontology), hed: (the dissolved legacy namespace)
 
-**Consensus timestamp**:
-A Hedera instant in the mirror-node string form `<seconds>.<nanoseconds>` (nine zero-padded nanosecond digits). A string, not an `xsd:dateTime` (#23).
 
 ### Standards
 
 **Standard**:
-A methodology standard hosted on the II platform (e.g. NIAS, TPTS), owned by its standards body, with its own ontology and SHACL that extend the platform's and domain ontologies.
+An impact accounting standard hosted on the II platform (e.g. NIAS, CCTS), owned by its standards body, with its own ontology and SHACL that extend the platform's and domain ontologies.
 
 **Standards body**:
 The organization that owns and publishes a standard — the tenant of the platform.
