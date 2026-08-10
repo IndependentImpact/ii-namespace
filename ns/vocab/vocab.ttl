@@ -45,13 +45,6 @@ iiplat:PlatformUser a rdfs:Class ;
     skos:definition "An actor on the Independent Impact platform." ;
     rdfs:subClassOf owl:Thing .
 
-iiplat:userType a rdf:Property ;
-    rdfs:label "userType" ;
-    skos:definition "The Independent Impact platform user type." ;
-    schema:domainIncludes iiplat:PlatformUser ;
-    schema:rangeIncludes schema:Text ;
-    skos:editorialNote "Allowed values are the ns/config/user-types.ttl concept scheme (issue #7)." .
-
 iiplat:dateRegistered a rdf:Property ;
     rdfs:label "dateRegistered" ;
     skos:definition "The timestamp at which a user account was created on the Independent Impact platform." ;
@@ -74,13 +67,6 @@ iiplat:licenseNumber a rdf:Property ;
     skos:definition "A unique string identifier for an Independent Impact Agent License." ;
     schema:domainIncludes iiplat:AgentLicense ;
     schema:rangeIncludes schema:Text .
-
-iiplat:licenseScope a rdf:Property ;
-    rdfs:label "licenseScope" ;
-    skos:definition "The label of the set of actions that the holder of the license is allowed to perform on the Independent Impact platform." ;
-    schema:domainIncludes iiplat:AgentLicense ;
-    schema:rangeIncludes schema:Text ;
-    skos:editorialNote "Allowed values are the ns/config/license-scopes.ttl concept scheme (issue #7)." .
 
 iiplat:hasAgentLicense a rdf:Property ;
     rdfs:label "hasAgentLicense" ;
