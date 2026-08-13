@@ -68,6 +68,8 @@ The four ontologies aiao, claimont, impactont and infocomm taken together; the p
 The external ontology modelling Hedera entities (accounts, topics, consensus messages). `hgo` is II's local prefix convention; the ontology declares none itself.
 _Avoid_: hadeda (a misheard review term — resolved to mean this ontology), hed: (the dissolved legacy namespace)
 
+**Consensus timestamp**:
+A Hedera instant in the native mirror-node string form `<seconds>.<nanoseconds>` — Unix epoch seconds, then exactly nine zero-padded nanosecond digits (e.g. `1586567700.453054000`). A string, not an `xsd:dateTime`, per `hgo:hasConsensusTimestamp` as published (Bhash #65).
 
 ### Standards
 
