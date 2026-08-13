@@ -49,13 +49,15 @@ iiplat:dateRegistered a rdf:Property ;
     rdfs:label "dateRegistered" ;
     skos:definition "The timestamp at which a user account was created on the Independent Impact platform." ;
     schema:domainIncludes iiplat:PlatformUser ;
-    schema:rangeIncludes schema:DateTime .
+    schema:rangeIncludes schema:DateTime ;
+    skos:editorialNote "Removal decided (#38, 2026-08-10, ADR-0021 authoritative): the creation message's consensus timestamp is the only authoritative creation time, read never stored; a user also has two candidate instants (DID create vs user-node INSERT), neither named — any derived replacement must pick one." .
 
 iiplat:didDocument a rdf:Property ;
     rdfs:label "didDocument" ;
     skos:definition "The document providing a platform user's DID and its associated properties." ;
     schema:domainIncludes iiplat:PlatformUser ;
-    schema:rangeIncludes data:Document .
+    schema:rangeIncludes data:Document ;
+    skos:editorialNote "Carry-forward review (#12 audit, 2026-08-10): contradicts BE ts-0014 — the DID document is never stored, only derived by topic replay; ranging data:Document implies exactly the stored representation ts-0014 forbids. The stored fact is the DID string on the user node, for which no iiplat term exists. Removal + iiplat:did addition decided in #38 (ts-0014 to be followed)." .
 
 iiplat:AgentLicense a rdfs:Class ;
     rdfs:label "AgentLicense" ;
@@ -160,7 +162,8 @@ iiplat:hasWorkflowStep a rdf:Property ;
 iiplat:WorkflowDocumentSubmission a rdfs:Class ;
     rdfs:label "WorkflowDocumentSubmission" ;
     skos:definition "Records the submission of a document to a specific step of a specific workflow for a specific workflow subject." ;
-    rdfs:subClassOf owl:Thing .
+    rdfs:subClassOf owl:Thing ;
+    skos:editorialNote "Carry-forward review (#12 audit, 2026-08-10): model divergence — BE ts-0003 has no document-submission concept; step completion is graph-state evaluation (smart function / SHACL over infotrips) on a branch per workflow instance, with subject and submitter implicit. Note iiplat:workflowSubject has a live CCTS consumer." .
 
 iiplat:workflow a rdf:Property ;
     rdfs:label "workflow" ;
@@ -202,7 +205,8 @@ iiplat:hasWorkflowSubmission a rdf:Property ;
 iiplat:AgentActivityWorkflowRelation a rdfs:Class ;
     rdfs:label "AgentActivityWorkflowRelation" ;
     skos:definition "Relates an agent to an activity in the context of a specific workflow." ;
-    rdfs:subClassOf aiao:AgentActivityRelation .
+    rdfs:subClassOf aiao:AgentActivityRelation ;
+    skos:editorialNote "Carry-forward review (#12 audit, 2026-08-10): no referent in BE ts-0003 or any other spec, and no consumer found in the estate." .
 
 ## ---------------------------------------------------------------------------
 ## Hedera links
@@ -211,7 +215,8 @@ iiplat:AgentActivityWorkflowRelation a rdfs:Class ;
 iiplat:PlatformUserXhederaAccountLink a rdfs:Class ;
     rdfs:label "PlatformUserXhederaAccountLink" ;
     skos:definition "Links an Independent Impact platform user to a Hedera account." ;
-    rdfs:subClassOf owl:Thing .
+    rdfs:subClassOf owl:Thing ;
+    skos:editorialNote "Removal decided (#38, 2026-08-10): legacy relational link-table artifact. Replaced by reusing hgo:hasAccount / hgo:isAccountOf (Bhash core.ttl — 'an account under its control'), with iiplat:PlatformUser aligned to hgo:Actor. BE ts-0015 confirms no per-binding labels such as 'PRIMARY_ACCOUNT' exist." .
 
 iiplat:hederaAccount a rdf:Property ;
     rdfs:label "hederaAccount" ;
@@ -235,7 +240,8 @@ iiplat:isLinkedToHederaAccount a rdf:Property ;
 iiplat:EntityXhederaTopicLink a rdfs:Class ;
     rdfs:label "EntityXhederaTopicLink" ;
     skos:definition "Links an Independent Impact entity (user, project, methodology, etc.) to a Hedera topic." ;
-    rdfs:subClassOf owl:Thing .
+    rdfs:subClassOf owl:Thing ;
+    skos:editorialNote "Removal decided (#38, 2026-08-10): legacy relational link-table artifact. Replaced by a plain object property (hgo has none with a fitting domain — hgo:hasTopic is ConsensusService-scoped — so either an upstream Bhash generalisation or a new iiplat:hasTopic), with topic class/purpose on the topic subject per BE ADR-0010/0021; ts-0017's topic_class enumeration (II_SPECIFIC | DID) is a candidate ns/config/ scheme." .
 
 iiplat:hederaTopic a rdf:Property ;
     rdfs:label "hederaTopic" ;
@@ -266,7 +272,7 @@ iiplat:dateCreated a rdf:Property ;
     skos:definition "The timestamp at which a project was created on the Independent Impact platform." ;
     schema:domainIncludes aiao:Project ;
     schema:rangeIncludes schema:DateTime ;
-    skos:editorialNote "Carry-forward review: possibly duplicates dcterms:created / schema:dateCreated." .
+    skos:editorialNote "Carry-forward review: possibly duplicates dcterms:created / schema:dateCreated. Strengthened by #12 audit (2026-08-10): BE ADR-0021 makes the creation message's consensus timestamp the only authoritative creation time, read never stored." .
 
 iiplat:createdBy a rdf:Property ;
     rdfs:label "createdBy" ;
@@ -279,7 +285,7 @@ iiplat:title a rdf:Property ;
     skos:definition "A human-friendly title for an activity or project." ;
     schema:domainIncludes aiao:Activity , aiao:Project ;
     schema:rangeIncludes schema:Text ;
-    skos:editorialNote "Carry-forward review: possibly duplicates dcterms:title / schema:name." .
+    skos:editorialNote "Prune-rescued (#12 audit, 2026-08-10): live consumers in ii-test-standard (test fixtures, contribution-design shapes) — renaming or removing now breaks CCTS. The dcterms:title/schema:name duplication stands but is no longer freely resolvable." .
 
 iiplat:purpose a rdf:Property ;
     rdfs:label "purpose" ;
@@ -315,7 +321,8 @@ iiplat:projectHistory a rdf:Property ;
     rdfs:label "projectHistory" ;
     skos:definition "The history of the project and its activities." ;
     schema:domainIncludes aiao:Project ;
-    schema:rangeIncludes schema:Text .
+    schema:rangeIncludes schema:Text ;
+    skos:editorialNote "Carry-forward review (#12 audit, 2026-08-10): no referent in any BE spec and no consumer found in the estate." .
 
 iiplat:monitoringReport a rdf:Property ;
     rdfs:label "monitoringReport" ;
