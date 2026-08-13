@@ -237,31 +237,12 @@ iiplat:isLinkedToHederaAccount a rdf:Property ;
     schema:domainIncludes iiplat:PlatformUser ;
     schema:rangeIncludes iiplat:PlatformUserXhederaAccountLink .
 
-iiplat:EntityXhederaTopicLink a rdfs:Class ;
-    rdfs:label "EntityXhederaTopicLink" ;
-    skos:definition "Links an Independent Impact entity (user, project, methodology, etc.) to a Hedera topic." ;
-    rdfs:subClassOf owl:Thing ;
-    skos:editorialNote "Removal decided (#38, 2026-08-10): legacy relational link-table artifact. Replaced by a plain object property (hgo has none with a fitting domain — hgo:hasTopic is ConsensusService-scoped — so either an upstream Bhash generalisation or a new iiplat:hasTopic), with topic class/purpose on the topic subject per BE ADR-0010/0021; ts-0017's topic_class enumeration (II_SPECIFIC | DID) is a candidate ns/config/ scheme." .
-
-iiplat:hederaTopic a rdf:Property ;
-    rdfs:label "hederaTopic" ;
-    skos:definition "A Hedera topic." ;
-    schema:domainIncludes iiplat:EntityXhederaTopicLink ;
+iiplat:hasTopic a rdf:Property ;
+    rdfs:label "hasTopic" ;
+    skos:definition "A Hedera consensus topic belonging to an Independent Impact entity." ;
+    schema:domainIncludes iiplat:PlatformUser , aiao:Project , iiplat:Methodology ;
     schema:rangeIncludes hgo:ConsensusTopic ;
-    skos:editorialNote "Range updated from legacy hed:HederaTopic to hgo:ConsensusTopic per the hed: dissolution (issue #6; mapping in ns/alignments/hed-hashgraph.ttl)." .
-
-iiplat:entityXhederaTopicLinkDescription a rdf:Property ;
-    rdfs:label "description" ;
-    skos:definition "A description of the link between an entity and a Hedera topic, e.g., 'DID'." ;
-    schema:domainIncludes iiplat:EntityXhederaTopicLink ;
-    schema:rangeIncludes schema:Text .
-
-iiplat:isLinkedToHederaTopic a rdf:Property ;
-    rdfs:label "isLinkedToHederaTopic" ;
-    rdfs:comment "Links an Independent Impact entity to a Hedera topic." ;
-    schema:domainIncludes iiplat:PlatformUser ;
-    schema:rangeIncludes iiplat:EntityXhederaTopicLink ;
-    skos:editorialNote "Carry-forward review: the class links any entity to a topic, but the legacy domain is only PlatformUser — domain likely too narrow." .
+    skos:editorialNote "Minted by #40 (2026-08-13) as the direct entity→topic predicate replacing the removed EntityXhederaTopicLink cluster. Not a reuse of hgo:hasTopic, whose domain is hgo:ConsensusService (the network service that holds the topic), not the entity the topic belongs to; a domain generalisation upstream in Bhash would supersede this term, but Bhash is v0.1.0-dev and the predicate is needed now (BE ts-0016 Flow B (g)). The domain is the non-constraining schema:domainIncludes union carried from the legacy class's 'user, project, methodology, etc.' and is extensible without breaking existing data — it deliberately does not repeat the legacy isLinkedToHederaTopic's PlatformUser-only domain, flagged too narrow in the #12 audit. A topic's class and purpose live on the topic subject, not here (BE ADR-0010/0021); ts-0017's topic_class enumeration (II_SPECIFIC | DID) is tracked as #42." .
 
 ## ---------------------------------------------------------------------------
 ## Projects and activities
