@@ -442,4 +442,6 @@ iiplat:iiSystemComponent a rdf:Property ;
     skos:editorialNote "No schema:domainIncludes is asserted: the subject is a Fluree policy identity, for which no iiplat class exists, and the write gate tests only for the presence of a value rather than for the subject's type. Values are constrained by ts-0020 — lowercase ASCII letters, digits and internal hyphens, at most 64 characters — and by its closed registry. A SHACL shape enforcing both would take effect at commit, since ts-0024 exempts no graph from the platform shapes; none exists yet." .
 
 iiplat:FlureeLedgerBaseline a rdfs:Class ;
-    rdfs:label "FlureeLedgerBaseline" ;
+    skos:editorialNote "II-internal. Defined here to reserve the name in the namespace." ;
+    rdfs:label "FlureeLedgerBaseline" .
+
