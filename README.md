@@ -52,3 +52,4 @@ The JSON-LD currently served at `https://independentimpact.org/ns/` predates thi
 
 - [IndependentImpact/ii-backend](https://github.com/IndependentImpact/ii-backend) — the platform backend whose ADRs and tech-specs source the artifacts here
 - [IndependentImpact/skos_SDG](https://github.com/IndependentImpact/skos_SDG) — SDG indicators vocabulary and Indicator Ontology (pending w3id publication)
+
