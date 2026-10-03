@@ -54,7 +54,7 @@ A verbatim copy of a deployed legacy JSON-LD document, kept purely as carry-forw
 _Avoid_: archive, backup
 
 **Prune candidate**:
-A carried-forward term whose retention is in question, flagged with a `skos:editorialNote` beginning "Carry-forward review:" and removed or kept per-term during review — never silently.
+A carried-forward term whose retention is in question, flagged with a `skos:editorialNote` beginning "Carry-forward review:" and removed or kept per-term during review — never silently. Once reviewed, the note records which way it went: **"Removal decided (#N, …)"** for a term awaiting its removal commit, **"Prune-rescued (…)"** for one kept because consumers were found. Terms are never marked `owl:deprecated`; the decision is the note plus the commit that acts on it.
 
 **Term-URI continuity**:
 The open decision on whether platform terms keep the legacy base URI (`…/ns/` + `indimp:`) or move to `…/ns/vocab/` + `iiplat:`. Existing ledger data references the legacy URIs.
