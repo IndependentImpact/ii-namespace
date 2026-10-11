@@ -137,12 +137,11 @@ iibount:mustCompleteBeforeTask a rdf:Property ;
     schema:domainIncludes iibount:BountyTask ;
     schema:rangeIncludes iibount:BountyTask .
 
-## iibount:requiredDeliverableType a rdf:Property ;
-##     rdfs:label "requiredDeliverableType" ;
-##     skos:definition "The class of which a task's one deliverable must be an instance." ;
-##     schema:domainIncludes iibount:BountyTask ;
-##    schema:rangeIncludes rdfs:Class .
-## << This should rather point to a SHACL shape or a SPARQL function.
+iibount:requiredDeliverableType a rdf:Property ;
+    rdfs:label "requiredDeliverableType" ;
+    skos:definition "The class of which a task's one deliverable must be an instance." ;
+    schema:domainIncludes iibount:BountyTask ;
+    schema:rangeIncludes rdfs:Class .
 
 iibount:hasReward a rdf:Property ;
     rdfs:label "hasReward" ;
