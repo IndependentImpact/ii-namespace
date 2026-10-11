@@ -93,14 +93,14 @@ iibount:disputeResolutionPhaseStart a rdf:Property ;
 
 iibount:hasSeat a rdf:Property ;
     rdfs:label "hasSeat" ;
-    skos:definition "Relates a bounty to one of the seats on its mission team." ;
+    skos:definition "Relates a bounty to one of its seats." ;
     schema:domainIncludes iibount:Bounty ;
     schema:rangeIncludes iibount:BountySeat .
 
 iibount:hasTask a rdf:Property ;
     rdfs:label "hasTask" ;
-    skos:definition "Relates a bounty seat to one of its tasks." ;
-    schema:domainIncludes iibount:BountySeat ;
+    skos:definition "Relates a bounty to one of its tasks." ;
+    schema:domainIncludes iibount:Bounty ;
     schema:rangeIncludes iibount:BountyTask .
 
 iibount:unspentFundsReturnAccount a rdf:Property ;
@@ -118,6 +118,12 @@ iibount:taskId a rdf:Property ;
     skos:definition "The identifier of a task, unique among the tasks of its bounty, by which the bounty's seats and sequence constraints refer to it and its smart contract records it." ;
     schema:domainIncludes iibount:BountyTask ;
     schema:rangeIncludes schema:Text .
+
+iibount:isAssignedToSeat a rdf:Property ;
+    rdfs:label "isAssignedToSeat" ;
+    skos:definition "Relates a bounty task to one of the seats of the bounty." ;
+    schema:domainIncludes iibount:BountyTask ;
+    schema:rangeIncludes iibount:BountySeat .
 
 iibount:mustCompleteAfterTask a rdf:Property ;
     rdfs:label "mustCompleteAfterTask" ;
