@@ -48,7 +48,7 @@ iibount:BountyTask a rdfs:Class ;
 
 iibount:BountySeat a rdfs:Class ;
     rdfs:label "BountySeat" ;
-    skos:definition "A position on a bounty's mission team that an agent claims, holding one or more of the bounty's tasks. A seat is either an expert seat, which delivers its tasks, or a training seat, through which an agent who does not yet meet the tasks' reputation requirements submits training deliverables." ;
+    skos:definition "A position on a bounty's mission team that an agent claims. A seat is either an expert seat, to which one or more of the bounty's tasks are assigned and which delivers them, or a training seat, which mirrors one expert seat and through which an agent who does not yet meet that seat's tasks' reputation requirements submits training deliverables for them." ;
     rdfs:subClassOf owl:Thing .
 
 iibount:BountyReward a rdfs:Class ;
@@ -64,8 +64,8 @@ iibount:bountyType a rdf:Property ;
     rdfs:label "bountyType" ;
     skos:definition "The type of a bounty, which determines the rules it follows beyond those common to every bounty." ;
     schema:domainIncludes iibount:Bounty ;
-    schema:rangeIncludes schema:Text ;
-    skos:editorialNote "Allowed values (ii-backend TS-0001): REVIEW, DISPUTE_ADJUDICATION. A candidate for a config scheme in ns/config/, carrying these as skos:notation." .
+    schema:rangeIncludes skos:Concept ;
+    skos:editorialNote "Values are concepts of the config scheme <https://independentimpact.org/ns/config/bounty-types> (ns/config/bounty-types.ttl)." .
 
 iibount:teamAssemblyPhaseStart a rdf:Property ;
     rdfs:label "teamAssemblyPhaseStart" ;
@@ -115,7 +115,7 @@ iibount:unspentFundsReturnAccount a rdf:Property ;
 
 iibount:isAssignedToSeat a rdf:Property ;
     rdfs:label "isAssignedToSeat" ;
-    skos:definition "Relates a bounty task to one of the seats of the bounty." ;
+    skos:definition "Relates a bounty task to the expert seat of the same bounty that delivers it. A task is assigned to exactly one seat, and only to an expert seat." ;
     schema:domainIncludes iibount:BountyTask ;
     schema:rangeIncludes iibount:BountySeat .
 
@@ -151,8 +151,14 @@ iibount:seatType a rdf:Property ;
     rdfs:label "seatType" ;
     skos:definition "The type of a bounty seat: an expert seat, which delivers its tasks, or a training seat, through which an agent who does not yet meet the tasks' reputation requirements submits training deliverables." ;
     schema:domainIncludes iibount:BountySeat ;
-    schema:rangeIncludes schema:Text ;
-    skos:editorialNote "Allowed values (ii-backend TS-0001): EXPERT, TRAINING. A candidate for a config scheme in ns/config/, carrying these as skos:notation." .
+    schema:rangeIncludes skos:Concept ;
+    skos:editorialNote "Values are concepts of the config scheme <https://independentimpact.org/ns/config/bounty-seat-types> (ns/config/bounty-seat-types.ttl)." .
+
+iibount:mirrorsExpertSeat a rdf:Property ;
+    rdfs:label "mirrorsExpertSeat" ;
+    skos:definition "Relates a training seat to the expert seat of the same bounty that it corresponds to: the trainee performs, as training, the tasks assigned to that expert seat. A training seat mirrors exactly one expert seat, and an expert seat is mirrored by at most one training seat." ;
+    schema:domainIncludes iibount:BountySeat ;
+    schema:rangeIncludes iibount:BountySeat .
 
 ## ---------------------------------------------------------------------------
 ## Reward properties
