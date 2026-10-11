@@ -113,12 +113,6 @@ iibount:unspentFundsReturnAccount a rdf:Property ;
 ## Task properties
 ## ---------------------------------------------------------------------------
 
-iibount:taskId a rdf:Property ;
-    rdfs:label "taskId" ;
-    skos:definition "The identifier of a task, unique among the tasks of its bounty, by which the bounty's seats and sequence constraints refer to it and its smart contract records it." ;
-    schema:domainIncludes iibount:BountyTask ;
-    schema:rangeIncludes schema:Text .
-
 iibount:isAssignedToSeat a rdf:Property ;
     rdfs:label "isAssignedToSeat" ;
     skos:definition "Relates a bounty task to one of the seats of the bounty." ;
@@ -152,12 +146,6 @@ iibount:hasReward a rdf:Property ;
 ## ---------------------------------------------------------------------------
 ## Seat properties
 ## ---------------------------------------------------------------------------
-
-iibount:seatNumber a rdf:Property ;
-    rdfs:label "seatNumber" ;
-    skos:definition "The number of a seat, unique among the seats of its bounty." ;
-    schema:domainIncludes iibount:BountySeat ;
-    schema:rangeIncludes schema:Integer .
 
 iibount:seatType a rdf:Property ;
     rdfs:label "seatType" ;
