@@ -468,12 +468,45 @@ iiplat:ConductStandard a rdfs:Class ;
     skos:definition "A formally defined set of principles, rules, and behavioural expectations that governs the actions and interactions of agents within a specified context. It establishes clear criteria for distinguishing acceptable conduct from unacceptable conduct, and provides a consistent basis for the assessment, enforcement, and, where applicable, incentivisation or sanctioning of behaviour." ;
     rdfs:subClassOf iiplat:Standard . 
 
-iiplat:Bounty a rdfs:Class ;
-    rdfs:label "Bounty" ;
-    skos:definition "A reward (typically monetary) locked up in a smart contract that can be claimed by completing one or more specific tasks." ;
-    rdfs:subClassOf aiao:Control .
-
-iiplat:isBoundToDid a rdf:Property ;
-    rdfs:label "isBoundToDid" ;
+iiplat:isBoundToDID a rdf:Property ;
+    rdfs:label "isBoundToDID" ;
     skos:definition "Identifies the DID to which the Hedera account in question is 'bound'." ;
     schema:domainIncludes hgo:Account .
+
+iiplat:hasPaymentsAccount a rdf:Property ;
+    rdfs:label "hasPaymentsAccount" ;
+    skos:definition "Identifies a Hedera account that a user uses for habitual payments." ;
+    schema:domainIncludes iiplat:PlatformUser ;
+    schema:rangeIncludes hgo:Account .
+
+iiplat:hasReputationAccount a rdf:Property ;
+    rdfs:label "hasReputationAccount" ;
+    skos:definition "Identifies a Hedera account that a user has dedicated to reputation tokens and (payments for DID operations)." ;
+    schema:domainIncludes iiplat:PlatformUser ;
+    schema:rangeIncludes hgo:Account .    
+
+## ---------------------------------------------------------------------------
+## Reputation requirements
+## ---------------------------------------------------------------------------
+
+iiplat:ReputationRequirement a rdfs:Class ;
+    rdfs:label "ReputationRequirement" ;
+    skos:definition "A minimum balance of one reputation token (Conduct Reputation or a Knowledge and Skills Reputation domain) that an agent must hold to perform a certain action, such as claiming a seat on a bounty." ;
+    rdfs:subClassOf owl:Thing .
+
+iiplat:hasReputationRequirement a rdf:Property ;
+    rdfs:label "hasReputationRequirement" ;
+    skos:definition "Relates an action, such as claiming a bounty seat, to a reputation requirement that an agent must meet to perform it." ;
+    schema:rangeIncludes iiplat:ReputationRequirement .
+
+iiplat:reputationToken a rdf:Property ;
+    rdfs:label "reputationToken" ;
+    skos:definition "The Hedera token whose balance a reputation requirement constrains: the token of a Conduct Reputation or Knowledge and Skills Reputation domain." ;
+    schema:domainIncludes iiplat:ReputationRequirement ;
+    schema:rangeIncludes hgo:Token .
+
+iiplat:minimumReputationScore a rdf:Property ;
+    rdfs:label "minimumReputationScore" ;
+    skos:definition "The minimum balance of its reputation token that a reputation requirement demands." ;
+    schema:domainIncludes iiplat:ReputationRequirement ;
+    schema:rangeIncludes schema:Integer .

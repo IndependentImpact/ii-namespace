@@ -1,0 +1,178 @@
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl:     <http://www.w3.org/2002/07/owl#> .
+@prefix skos:    <http://www.w3.org/2004/02/skos/core#> .
+@prefix schema:  <https://schema.org/> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix vann:    <http://purl.org/vocab/vann/> .
+@prefix vcdm:    <https://www.w3.org/ns/credentials/v2/> .
+@prefix aiao:    <https://w3id.org/aiao/> .
+@prefix impact:  <https://w3id.org/impactont/> .
+@prefix data:    <https://jellyfiiish.xyz/ns/> .
+@prefix hgo:     <https://hashgraphontology.xyz/core/> .
+@prefix time:    <http://www.w3.org/2006/time#> .
+@prefix iiplat:  <https://independentimpact.org/ns/vocab/> .
+@prefix iibount:  <https://independentimpact.org/ns/vocab/bounties/> .
+
+# II platform classes and properties specific to bounties.
+#
+# A bounty's definition — the semantic payload POST /bounties/create takes —
+# is specified normatively in ii-backend's TS-0001 "Bounty definition", and
+# validated by the platform shapes in ii-backend
+# (assets/storage-service/shacl-shapes/platform-shapes.ttl, iishpbount:*).
+# This file defines the terms; cardinalities and allowed values live there.
+# Reputation requirements are not bounty-specific and are defined in
+# vocab.ttl (iiplat:ReputationRequirement and its properties).
+
+<https://independentimpact.org/ns/vocab/bounties/> a owl:Ontology ;
+    dcterms:title "II Bounty vocabulary" ;
+    dcterms:description "Classes and properties for bounties on the Independent Impact Platform: their tasks, seats and rewards, and the phases they run through." ;
+    dcterms:source <https://github.com/IndependentImpact/ii-namespace> ;
+    vann:preferredNamespacePrefix "iibount" ;
+    vann:preferredNamespaceUri "https://independentimpact.org/ns/vocab/bounties/" .
+
+## ---------------------------------------------------------------------------
+## Classes
+## ---------------------------------------------------------------------------
+
+iibount:Bounty a rdfs:Class ;
+    rdfs:label "Bounty" ;
+    skos:definition "A reward (typically monetary) locked up in a smart contract that can be claimed by completing one or more specific tasks." ;
+    rdfs:subClassOf aiao:Control .
+
+iibount:BountyTask a rdfs:Class ;
+    rdfs:label "BountyTask" ;
+    skos:definition "A unit of work within a bounty that requires exactly one deliverable, with the reputation requirements an agent must meet to perform it and the rewards paid for completing it." ;
+    rdfs:subClassOf owl:Thing .
+
+iibount:BountySeat a rdfs:Class ;
+    rdfs:label "BountySeat" ;
+    skos:definition "A position on a bounty's mission team that an agent claims, holding one or more of the bounty's tasks. A seat is either an expert seat, which delivers its tasks, or a training seat, through which an agent who does not yet meet the tasks' reputation requirements submits training deliverables." ;
+    rdfs:subClassOf owl:Thing .
+
+iibount:BountyReward a rdfs:Class ;
+    rdfs:label "BountyReward" ;
+    skos:definition "An amount of one digital asset — HBAR or a Hedera token, such as a reputation token — paid for completing a bounty task." ;
+    rdfs:subClassOf owl:Thing .
+
+## ---------------------------------------------------------------------------
+## Bounty properties
+## ---------------------------------------------------------------------------
+
+iibount:bountyType a rdf:Property ;
+    rdfs:label "bountyType" ;
+    skos:definition "The type of a bounty, which determines the rules it follows beyond those common to every bounty." ;
+    schema:domainIncludes iibount:Bounty ;
+    schema:rangeIncludes schema:Text ;
+    skos:editorialNote "Allowed values (ii-backend TS-0001): REVIEW, DISPUTE_ADJUDICATION. A candidate for a config scheme in ns/config/, carrying these as skos:notation." .
+
+iibount:teamAssemblyPhaseStart a rdf:Property ;
+    rdfs:label "teamAssemblyPhaseStart" ;
+    skos:definition "The instant at which a bounty's team assembly phase starts: the first of its four consecutive phases, during which agents claim seats." ;
+    schema:domainIncludes iibount:Bounty ;
+    schema:rangeIncludes time:Instant .
+
+iibount:missionPhaseStart a rdf:Property ;
+    rdfs:label "missionPhaseStart" ;
+    skos:definition "The instant at which a bounty's mission phase starts, during which seat holders perform their tasks and submit their deliverables. It is also the end of the team assembly phase." ;
+    schema:domainIncludes iibount:Bounty ;
+    schema:rangeIncludes time:Instant .
+
+iibount:disputeLodgingPhaseStart a rdf:Property ;
+    rdfs:label "disputeLodgingPhaseStart" ;
+    skos:definition "The instant at which a bounty's dispute lodging phase starts, during which the parties to the bounty may dispute submitted deliverables. It is also the end of the mission phase." ;
+    schema:domainIncludes iibount:Bounty ;
+    schema:rangeIncludes time:Instant .
+
+iibount:disputeResolutionPhaseStart a rdf:Property ;
+    rdfs:label "disputeResolutionPhaseStart" ;
+    skos:definition "The instant at which a bounty's dispute resolution phase starts, during which lodged disputes are adjudicated. It is also the end of the dispute lodging phase; the dispute resolution phase itself is open-ended." ;
+    schema:domainIncludes iibount:Bounty ;
+    schema:rangeIncludes time:Instant .
+
+iibount:hasSeat a rdf:Property ;
+    rdfs:label "hasSeat" ;
+    skos:definition "Relates a bounty to one of the seats on its mission team." ;
+    schema:domainIncludes iibount:Bounty ;
+    schema:rangeIncludes iibount:BountySeat .
+
+iibount:hasTask a rdf:Property ;
+    rdfs:label "hasTask" ;
+    skos:definition "Relates a bounty seat to one of its tasks." ;
+    schema:domainIncludes iibount:BountySeat ;
+    schema:rangeIncludes iibount:BountyTask .
+
+iibount:unspentFundsReturnAccount a rdf:Property ;
+    rdfs:label "unspentFundsReturnAccount" ;
+    skos:definition "The Hedera account to which a bounty's unspent escrowed funds are returned when the bounty terminates." ;
+    schema:domainIncludes iibount:Bounty ;
+    schema:rangeIncludes hgo:Account .
+
+## ---------------------------------------------------------------------------
+## Task properties
+## ---------------------------------------------------------------------------
+
+iibount:taskId a rdf:Property ;
+    rdfs:label "taskId" ;
+    skos:definition "The identifier of a task, unique among the tasks of its bounty, by which the bounty's seats and sequence constraints refer to it and its smart contract records it." ;
+    schema:domainIncludes iibount:BountyTask ;
+    schema:rangeIncludes schema:Text .
+
+iibount:mustCompleteAfterTask a rdf:Property ;
+    rdfs:label "mustCompleteAfterTask" ;
+    skos:definition "Identifies another task of the same bounty that must be completed before this task can be completed." ;
+    schema:domainIncludes iibount:BountyTask ;
+    schema:rangeIncludes iibount:BountyTask .
+
+iibount:mustCompleteBeforeTask a rdf:Property ;
+    rdfs:label "mustCompleteBeforeTask" ;
+    skos:definition "Identifies another task of the same bounty before which this task must be completed." ;
+    schema:domainIncludes iibount:BountyTask ;
+    schema:rangeIncludes iibount:BountyTask .
+
+## iibount:requiredDeliverableType a rdf:Property ;
+##     rdfs:label "requiredDeliverableType" ;
+##     skos:definition "The class of which a task's one deliverable must be an instance." ;
+##     schema:domainIncludes iibount:BountyTask ;
+##    schema:rangeIncludes rdfs:Class .
+## << This should rather point to a SHACL shape or a SPARQL function.
+
+iibount:hasReward a rdf:Property ;
+    rdfs:label "hasReward" ;
+    skos:definition "Relates a task to one of the rewards paid for completing it." ;
+    schema:domainIncludes iibount:BountyTask ;
+    schema:rangeIncludes iibount:BountyReward .
+
+## ---------------------------------------------------------------------------
+## Seat properties
+## ---------------------------------------------------------------------------
+
+iibount:seatNumber a rdf:Property ;
+    rdfs:label "seatNumber" ;
+    skos:definition "The number of a seat, unique among the seats of its bounty." ;
+    schema:domainIncludes iibount:BountySeat ;
+    schema:rangeIncludes schema:Integer .
+
+iibount:seatType a rdf:Property ;
+    rdfs:label "seatType" ;
+    skos:definition "The type of a bounty seat: an expert seat, which delivers its tasks, or a training seat, through which an agent who does not yet meet the tasks' reputation requirements submits training deliverables." ;
+    schema:domainIncludes iibount:BountySeat ;
+    schema:rangeIncludes schema:Text ;
+    skos:editorialNote "Allowed values (ii-backend TS-0001): EXPERT, TRAINING. A candidate for a config scheme in ns/config/, carrying these as skos:notation." .
+
+## ---------------------------------------------------------------------------
+## Reward properties
+## ---------------------------------------------------------------------------
+
+iibount:rewardAsset a rdf:Property ;
+    rdfs:label "rewardAsset" ;
+    skos:definition "The digital asset a reward is paid in: HBAR (hgo:HBAR) or a Hedera token." ;
+    schema:domainIncludes iibount:BountyReward ;
+    schema:rangeIncludes hgo:DigitalAsset .
+
+iibount:rewardAmount a rdf:Property ;
+    rdfs:label "rewardAmount" ;
+    skos:definition "The amount of a reward, as an integer in its asset's smallest unit (tinybars for HBAR)." ;
+    schema:domainIncludes iibount:BountyReward ;
+    schema:rangeIncludes schema:Integer .
