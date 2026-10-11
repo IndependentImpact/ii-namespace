@@ -1,0 +1,21 @@
+@prefix skos:    <http://www.w3.org/2004/02/skos/core#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+
+<https://independentimpact.org/ns/config/bounty-types> a skos:ConceptScheme ;
+    dcterms:title "II bounty types" ;
+    dcterms:description "Types of bounty: the values of iibount:bountyType. A bounty's type determines the rules it follows beyond those common to every bounty (ii-backend TS-0001 \"Bounty definition\"). The project/activity development bounty of TS-0001 is to be added once its rules are specified." ;
+    skos:hasTopConcept <https://independentimpact.org/ns/config/bounty-types#REVIEW> , <https://independentimpact.org/ns/config/bounty-types#DISPUTE_ADJUDICATION> .
+
+<https://independentimpact.org/ns/config/bounty-types#REVIEW> a skos:Concept ;
+    skos:inScheme <https://independentimpact.org/ns/config/bounty-types> ;
+    skos:topConceptOf <https://independentimpact.org/ns/config/bounty-types> ;
+    skos:notation "REVIEW" ;
+    skos:prefLabel "Review"@en ;
+    skos:definition "A bounty commissioning the review — validation, verification, or both — of some artefact against a standard." .
+
+<https://independentimpact.org/ns/config/bounty-types#DISPUTE_ADJUDICATION> a skos:Concept ;
+    skos:inScheme <https://independentimpact.org/ns/config/bounty-types> ;
+    skos:topConceptOf <https://independentimpact.org/ns/config/bounty-types> ;
+    skos:notation "DISPUTE_ADJUDICATION" ;
+    skos:prefLabel "Dispute adjudication"@en ;
+    skos:definition "A bounty commissioning the adjudication of a dispute lodged against a deliverable of another bounty." .

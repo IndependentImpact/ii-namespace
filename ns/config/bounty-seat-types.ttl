@@ -1,0 +1,21 @@
+@prefix skos:    <http://www.w3.org/2004/02/skos/core#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+
+<https://independentimpact.org/ns/config/bounty-seat-types> a skos:ConceptScheme ;
+    dcterms:title "II bounty seat types" ;
+    dcterms:description "Types of bounty seat: the values of iibount:seatType (ii-backend TS-0001 \"Bounty definition\")." ;
+    skos:hasTopConcept <https://independentimpact.org/ns/config/bounty-seat-types#EXPERT> , <https://independentimpact.org/ns/config/bounty-seat-types#TRAINING> .
+
+<https://independentimpact.org/ns/config/bounty-seat-types#EXPERT> a skos:Concept ;
+    skos:inScheme <https://independentimpact.org/ns/config/bounty-seat-types> ;
+    skos:topConceptOf <https://independentimpact.org/ns/config/bounty-seat-types> ;
+    skos:notation "EXPERT" ;
+    skos:prefLabel "Expert"@en ;
+    skos:definition "A seat to which one or more of a bounty's tasks are assigned, and which delivers them; the tasks' reputation requirements and rewards apply to it." .
+
+<https://independentimpact.org/ns/config/bounty-seat-types#TRAINING> a skos:Concept ;
+    skos:inScheme <https://independentimpact.org/ns/config/bounty-seat-types> ;
+    skos:topConceptOf <https://independentimpact.org/ns/config/bounty-seat-types> ;
+    skos:notation "TRAINING" ;
+    skos:prefLabel "Training"@en ;
+    skos:definition "A seat that mirrors an expert seat, and through which an agent who does not yet meet the reputation requirements of that seat's tasks submits training deliverables for them." .
