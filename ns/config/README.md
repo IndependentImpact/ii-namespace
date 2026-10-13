@@ -12,5 +12,6 @@ One SKOS concept scheme per file: the controlled enumerations that constrain val
 | [`hedera-networks.ttl`](hedera-networks.ttl)                   | legacy `hed:HederaNetworkNameShape` (review: may become `hgo:Network` individuals) |
 | [`bounty-types.ttl`](bounty-types.ttl)                         | `iibount:bountyType` (ii-backend TS-0001)                                          |
 | [`bounty-seat-types.ttl`](bounty-seat-types.ttl)               | `iibount:seatType` (ii-backend TS-0001)                                            |
+| [`agent-types.ttl`](agent-types.ttl)                           | `iiplat:agentType`                                                                 |
 
 Still to extract (sources not yet enumeration-complete): workflow states and step types (standard-specific per ts-0003 — may not be platform config at all), document/schema types, review mandates and review outcomes (#26).

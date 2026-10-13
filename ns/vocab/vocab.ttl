@@ -37,7 +37,7 @@
     vann:preferredNamespaceUri "https://independentimpact.org/ns/vocab/" .
 
 ## ---------------------------------------------------------------------------
-## Platform users and licenses
+## Platform users, agents and licenses
 ## ---------------------------------------------------------------------------
 
 iiplat:AgentLicense a rdfs:Class ;
@@ -57,6 +57,13 @@ iiplat:hasVerifiableCredential a rdf:Property ;
     schema:domainIncludes aiao:Activity , aiao:Project ;
     schema:rangeIncludes vcdm:VerifiableCredential ;
     skos:editorialNote "Legacy source labelled this property 'hasAgentLicense' (copy-paste error); label corrected during carry-forward." .
+
+iiplat:agentType a rdf:Property ;
+    rdfs:label "agentType" ;
+    skos:definition "The type of 'aiao:Agent', as categorised by II. Currently only NATURAL_PERSON and LEGAL_PERSON are accepted." ;
+    schema:domainIncludes aiao:Agent ;
+    schema:rangeIncludes skos:Concept ;
+    skos:editorialNote "Values are concepts of the config scheme <https://independentimpact.org/ns/config/agent-types> (ns/config/agent-types.ttl)." .
 
 ## ---------------------------------------------------------------------------
 ## Resources and documents

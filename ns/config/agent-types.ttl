@@ -1,0 +1,21 @@
+@prefix skos:    <http://www.w3.org/2004/02/skos/core#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+
+<https://independentimpact.org/ns/config/agent-types> a skos:ConceptScheme ;
+    dcterms:title "II aiao:Agent types" ;
+    dcterms:description "Types of aiao:Agents: the values of iiplat:agentType." ;
+    skos:hasTopConcept <https://independentimpact.org/ns/config/agent-types#NATURAL_PERSON> , <https://independentimpact.org/ns/config/agent-types#LEGAL_PERSON> .
+
+<https://independentimpact.org/ns/config/agent-types#NATURAL_PERSON> a skos:Concept ;
+    skos:inScheme <https://independentimpact.org/ns/config/agent-types> ;
+    skos:topConceptOf <https://independentimpact.org/ns/config/agent-types> ;
+    skos:notation "NATURAL_PERSON" ;
+    skos:prefLabel "`Natural person`"@en ;
+    skos:definition "A living human being recognised by law as having individual rights and responsibilities." .
+
+<https://independentimpact.org/ns/config/agent-types#LEGAL_PERSON> a skos:Concept ;
+    skos:inScheme <https://independentimpact.org/ns/config/agent-types> ;
+    skos:topConceptOf <https://independentimpact.org/ns/config/agent-types> ;
+    skos:notation "LEGAL_PERSON" ;
+    skos:prefLabel "Legal person"@en ;
+    skos:definition "An artificial or non-human entity (such as a corporation or government agency) granted legal rights and duties by law." .
