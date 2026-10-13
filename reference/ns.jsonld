@@ -20,72 +20,6 @@
   },
   "@graph": [
     {
-      "@id": "indimp:PlatformUser",
-      "@type": "rdfs:Class",
-      "skos:definition": "An actor on the Independent Impact platform.",
-      "rdfs:label": "PlatformUser",
-      "rdfs:subClassOf": {
-        "@id": "owl:Thing"
-      }
-    },
-    {
-      "@id": "indimp:userType",
-      "@type": "rdf:Property",
-      "skos:definition": "The Independent Impact platform user type.",
-      "rdfs:label": "userType",
-      "schema:domainIncludes": {
-        "@id": "indimp:PlatformUser"
-      },
-      "schema:rangeIncludes": {
-        "@id": "schema:Text"
-      }
-    },
-    {
-      "@id": "indimp:userTypeShape",
-      "@type": "sh:NodeShape",
-      "sh:targetClass": {
-        "@id": "indimp:PlatformUser"
-      },
-      "sh:property": {
-        "sh:path": {
-          "@id": "indimp:userType"
-        },
-        "sh:datatype": {
-          "@id": "xsd:string"
-        },
-        "sh:in": [
-          "STANDARD_REGISTRY",
-          "USER"
-        ],
-        "sh:minCount": 1,
-        "sh:maxCount": 1
-      }
-    },
-    {
-      "@id": "indimp:dateRegistered",
-      "@type": "rdf:Property",
-      "skos:definition": "The timestamp at which a user account was created on the Independent Impact platform.",
-      "rdfs:label": "dateRegistered",
-      "schema:domainIncludes": {
-        "@id": "indimp:PlatformUser"
-      },
-      "schema:rangeIncludes": {
-        "@id": "schema:DateTime"
-      }
-    },
-    {
-      "@id": "indimp:didDocument",
-      "@type": "rdf:Property",
-      "skos:definition": "The document providing a platform user's DID and its associated properties.",
-      "rdfs:label": "didDocument",
-      "schema:domainIncludes": {
-        "@id": "indimp:PlatformUser"
-      },
-      "schema:rangeIncludes": {
-        "@id": "data:Document"
-      }
-    },
-    {
       "@id": "indimp:AgentLicense",
       "@type": "rdfs:Class",
       "skos:definition": "A license that allows a platform user to perform specialised actions on the Independent Impact platform.",
@@ -159,24 +93,11 @@
       }
     },
     {
-      "@id": "indimp:hasAgentLicense",
-      "@type": "rdf:Property",
-      "skos:definition": "An Independent Impact Agent License held by a platform user.",
-      "rdfs:label": "hasAgentLicense",
-      "schema:domainIncludes": {
-        "@id": "indimp:PlatformUser"
-      },
-      "schema:rangeIncludes": {
-        "@id": "indimp:AgentLicense"
-      }
-    },
-    {
       "@id": "indimp:hasVerifiableCredential",
       "@type": "rdf:Property",
       "skos:definition": "A verifiable credential document held by an entity (e.g., by a user or an activity).",
       "rdfs:label": "hasAgentLicense",
       "schema:domainIncludes": [
-		{ "@id": "indimp:PlatformUser" },
 	    { "@id": "aiao:Activity" },
 		{ "@id": "aiao:Project" }
 	  ],
@@ -260,9 +181,6 @@
         "@id": "data:Document"
       },
       "schema:rangeIncludes": [
-        {
-          "@id": "indimp:PlatformUser"
-        },
         {
           "@id": "aiao:Agent"
         },
@@ -395,7 +313,7 @@
         "@id": "indimp:WorkflowDocumentSubmission"
       },
       "schema:rangeIncludes": {
-        "@id": "indimp:PlatformUser"
+        "@id": "aiao:Agent"
       }
     },
     {
@@ -420,51 +338,6 @@
       },
       "schema:rangeIncludes": {
         "@id": "indimp:WorkflowDocumentSubmission"
-      }
-    },
-    {
-      "@id": "indimp:PlatformUserXhederaAccountLink",
-      "@type": "rdfs:Class",
-      "skos:definition": "Links an Independent Impact platform user to a Hedera account.",
-      "rdfs:label": "PlatformUserXhederaAccountLink",
-      "rdfs:subClassOf": {
-        "@id": "owl:Thing"
-      }
-    },
-    {
-      "@id": "indimp:hederaAccount",
-      "@type": "rdf:Property",
-      "skos:definition": "A Hedera account.",
-      "rdfs:label": "hederaAccount",
-      "schema:domainIncludes": {
-        "@id": "indimp:PlatformUserXhederaAccountLink"
-      },
-      "schema:rangeIncludes": {
-        "@id": "hed:HederaAccount"
-      }
-    },
-    {
-      "@id": "indimp:platformUserXhederaAccountLinkDescription",
-      "@type": "rdf:Property",
-      "skos:definition": "A description of the link between a platform user and a Hedera account, e.g., 'PRIMARY_ACCOUNT'.",
-      "rdfs:label": "description",
-      "schema:domainIncludes": {
-        "@id": "indimp:PlatformUserXhederaAccountLink"
-      },
-      "schema:rangeIncludes": {
-        "@id": "schema:Text"
-      }
-    },
-    {
-      "@id": "indimp:isLinkedToHederaAccount",
-      "@type": "rdf:Property",
-      "rdfs:comment": "Links an Independent Impact platform user to a Hedera account.",
-      "rdfs:label": "isLinkedToHederaAccount",
-      "schema:domainIncludes": {
-        "@id": "indimp:PlatformUser"
-      },
-      "schema:rangeIncludes": {
-        "@id": "indimp:PlatformUserXhederaAccountLink"
       }
     },
     {
@@ -501,18 +374,6 @@
       }
     },
     {
-      "@id": "indimp:isLinkedToHederaTopic",
-      "@type": "rdf:Property",
-      "rdfs:comment": "Links an Independent Impact entity to a Hedera topic.",
-      "rdfs:label": "isLinkedToHederaTopic",
-      "schema:domainIncludes": {
-        "@id": "indimp:PlatformUser"
-      },
-      "schema:rangeIncludes": {
-        "@id": "indimp:EntityXhederaTopicLink"
-      }
-    },
-    {
       "@id": "indimp:isReviewOf",
       "@type": "rdf:Property",
       "rdfs:comment": "Identifies a document as a review of another document.",
@@ -543,18 +404,6 @@
       },
       "schema:rangeIncludes": {
         "@id": "schema:DateTime"
-      }
-    },
-    {
-      "@id": "indimp:createdBy",
-      "@type": "rdf:Property",
-      "skos:definition": "The Independent Impact platform user who created the project.",
-      "rdfs:label": "createdBy",
-      "schema:domainIncludes": {
-        "@id": "aiao:Project"
-      },
-      "schema:rangeIncludes": {
-        "@id": "indimp:PlatformUser"
       }
     },
     {
