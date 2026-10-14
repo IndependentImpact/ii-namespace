@@ -127,68 +127,73 @@ iiplat:isReviewOf a rdf:Property ;
 iiplat:Workflow a rdfs:Class ;
     rdfs:label "Workflow" ;
     skos:definition "A set of actions, processes or procedures that must be executed or performed to achieve a specific outcome." ;
-    rdfs:subClassOf aiao:Control .
+    rdfs:subClassOf aiao:Process .
 
 iiplat:WorkflowStep a rdfs:Class ;
     rdfs:label "WorkflowStep" ;
-    skos:definition "A single action, process or procedure of a workflow." ;
-    rdfs:subClassOf aiao:Control .
+    skos:definition "A single action, process or procedure of a workflow." .
 
 iiplat:hasWorkflowStep a rdf:Property ;
     rdfs:label "hasWorkflowStep" ;
     skos:definition "A specific step of a workflow." ;
     schema:domainIncludes iiplat:Workflow ;
-    schema:rangeIncludes iiplat:WorkflowStep ;
-    skos:editorialNote "Legacy source labelled this property 'Workflow' (copy-paste error); label corrected during carry-forward." .
-
-iiplat:WorkflowDocumentSubmission a rdfs:Class ;
-    rdfs:label "WorkflowDocumentSubmission" ;
-    skos:definition "Records the submission of a document to a specific step of a specific workflow for a specific workflow subject." ;
-    rdfs:subClassOf owl:Thing ;
-    skos:editorialNote "Carry-forward review (#12 audit, 2026-08-10): model divergence — BE ts-0003 has no document-submission concept; step completion is graph-state evaluation (smart function / SHACL over infotrips) on a branch per workflow instance, with subject and submitter implicit. Note iiplat:workflowSubject has a live CCTS consumer." .
-
-iiplat:workflow a rdf:Property ;
-    rdfs:label "workflow" ;
-    skos:definition "The workflow to which a document was submitted, or in the context of which an agent-activity relation exists." ;
-    schema:domainIncludes iiplat:WorkflowDocumentSubmission , iiplat:AgentActivityWorkflowRelation ;
-    schema:rangeIncludes iiplat:Workflow .
-
-iiplat:workflowStep a rdf:Property ;
-    rdfs:label "workflowStep" ;
-    skos:definition "The workflow step to which the document was submitted." ;
-    schema:domainIncludes iiplat:WorkflowDocumentSubmission ;
     schema:rangeIncludes iiplat:WorkflowStep .
 
-iiplat:workflowSubject a rdf:Property ;
-    rdfs:label "workflowSubject" ;
-    skos:definition "The subject of the workflow in respect of which or whom the document was submitted." ;
-    schema:domainIncludes iiplat:WorkflowDocumentSubmission ;
-    schema:rangeIncludes owl:Thing .
+iiplat:WorkflowTest a rdfs:Class ;
+    rdfs:label "WorkflowTest" ;
+    skos:definition "A test that a workflow step evaluates against a workflow subject, answering pass or fail. Either a SHACL node shape (sh:NodeShape) that the subject must conform to, or a SPARQL ASK query (iiplat:SparqlAskQuery) that must answer true for the subject. A workflow test carries this class explicitly, whichever kind it is, and a test that is a SHACL shape declares no target: it is applied to one subject by the workflow machinery, never on the write path." ;
+    rdfs:subClassOf aiao:Control .
 
-iiplat:workflowDocumentSubmittedBy a rdf:Property ;
-    rdfs:label "submittedBy" ;
-    skos:definition "The platform user who submitted the document." ;
-    schema:domainIncludes iiplat:WorkflowDocumentSubmission ;
-    schema:rangeIncludes aiao:Agent .
+iiplat:SparqlAskQuery a rdfs:Class ;
+    rdfs:label "SparqlAskQuery" ;
+    skos:definition "A workflow test that is a SPARQL ASK query. The query text is carried by iiplat:askQuery; the subject under test is the variable $this." ;
+    rdfs:subClassOf iiplat:WorkflowTest .
 
-iiplat:workflowDocumentSubmissionHederaMessageId a rdf:Property ;
-    rdfs:label "hederaMessageId" ;
-    skos:definition "The ID of the Hedera consensus message that recorded the moment that a document was submitted to a specific workflow." ;
-    schema:domainIncludes iiplat:WorkflowDocumentSubmission ;
-    schema:rangeIncludes hgo:TopicMessage ;
-    skos:editorialNote "Re-ranged from the legacy string-class hed:HederaMessageId to hgo:TopicMessage (issue #6, see ns/alignments/hed-hashgraph.ttl). Settled 2026-08-10: Bhash #65 made hgo:hasConsensusTimestamp a native <seconds>.<nanoseconds> string, so the message entity is keyed by exactly the string the legacy class held." .
+iiplat:askQuery a rdf:Property ;
+    rdfs:label "askQuery" ;
+    skos:definition "The text of a SPARQL ASK query: one complete query in which the workflow subject is the variable $this, which must occur in the text only as that variable." ;
+    schema:domainIncludes iiplat:SparqlAskQuery ;
+    schema:rangeIncludes xsd:string .
 
-iiplat:hasWorkflowSubmission a rdf:Property ;
-    rdfs:label "hasWorkflowSubmission" ;
-    rdfs:comment "Provides details about a workflow submission for the document in question." ;
-    schema:domainIncludes data:Document ;
-    schema:rangeIncludes iiplat:WorkflowDocumentSubmission .
+iiplat:readinessTest a rdf:Property ;
+    rdfs:label "readinessTest" ;
+    skos:definition "Identifies a workflow test (a SHACL shape or SPARQL ASK query) with which a subject's readiness to start with the workflow step is evaluated. A subject must pass every readiness test of a step before it may start the step." ;
+    schema:domainIncludes iiplat:WorkflowStep ;
+    schema:rangeIncludes iiplat:WorkflowTest .
 
-iiplat:AgentActivityWorkflowRelation a rdfs:Class ;
-    rdfs:label "AgentActivityWorkflowRelation" ;
-    skos:definition "Relates an agent to an activity in the context of a specific workflow." ;
-    rdfs:subClassOf aiao:AgentActivityRelation ;
-    skos:editorialNote "Carry-forward review (#12 audit, 2026-08-10): no referent in BE ts-0003 or any other spec, and no consumer found in the estate." .
+iiplat:completionTest a rdf:Property ;
+    rdfs:label "completionTest" ;
+    skos:definition "Identifies a workflow test (a SHACL shape or SPARQL ASK query) with which a subject's completion of a workflow step is evaluated. A subject must pass every completion test of a step for the step to count as completed." ;
+    schema:domainIncludes iiplat:WorkflowStep ;
+    schema:rangeIncludes iiplat:WorkflowTest .
+
+iiplat:stepNumber a rdf:Property ;
+    rdfs:label "stepNumber" ;
+    skos:definition "The position of a workflow step within its workflow, counted from 1, for presentation. The order in which steps may be started is enforced by their readiness tests, not by this number." ;
+    schema:domainIncludes iiplat:WorkflowStep ;
+    schema:rangeIncludes xsd:positiveInteger .
+
+iiplat:subjectClass a rdf:Property ;
+    rdfs:label "subjectClass" ;
+    skos:definition "The class of entity a workflow is run for, such as aiao:Activity or aiao:Agent. A workflow is offered to a subject only if the subject is an instance of this class." ;
+    schema:domainIncludes iiplat:Workflow ;
+    schema:rangeIncludes rdfs:Class .
+
+iiplat:issuesCredentialType a rdf:Property ;
+    rdfs:label "issuesCredentialType" ;
+    skos:definition "The type of credential issued to the workflow subject on completion of the workflow: a SKOS concept declared in the concept scheme of the standard that defines the workflow." ;
+    schema:domainIncludes iiplat:Workflow ;
+    schema:rangeIncludes skos:Concept .
+
+## ---------------------------------------------------------------------------
+## Standards
+## ---------------------------------------------------------------------------
+
+iiplat:shapesGraph a rdf:Property ;
+    rdfs:label "shapesGraph" ;
+    skos:definition "The IRI of the named graph in II's Fluree ledger that holds the SHACL shapes and workflow tests that II maintains for the standard. Never the default graph: a standard's shapes are selected per transaction from this graph, and the default graph holds the platform baseline alone." ;
+    schema:domainIncludes iiplat:Standard ;
+    schema:rangeIncludes rdfs:Resource .
 
 ## ---------------------------------------------------------------------------
 ## Hedera links
