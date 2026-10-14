@@ -137,7 +137,7 @@ iiplat:hasWorkflowStep a rdf:Property ;
     rdfs:label "hasWorkflowStep" ;
     skos:definition "A specific step of a workflow." ;
     schema:domainIncludes iiplat:Workflow ;
-    schema:rangeIncludes iiplat:WorkflowStep ;
+    schema:rangeIncludes iiplat:WorkflowStep .
 
 iiplat:WorkflowTest a rdfs:Class ;
     rdfs:label "WorkflowTest" ;
