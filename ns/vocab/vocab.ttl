@@ -131,11 +131,11 @@ iiplat:Workflow a rdfs:Class ;
 
 iiplat:WorkflowStep a rdfs:Class ;
     rdfs:label "WorkflowStep" ;
-    skos:definition "A single action, process or procedure of a workflow." .
+    skos:definition "A single action, process or procedure of a workflow. Note that some workflows are modular and that a specific step can therefore appear in multiple workflows." .
 
 iiplat:hasWorkflowStep a rdf:Property ;
     rdfs:label "hasWorkflowStep" ;
-    skos:definition "A specific step of a workflow." ;
+    skos:definition "An ordered list of one or more steps making up the workflow. Ordered in presentation order." ;
     schema:domainIncludes iiplat:Workflow ;
     schema:rangeIncludes iiplat:WorkflowStep .
 
@@ -166,12 +166,6 @@ iiplat:completionTest a rdf:Property ;
     skos:definition "Identifies a workflow test (a SHACL shape or SPARQL ASK query) with which a subject's completion of a workflow step is evaluated. A subject must pass every completion test of a step for the step to count as completed." ;
     schema:domainIncludes iiplat:WorkflowStep ;
     schema:rangeIncludes iiplat:WorkflowTest .
-
-iiplat:stepNumber a rdf:Property ;
-    rdfs:label "stepNumber" ;
-    skos:definition "The position of a workflow step within its workflow, counted from 1, for presentation. The order in which steps may be started is enforced by their readiness tests, not by this number." ;
-    schema:domainIncludes iiplat:WorkflowStep ;
-    schema:rangeIncludes xsd:positiveInteger .
 
 iiplat:subjectClass a rdf:Property ;
     rdfs:label "subjectClass" ;
