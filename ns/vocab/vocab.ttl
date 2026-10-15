@@ -181,7 +181,7 @@ iiplat:issuesCredentialType a rdf:Property ;
 
 iiplat:isPrescribedBy a rdf:Property ;
     rdfs:label "isPrescribedBy" ;
-    skos:definition "Identifies the standards body, registry or other entity that prescribes the workflow. There is no dedicated class for such an entity; it is simply an aiao:Agent. Distinct from aiao:isGovernedBy, which holds an entity's own information to a standard's requirements: a workflow is the procedure, with its tests, by which the prescribing body governs other entities under the standard." ;
+    skos:definition "Identifies the entity (standards body, registry, certification body or other) that prescribes the workflow. There is no dedicated class for such an entity; it is simply an aiao:Agent. Distinct from aiao:isGovernedBy, which holds an entity's own information to a standard's requirements: a workflow is the procedure, with its tests, by which the prescribing body governs other entities under the standard." ;
     schema:domainIncludes iiplat:Workflow ;
     schema:rangeIncludes aiao:Agent .
 
