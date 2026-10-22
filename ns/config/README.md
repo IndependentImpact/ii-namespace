@@ -13,5 +13,7 @@ One SKOS concept scheme per file: the controlled enumerations that constrain val
 | [`bounty-types.ttl`](bounty-types.ttl)                         | `iibount:bountyType` (ii-backend TS-0001)                                          |
 | [`bounty-seat-types.ttl`](bounty-seat-types.ttl)               | `iibount:seatType` (ii-backend TS-0001)                                            |
 | [`agent-types.ttl`](agent-types.ttl)                           | `iiplat:agentType`                                                                 |
+| [`action-request-types.ttl`](action-request-types.ttl)         | `iibount:actionRequestType` (ii-backend TS-0001)                                   |
+| [`task-outcomes.ttl`](task-outcomes.ttl)                       | `iibount:taskOutcome` (ii-backend TS-0001)                                         |
 
-Still to extract (sources not yet enumeration-complete): workflow states and step types (standard-specific per ts-0003 — may not be platform config at all), document/schema types, review mandates and review outcomes (#26).
+Still to extract (sources not yet enumeration-complete): review mandates and review outcomes (#26).

@@ -22,8 +22,14 @@
 # validated by the platform shapes in ii-backend
 # (assets/storage-service/shacl-shapes/platform-shapes.ttl, iishpbount:*).
 # This file defines the terms; cardinalities and allowed values live there.
-# Reputation requirements are not bounty-specific and are defined in
-# vocab.ttl (iiplat:ReputationRequirement and its properties).
+# Reputation requirements and reputation rules are not bounty-specific and
+# are defined in vocab.ttl (iiplat:ReputationRequirement,
+# iiplat:ReputationRule and their properties), as is iiplat:workflowSubject.
+#
+# Some members are written by II alone, in its own record messages on the
+# bounty's topic, and never by the definition's author (BE TS-0001 "What II
+# records"): iibount:terminatedAt, iibount:taskOutcome,
+# iibount:submissionRecord and iibount:isBountyContractOf.
 
 <https://independentimpact.org/ns/vocab/bounties/> a owl:Ontology ;
     dcterms:title "II Bounty vocabulary" ;
@@ -55,6 +61,18 @@ iibount:BountyReward a rdfs:Class ;
     rdfs:label "BountyReward" ;
     skos:definition "An amount of one digital asset — HBAR or a Hedera token, such as a reputation token — paid for completing a bounty task." ;
     rdfs:subClassOf owl:Thing .
+
+iibount:ActionRequest a rdfs:Class ;
+    rdfs:label "ActionRequest" ;
+    skos:definition "A request, by the holder of a bounty task's expert seat to the bounty's creator, for a clarification or a correction concerning the task, made during the bounty's mission phase." ;
+    rdfs:subClassOf owl:Thing ;
+    skos:editorialNote "Addressed beneath its task as ii:<bounty-uuid>/tasks/<taskNumber>/action-requests/<requestNumber> (BE TS-0001 \"Submissions by reference\")." .
+
+iibount:ActionResponse a rdfs:Class ;
+    rdfs:label "ActionResponse" ;
+    skos:definition "The bounty creator's response to an action request." ;
+    rdfs:subClassOf owl:Thing ;
+    skos:editorialNote "Addressed beneath the request it answers as <request>/response, so a request has at most one response (BE TS-0001 \"Submissions by reference\")." .
 
 ## ---------------------------------------------------------------------------
 ## Bounty properties
@@ -109,6 +127,20 @@ iibount:unspentFundsReturnAccount a rdf:Property ;
     schema:domainIncludes iibount:Bounty ;
     schema:rangeIncludes hgo:Account .
 
+iibount:forWorkflowStep a rdf:Property ;
+    rdfs:label "forWorkflowStep" ;
+    skos:definition "Identifies the workflow step whose bounty template a bounty's definition instantiates. Given together with iiplat:workflowSubject, never alone; a bounty with neither is an ordinary bounty." ;
+    schema:domainIncludes iibount:Bounty ;
+    schema:rangeIncludes iiplat:WorkflowStep ;
+    skos:editorialNote "Added by II at the template's instantiation, never written by the bounty's author; a definition carrying it is published only as II instantiated it (BE TS-0001 \"Bounty templates\")." .
+
+iibount:terminatedAt a rdf:Property ;
+    rdfs:label "terminatedAt" ;
+    skos:definition "The consensus time at which a bounty was terminated." ;
+    schema:domainIncludes iibount:Bounty ;
+    schema:rangeIncludes xsd:dateTimeStamp ;
+    skos:editorialNote "Written by II alone, in its termination record. A bounty's status is derived from its phase starts and this instant, never recorded (BE TS-0001 \"What II records\")." .
+
 ## ---------------------------------------------------------------------------
 ## Task properties
 ## ---------------------------------------------------------------------------
@@ -143,6 +175,32 @@ iibount:hasReward a rdf:Property ;
     schema:domainIncludes iibount:BountyTask ;
     schema:rangeIncludes iibount:BountyReward .
 
+iibount:acceptanceRule a rdf:Property ;
+    rdfs:label "acceptanceRule" ;
+    skos:definition "Identifies a reputation rule applied to the reputation account of the holder of a task's seat when the seat holder's final deliverable for the task is undisputed at the bounty's termination. The amount of reputation is the rule's, never the bounty's." ;
+    schema:domainIncludes iibount:BountyTask ;
+    schema:rangeIncludes iiplat:ReputationRule .
+
+iibount:rejectionRule a rdf:Property ;
+    rdfs:label "rejectionRule" ;
+    skos:definition "Identifies a reputation rule applied to the reputation account of the holder of a task's seat when a dispute over the task's deliverable is resolved against them." ;
+    schema:domainIncludes iibount:BountyTask ;
+    schema:rangeIncludes iiplat:ReputationRule ;
+    skos:editorialNote "Applied once disputes exist (the MVE); see ii-backend docs/ROADMAP.md for the phase split." .
+
+iibount:noSubmissionRule a rdf:Property ;
+    rdfs:label "noSubmissionRule" ;
+    skos:definition "Identifies a reputation rule applied to the reputation account of the holder of a task's seat when the task terminates with no submission from them." ;
+    schema:domainIncludes iibount:BountyTask ;
+    schema:rangeIncludes iiplat:ReputationRule .
+
+iibount:taskOutcome a rdf:Property ;
+    rdfs:label "taskOutcome" ;
+    skos:definition "The outcome of a bounty task, as settled at the bounty's termination." ;
+    schema:domainIncludes iibount:BountyTask ;
+    schema:rangeIncludes skos:Concept ;
+    skos:editorialNote "Written by II alone, in its termination record. Values are concepts of the config scheme <https://independentimpact.org/ns/config/task-outcomes> (ns/config/task-outcomes.ttl)." .
+
 ## ---------------------------------------------------------------------------
 ## Seat properties
 ## ---------------------------------------------------------------------------
@@ -175,3 +233,56 @@ iibount:rewardAmount a rdf:Property ;
     skos:definition "The amount of a reward, as an integer in its asset's smallest unit (tinybars for HBAR)." ;
     schema:domainIncludes iibount:BountyReward ;
     schema:rangeIncludes schema:Integer .
+
+## ---------------------------------------------------------------------------
+## Submission properties: deliverables, action requests and responses
+## ---------------------------------------------------------------------------
+
+iibount:isDeliverableFor a rdf:Property ;
+    rdfs:label "isDeliverableFor" ;
+    skos:definition "Relates a deliverable to the bounty task it was submitted for." ;
+    schema:rangeIncludes iibount:BountyTask ;
+    skos:editorialNote "No schema:domainIncludes is asserted: a deliverable's class is its task's iibount:requiredDeliverableType, which the standards define. A deliverable is addressed beneath its task as <task>/deliverables/<submissionNumber>." .
+
+iibount:actionRequestType a rdf:Property ;
+    rdfs:label "actionRequestType" ;
+    skos:definition "The type of an action request: whether it asks for a clarification or a correction." ;
+    schema:domainIncludes iibount:ActionRequest ;
+    schema:rangeIncludes skos:Concept ;
+    skos:editorialNote "Values are concepts of the config scheme <https://independentimpact.org/ns/config/action-request-types> (ns/config/action-request-types.ttl)." .
+
+iibount:isActionRequestFor a rdf:Property ;
+    rdfs:label "isActionRequestFor" ;
+    skos:definition "Relates an action request to the bounty task it concerns." ;
+    schema:domainIncludes iibount:ActionRequest ;
+    schema:rangeIncludes iibount:BountyTask .
+
+iibount:concerns a rdf:Property ;
+    rdfs:label "concerns" ;
+    skos:definition "Identifies something an action request is about, such as an infotrip, a field, or a node of the bounty's subject." ;
+    schema:domainIncludes iibount:ActionRequest ;
+    schema:rangeIncludes owl:Thing .
+
+iibount:respondsTo a rdf:Property ;
+    rdfs:label "respondsTo" ;
+    skos:definition "Relates an action response to the action request it answers." ;
+    schema:domainIncludes iibount:ActionResponse ;
+    schema:rangeIncludes iibount:ActionRequest .
+
+iibount:submissionRecord a rdf:Property ;
+    rdfs:label "submissionRecord" ;
+    skos:definition "Identifies the transaction record of the bounty contract call that registered a submission — a deliverable, an action request or an action response — with the bounty's contract. The record's consensus timestamp is the submission's registration time, and its presence distinguishes a submission the contract holds from one that was merely published." ;
+    schema:domainIncludes iibount:ActionRequest , iibount:ActionResponse ;
+    schema:rangeIncludes hgo:TransactionRecord ;
+    skos:editorialNote "Written by II alone, in its registration record. Deliverables carry it too; they have no common class to name as a domain (see iibount:isDeliverableFor)." .
+
+## ---------------------------------------------------------------------------
+## Bounty contracts
+## ---------------------------------------------------------------------------
+
+iibount:isBountyContractOf a rdf:Property ;
+    rdfs:label "isBountyContractOf" ;
+    skos:definition "Relates a deployed bounty smart contract to the bounty it implements." ;
+    schema:domainIncludes hgo:SmartContract ;
+    schema:rangeIncludes iibount:Bounty ;
+    skos:editorialNote "Written by II alone, in its contract record, once the deployment is confirmed. A bounty has a public status only once a contract points at it this way; before then its seats cannot be claimed (BE TS-0001 \"What II records\")." .
