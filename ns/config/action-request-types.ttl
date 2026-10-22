@@ -1,0 +1,21 @@
+@prefix skos:    <http://www.w3.org/2004/02/skos/core#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+
+<https://independentimpact.org/ns/config/action-request-types> a skos:ConceptScheme ;
+    dcterms:title "II bounty action request types" ;
+    dcterms:description "Types of action request on a bounty task: the values of iibount:actionRequestType (ii-backend TS-0001 \"Submissions by reference\")." ;
+    skos:hasTopConcept <https://independentimpact.org/ns/config/action-request-types#CLARIFICATION> , <https://independentimpact.org/ns/config/action-request-types#CORRECTION> .
+
+<https://independentimpact.org/ns/config/action-request-types#CLARIFICATION> a skos:Concept ;
+    skos:inScheme <https://independentimpact.org/ns/config/action-request-types> ;
+    skos:topConceptOf <https://independentimpact.org/ns/config/action-request-types> ;
+    skos:notation "CLARIFICATION" ;
+    skos:prefLabel "Clarification"@en ;
+    skos:definition "The holder of the task's expert seat asks the bounty's creator to explain something about the subject or the task." .
+
+<https://independentimpact.org/ns/config/action-request-types#CORRECTION> a skos:Concept ;
+    skos:inScheme <https://independentimpact.org/ns/config/action-request-types> ;
+    skos:topConceptOf <https://independentimpact.org/ns/config/action-request-types> ;
+    skos:notation "CORRECTION" ;
+    skos:prefLabel "Correction"@en ;
+    skos:definition "The holder of the task's expert seat asks the bounty's creator to correct something about the subject or the task." .

@@ -13,6 +13,7 @@
 @prefix hgo:     <https://hashgraphontology.xyz/core/> .
 @prefix time:    <http://www.w3.org/2006/time#> .
 @prefix iiplat:  <https://independentimpact.org/ns/vocab/> .
+@prefix iibount: <https://independentimpact.org/ns/vocab/bounties/> .
 
 # II Platform vocabulary — carried forward from the legacy /ns/ JSON-LD
 # (reference/ns.jsonld) per the carry-forward decision (PRs #3/#9): every
@@ -191,6 +192,20 @@ iiplat:isPrescribedFor a rdf:Property ;
     schema:domainIncludes iiplat:Workflow ;
     schema:rangeIncludes iiplat:Standard .
 
+iiplat:bountyTemplate a rdf:Property ;
+    rdfs:label "bountyTemplate" ;
+    skos:definition "Identifies, by its content address (an ipfs://<CID> IRI), the bounty template of a workflow step: the bounty definition, with placeholders, from which II instantiates for each run of the workflow the bounty under which the step's work is done. A step that names a bounty template is a bounty-anchored step." ;
+    schema:domainIncludes iiplat:WorkflowStep ;
+    schema:rangeIncludes rdfs:Resource ;
+    skos:editorialNote "The template is an IPFS object outside the ledger, and so immutable once named; a step names at most one. Its form is BE TS-0001 \"Bounty templates\"; the step side is BE TS-0003 \"Bounty-anchored steps\"." .
+
+iiplat:workflowSubject a rdf:Property ;
+    rdfs:label "workflowSubject" ;
+    skos:definition "Identifies the subject of a workflow run — the entity the workflow is run for, such as an activity or an agent — in respect of which a workflow artefact was produced: a bounty instantiated from a workflow step's bounty template, a review, a report." ;
+    schema:domainIncludes iibount:Bounty ;
+    schema:rangeIncludes owl:Thing ;
+    skos:editorialNote "On a bounty it is given together with iibount:forWorkflowStep, never alone, and is added by II at the template's instantiation rather than written by the bounty's author (BE TS-0001 \"Bounty templates\"). BE TS-0013 §13 uses the same term for the subject of any workflow artefact." .
+
 ## ---------------------------------------------------------------------------
 ## Standards
 ## ---------------------------------------------------------------------------
@@ -211,6 +226,38 @@ iiplat:isSubjectOfHcsTopic a rdf:Property ;
     schema:domainIncludes aiao:Agent , aiao:Project , aiao:Activity, iiplat:Methodology, iiplat:Standard ;
     schema:rangeIncludes hgo:ConsensusTopic ;
     skos:editorialNote "Defined by #40 (2026-08-13) as the direct entity→topic predicate replacing the removed EntityXhederaTopicLink cluster; the predicate is needed now (BE ts-0016 Flow B (g)). Deliberately not a reuse of hgo:hasTopic (domain hgo:ConsensusService — service-side management) nor of hgo:controlsTopic/isTopicOf (Bhash#70, PR Bhash#71; hard rdfs:domain hgo:Actor — key control, which under ts-0016 custody rests with II, not the entity): this term asserts aboutness — the entity is the topic's subject. It therefore coexists with the Bhash terms rather than being superseded by them; the eventual record is a skos:closeMatch in ns/alignments/ (never rdfs:subPropertyOf, which would propagate the hgo:Actor domain entailment), once #41 pins the hgo: version. The domain is the non-constraining schema:domainIncludes union carried from the legacy class's 'user, project, methodology, etc.' and is extensible without breaking existing data. A topic's class and purpose live on the topic subject, not here (BE ADR-0010/0021); ts-0017's topic_class enumeration (II_SPECIFIC | DID) is tracked as #42." .
+
+# Topic registration. The Topic Administration Service announces every II
+# platform topic on the Topic Registry Topic (BE ADR-0010) as one
+# hgo:ConsensusTopic node carrying the terms below. The announcement must
+# publish inline, within HCS's 1,024-byte message cap, which is why the term
+# names are short.
+
+iiplat:topicClass a rdf:Property ;
+    rdfs:label "topicClass" ;
+    skos:definition "The class of an II platform HCS topic — an II-specific topic or a DID topic — which determines the key structure the topic is created with (BE ADR-0019)." ;
+    schema:domainIncludes hgo:ConsensusTopic ;
+    schema:rangeIncludes schema:Text ;
+    skos:editorialNote "Values are the wire strings II_SPECIFIC and DID (BE TS-0017 topic_class); whether they become a config scheme is tracked as #42." .
+
+iiplat:hcsTopicPurpose a rdf:Property ;
+    rdfs:label "hcsTopicPurpose" ;
+    skos:definition "A human-readable statement of the functional purpose of an II platform HCS topic, such as \"Account registry of the Independent Impact platform.\"" ;
+    schema:domainIncludes hgo:ConsensusTopic ;
+    schema:rangeIncludes schema:Text .
+
+iiplat:ledger a rdf:Property ;
+    rdfs:label "ledger" ;
+    skos:definition "The name of the Fluree ledger to which an II platform HCS topic belongs, e.g. \"ii-main\": the ledger name alone, not an address." ;
+    schema:domainIncludes hgo:ConsensusTopic ;
+    schema:rangeIncludes schema:Text .
+
+iiplat:entity a rdf:Property ;
+    rdfs:label "entity" ;
+    skos:definition "Identifies the II entity to which an II platform HCS topic belongs. Absent for a system topic, such as the Topic Registry Topic itself, which belongs to no entity." ;
+    schema:domainIncludes hgo:ConsensusTopic ;
+    schema:rangeIncludes owl:Thing ;
+    skos:editorialNote "Points from the topic to its entity, as announced by the Topic Administration Service; iiplat:isSubjectOfHcsTopic points from the entity to its topic, and is asserted in the entity's own record." .
 
 ## ---------------------------------------------------------------------------
 ## Projects and activities
@@ -466,3 +513,61 @@ iiplat:minimumReputationScore a rdf:Property ;
     skos:definition "The minimum balance of its reputation token that a reputation requirement demands." ;
     schema:domainIncludes iiplat:ReputationRequirement ;
     schema:rangeIncludes schema:Integer .
+
+## ---------------------------------------------------------------------------
+## Reputation rules
+## ---------------------------------------------------------------------------
+
+iiplat:ReputationRule a rdfs:Class ;
+    rdfs:label "ReputationRule" ;
+    skos:definition "A rule of a reputation standard: the signed amount of reputation that one trigger — an action the agent takes, or an event that befalls the agent — earns or costs in one domain of the standard. The unit that moves reputation is always a rule, never a bare trigger." ;
+    rdfs:subClassOf owl:Thing ;
+    skos:editorialNote "Addressed beneath its standard as ii:<standard-uuid>/rules/<ruleNumber>, and known to the standard's reputation contract by that same IRI (BE TS-0006 \"The rule node\"). A bounty task names the rules it applies (iibount:acceptanceRule, iibount:rejectionRule, iibount:noSubmissionRule)." .
+
+iiplat:hasReputationRule a rdf:Property ;
+    rdfs:label "hasReputationRule" ;
+    skos:definition "Relates a reputation standard to one of its reputation rules. At most one rule of a standard exists per pair of domain and trigger." ;
+    schema:domainIncludes iiplat:ExpertiseStandard , iiplat:ConductStandard ;
+    schema:rangeIncludes iiplat:ReputationRule .
+
+iiplat:expertiseDomain a rdf:Property ;
+    rdfs:label "expertiseDomain" ;
+    skos:definition "Identifies the domain in which a reputation rule moves reputation: a concept of the reputation standard's own concept scheme. Each domain of a standard is held as one Hedera token." ;
+    schema:domainIncludes iiplat:ReputationRule ;
+    schema:rangeIncludes skos:Concept .
+
+iiplat:reputationAction a rdf:Property ;
+    rdfs:label "reputationAction" ;
+    skos:definition "Identifies the trigger of a reputation rule where the trigger is an action the agent takes, such as submitting a review: a concept of the reputation standard's own concept scheme. A rule names exactly one trigger, an action or an event, never both." ;
+    schema:domainIncludes iiplat:ReputationRule ;
+    schema:rangeIncludes skos:Concept .
+
+iiplat:reputationEvent a rdf:Property ;
+    rdfs:label "reputationEvent" ;
+    skos:definition "Identifies the trigger of a reputation rule where the trigger is an event that befalls the agent as the consequence of someone else's action, such as receiving a positive review: a concept of the reputation standard's own concept scheme. A rule names exactly one trigger, an action or an event, never both." ;
+    schema:domainIncludes iiplat:ReputationRule ;
+    schema:rangeIncludes skos:Concept .
+
+iiplat:reputationDelta a rdf:Property ;
+    rdfs:label "reputationDelta" ;
+    skos:definition "The amount of reputation a rule's trigger earns (positive) or costs (negative) in the rule's domain, in whole units. Never zero." ;
+    schema:domainIncludes iiplat:ReputationRule ;
+    schema:rangeIncludes schema:Integer .
+
+## ---------------------------------------------------------------------------
+## Reputation contracts and tokens
+## ---------------------------------------------------------------------------
+
+iiplat:isReputationContractOf a rdf:Property ;
+    rdfs:label "isReputationContractOf" ;
+    skos:definition "Relates a deployed reputation smart contract to the reputation standard whose rules it implements." ;
+    schema:domainIncludes hgo:SmartContract ;
+    schema:rangeIncludes iiplat:ExpertiseStandard , iiplat:ConductStandard ;
+    skos:editorialNote "Asserted by II on the contract's node once it has verified the deployment, never by the standard's author. The ledger is the one record of which contract serves which standard: a standard that no contract points at is not yet deployed, and no bounty can name its rules (BE TS-0006 \"What II adds after deployment\")." .
+
+iiplat:isReputationTokenOf a rdf:Property ;
+    rdfs:label "isReputationTokenOf" ;
+    skos:definition "Relates the Hedera fungible token that holds a reputation domain's reputation to that domain's concept." ;
+    schema:domainIncludes hgo:Token ;
+    schema:rangeIncludes skos:Concept ;
+    skos:editorialNote "Asserted by II on the token's node once the standard's contract, which creates the token, has been deployed and verified (BE TS-0006 \"What II adds after deployment\"). The token's IRI is what iiplat:reputationToken names." .

@@ -1,0 +1,29 @@
+@prefix skos:    <http://www.w3.org/2004/02/skos/core#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+
+<https://independentimpact.org/ns/config/task-outcomes> a skos:ConceptScheme ;
+    dcterms:title "II bounty task outcomes" ;
+    dcterms:description "Outcomes of a bounty task, as settled at the bounty's termination: the values of iibount:taskOutcome (ii-backend TS-0001 \"Termination\")." ;
+    skos:hasTopConcept <https://independentimpact.org/ns/config/task-outcomes#ACCEPTED> , <https://independentimpact.org/ns/config/task-outcomes#NO_SUBMISSION> , <https://independentimpact.org/ns/config/task-outcomes#REJECTED> .
+
+<https://independentimpact.org/ns/config/task-outcomes#ACCEPTED> a skos:Concept ;
+    skos:inScheme <https://independentimpact.org/ns/config/task-outcomes> ;
+    skos:topConceptOf <https://independentimpact.org/ns/config/task-outcomes> ;
+    skos:notation "ACCEPTED" ;
+    skos:prefLabel "Accepted"@en ;
+    skos:definition "The task received at least one undisputed submission from the holder of its expert seat: its reward is paid to the seat holder and its acceptance rules apply to the holder's reputation." .
+
+<https://independentimpact.org/ns/config/task-outcomes#NO_SUBMISSION> a skos:Concept ;
+    skos:inScheme <https://independentimpact.org/ns/config/task-outcomes> ;
+    skos:topConceptOf <https://independentimpact.org/ns/config/task-outcomes> ;
+    skos:notation "NO_SUBMISSION" ;
+    skos:prefLabel "No submission"@en ;
+    skos:definition "The task received no submission from the holder of its expert seat: its reward stays with the bounty's unspent funds and, if the seat was held, its no-submission rules apply to the holder's reputation." .
+
+<https://independentimpact.org/ns/config/task-outcomes#REJECTED> a skos:Concept ;
+    skos:inScheme <https://independentimpact.org/ns/config/task-outcomes> ;
+    skos:topConceptOf <https://independentimpact.org/ns/config/task-outcomes> ;
+    skos:notation "REJECTED" ;
+    skos:prefLabel "Rejected"@en ;
+    skos:definition "A dispute over the task's deliverable was resolved against the seat holder: the task's rejection rules apply to the holder's reputation." ;
+    skos:editorialNote "Arrives with disputes, at the MVE; until then ii-backend's platform shapes admit only ACCEPTED and NO_SUBMISSION (see ii-backend docs/ROADMAP.md for the phase split)." .
