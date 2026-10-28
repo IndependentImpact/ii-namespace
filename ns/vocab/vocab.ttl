@@ -489,69 +489,67 @@ iiplat:hasReputationAccount a rdf:Property ;
     schema:rangeIncludes hgo:Account .    
 
 ## ---------------------------------------------------------------------------
-## Reputation requirements
-## ---------------------------------------------------------------------------
-
-iiplat:ReputationRequirement a rdfs:Class ;
-    rdfs:label "ReputationRequirement" ;
-    skos:definition "A minimum balance of one reputation token (Conduct Reputation or a Knowledge and Skills Reputation domain) that an agent must hold to perform a certain action, such as claiming a seat on a bounty." ;
-    rdfs:subClassOf owl:Thing .
-
-iiplat:hasReputationRequirement a rdf:Property ;
-    rdfs:label "hasReputationRequirement" ;
-    skos:definition "Relates an action, such as claiming a bounty seat, to a reputation requirement that an agent must meet to perform it." ;
-    schema:rangeIncludes iiplat:ReputationRequirement .
-
-iiplat:reputationToken a rdf:Property ;
-    rdfs:label "reputationToken" ;
-    skos:definition "The Hedera token whose balance a reputation requirement constrains: the token of a Conduct Reputation or Knowledge and Skills Reputation domain." ;
-    schema:domainIncludes iiplat:ReputationRequirement ;
-    schema:rangeIncludes hgo:Token .
-
-iiplat:minimumReputationScore a rdf:Property ;
-    rdfs:label "minimumReputationScore" ;
-    skos:definition "The minimum balance of its reputation token that a reputation requirement demands." ;
-    schema:domainIncludes iiplat:ReputationRequirement ;
-    schema:rangeIncludes schema:Integer .
-
-## ---------------------------------------------------------------------------
 ## Reputation rules
 ## ---------------------------------------------------------------------------
 
 iiplat:ReputationRule a rdfs:Class ;
     rdfs:label "ReputationRule" ;
-    skos:definition "A rule of a reputation standard: the signed amount of reputation that one trigger — an action the agent takes, or an event that befalls the agent — earns or costs in one domain of the standard. The unit that moves reputation is always a rule, never a bare trigger." ;
-    rdfs:subClassOf owl:Thing ;
-    skos:editorialNote "Addressed beneath its standard as ii:<standard-uuid>/rules/<ruleNumber>, and known to the standard's reputation contract by that same IRI (BE TS-0006 \"The rule node\"). A bounty task names the rules it applies (iibount:acceptanceRule, iibount:rejectionRule, iibount:noSubmissionRule)." .
+    skos:definition "A rule of a standard of conduct or expertise. It sets either a reputation requirement for an action, or a reputation adjustment in response to an action or event." ;
+    rdfs:subClassOf aiao:Control .
 
-iiplat:hasReputationRule a rdf:Property ;
-    rdfs:label "hasReputationRule" ;
-    skos:definition "Relates a reputation standard to one of its reputation rules. At most one rule of a standard exists per pair of domain and trigger." ;
-    schema:domainIncludes iiplat:ExpertiseStandard , iiplat:ConductStandard ;
-    schema:rangeIncludes iiplat:ReputationRule .
-
-iiplat:expertiseDomain a rdf:Property ;
-    rdfs:label "expertiseDomain" ;
-    skos:definition "Identifies the domain in which a reputation rule moves reputation: a concept of the reputation standard's own concept scheme. Each domain of a standard is held as one Hedera token." ;
+iiplat:reputationDomain a rdf:Property ;
+    rdfs:label "reputationDomain" ;
+    skos:definition "Identifies the domain to which a reputation rule applies. In the case of a reputation requirement, it identifies the domain in which an agent must hold the prescribed amount of reputation; in the case of a reputation adjustment rule, it identifies the domain that will be affected by the adjustment. Domains are specified in a reputation standard's own concept scheme." ;
     schema:domainIncludes iiplat:ReputationRule ;
     schema:rangeIncludes skos:Concept .
 
 iiplat:reputationAction a rdf:Property ;
     rdfs:label "reputationAction" ;
-    skos:definition "Identifies the trigger of a reputation rule where the trigger is an action the agent takes, such as submitting a review: a concept of the reputation standard's own concept scheme. A rule names exactly one trigger, an action or an event, never both." ;
+    skos:definition "Identifies the action to which a reputation rule applies. In the case of a reputation requirement, it identifies the action gated by the rule; in the case of a reputation adjustment rule, it identifies the action that triggers the adjustment. Actions are specified in a reputation standard's own concept scheme. A reputation requirement names exactly one action; a reputation adjustment rule names at most one action." ;
     schema:domainIncludes iiplat:ReputationRule ;
     schema:rangeIncludes skos:Concept .
 
+iiplat:hasReputationRule a rdf:Property ;
+    rdfs:label "hasReputationRule" ;
+    skos:definition "Relates a standard to one of its reputation rules." ;
+    schema:domainIncludes iiplat:Standard ;
+    schema:rangeIncludes iiplat:ReputationRule .
+
+## ---------------------------------------------------------------------------
+## Reputation rules: Reputation requirements
+## ---------------------------------------------------------------------------
+
+iiplat:ReputationRequirement a rdfs:Class ;
+    rdfs:label "ReputationRequirement" ;
+    skos:definition "A minimum amount of reputation in some domain (a Conduct Reputation domain or a Knowledge and Skills Reputation domain) that an agent must hold to perform a certain action, such as claiming a seat on a bounty." ;
+    rdfs:subClassOf iiplat:ReputationRule .
+
+iiplat:minimumReputationScore a rdf:Property ;
+    rdfs:label "minimumReputationScore" ;
+    skos:definition "The minimum amount of reputation required by the rule, in the domain specified by the rule." ;
+    schema:domainIncludes iiplat:ReputationRequirement ;
+    schema:rangeIncludes schema:Integer .
+
+## ---------------------------------------------------------------------------
+## Reputation rules: Reputation adjustment rules
+## ---------------------------------------------------------------------------
+
+iiplat:ReputationAdjustmentRule a rdfs:Class ;
+    rdfs:label "ReputationAdjustmentRule" ;
+    skos:definition "A rule of a reputation standard: the signed amount of reputation that one trigger — an action the agent takes, or an event that befalls the agent — earns or costs in one domain of the standard. The unit that moves reputation is always a rule, never a bare trigger." ;
+    rdfs:subClassOf iiplat:ReputationRule ;
+    skos:editorialNote "Addressed beneath its standard as ii:<standard-uuid>/rules/<ruleNumber>, and known to the standard's reputation contract by that same IRI (BE TS-0006 \"The rule node\"). A bounty task names the rules it applies (iibount:acceptanceRule, iibount:rejectionRule, iibount:noSubmissionRule)." .
+
 iiplat:reputationEvent a rdf:Property ;
     rdfs:label "reputationEvent" ;
-    skos:definition "Identifies the trigger of a reputation rule where the trigger is an event that befalls the agent as the consequence of someone else's action, such as receiving a positive review: a concept of the reputation standard's own concept scheme. A rule names exactly one trigger, an action or an event, never both." ;
-    schema:domainIncludes iiplat:ReputationRule ;
+    skos:definition "Identifies the event that triggers the reputation adjustment. An event (e.g., receiving a positive review) befalls an agent as the consequence of another agent's action. Events are specified in a reputation standard's own concept scheme. A reputation adjustment rule names at most one event; a reputation requirement never names an event." ;
+    schema:domainIncludes iiplat:ReputationAdjustmentRule ;
     schema:rangeIncludes skos:Concept .
 
 iiplat:reputationDelta a rdf:Property ;
     rdfs:label "reputationDelta" ;
-    skos:definition "The amount of reputation a rule's trigger earns (positive) or costs (negative) in the rule's domain, in whole units. Never zero." ;
-    schema:domainIncludes iiplat:ReputationRule ;
+    skos:definition "The amount of reputation a rule's trigger earns (positive) or costs (negative) in the rule's domain, in whole units." ;
+    schema:domainIncludes iiplat:ReputationAdjustmentRule ;
     schema:rangeIncludes schema:Integer .
 
 ## ---------------------------------------------------------------------------
@@ -570,4 +568,9 @@ iiplat:isReputationTokenOf a rdf:Property ;
     skos:definition "Relates the Hedera fungible token that holds a reputation domain's reputation to that domain's concept." ;
     schema:domainIncludes hgo:Token ;
     schema:rangeIncludes skos:Concept ;
-    skos:editorialNote "Asserted by II on the token's node once the standard's contract, which creates the token, has been deployed and verified (BE TS-0006 \"What II adds after deployment\"). The token's IRI is what iiplat:reputationToken names." .
+    skos:editorialNote "Asserted by II on the token's node once the standard's contract, which creates the token, has been deployed and verified (BE TS-0006 \"What II adds after deployment\")." .
+
+iiplat:hasReputationRequirement a rdf:Property ;
+    rdfs:label "hasReputationRequirement" ;
+    skos:definition "Relates an action, such as claiming a bounty seat, to a reputation requirement that an agent must meet to perform it." ;
+    schema:rangeIncludes iiplat:ReputationRequirement .
