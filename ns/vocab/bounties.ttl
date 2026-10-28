@@ -22,9 +22,7 @@
 # validated by the platform shapes in ii-backend
 # (assets/storage-service/shacl-shapes/platform-shapes.ttl, iishpbount:*).
 # This file defines the terms; cardinalities and allowed values live there.
-# Reputation requirements and reputation rules are not bounty-specific and
-# are defined in vocab.ttl (iiplat:ReputationRequirement,
-# iiplat:ReputationRule and their properties), as is iiplat:workflowSubject.
+# See vocab.ttl for classes and properties related to reputation and workflows.
 #
 # Some members are written by II alone, in its own record messages on the
 # bounty's topic, and never by the definition's author (BE TS-0001 "What II
@@ -179,20 +177,20 @@ iibount:acceptanceRule a rdf:Property ;
     rdfs:label "acceptanceRule" ;
     skos:definition "Identifies a reputation rule applied to the reputation account of the holder of a task's seat when the seat holder's final deliverable for the task is undisputed at the bounty's termination. The amount of reputation is the rule's, never the bounty's." ;
     schema:domainIncludes iibount:BountyTask ;
-    schema:rangeIncludes iiplat:ReputationRule .
+    schema:rangeIncludes iiplat:ReputationAdjustmentRule .
 
 iibount:rejectionRule a rdf:Property ;
     rdfs:label "rejectionRule" ;
     skos:definition "Identifies a reputation rule applied to the reputation account of the holder of a task's seat when a dispute over the task's deliverable is resolved against them." ;
     schema:domainIncludes iibount:BountyTask ;
-    schema:rangeIncludes iiplat:ReputationRule ;
+    schema:rangeIncludes iiplat:ReputationAdjustmentRule ;
     skos:editorialNote "Applied once disputes exist (the MVE); see ii-backend docs/ROADMAP.md for the phase split." .
 
 iibount:noSubmissionRule a rdf:Property ;
     rdfs:label "noSubmissionRule" ;
     skos:definition "Identifies a reputation rule applied to the reputation account of the holder of a task's seat when the task terminates with no submission from them." ;
     schema:domainIncludes iibount:BountyTask ;
-    schema:rangeIncludes iiplat:ReputationRule .
+    schema:rangeIncludes iiplat:ReputationAdjustmentRule .
 
 iibount:taskOutcome a rdf:Property ;
     rdfs:label "taskOutcome" ;
