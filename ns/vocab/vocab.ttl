@@ -12,6 +12,7 @@
 @prefix data:    <https://jellyfiiish.xyz/ns/> .
 @prefix hgo:     <https://hashgraphontology.xyz/core/> .
 @prefix time:    <http://www.w3.org/2006/time#> .
+@prefix sh:      <http://www.w3.org/ns/shacl#> .
 @prefix iiplat:  <https://independentimpact.org/ns/vocab/> .
 @prefix iibount: <https://independentimpact.org/ns/vocab/bounties/> .
 
@@ -140,15 +141,9 @@ iiplat:hasWorkflowStep a rdf:Property ;
     schema:domainIncludes iiplat:Workflow ;
     schema:rangeIncludes iiplat:WorkflowStep .
 
-iiplat:WorkflowTest a rdfs:Class ;
-    rdfs:label "WorkflowTest" ;
-    skos:definition "A test that a workflow step evaluates against a workflow subject, answering pass or fail. Either a SHACL node shape (sh:NodeShape) that the subject must conform to, or a SPARQL ASK query (iiplat:SparqlAskQuery) that must answer true for the subject. A workflow test carries this class explicitly, whichever kind it is, and a test that is a SHACL shape declares no target: it is applied to one subject by the workflow machinery, never on the write path." ;
-    rdfs:subClassOf aiao:Control .
-
 iiplat:SparqlAskQuery a rdfs:Class ;
     rdfs:label "SparqlAskQuery" ;
-    skos:definition "A workflow test that is a SPARQL ASK query. The query text is carried by iiplat:askQuery; the subject under test is the variable $this." ;
-    rdfs:subClassOf iiplat:WorkflowTest .
+    skos:definition "A test that is a SPARQL ASK query, evaluated against a subject and answering pass (true) or fail (false). One of the two kinds of test a workflow, a workflow step, a methodology or an indicator names — the other being a SHACL node shape (sh:NodeShape) the subject must conform to. What a test decides is said by the predicate that names it (iiplat:applicabilityTest, iiplat:readinessTest, iiplat:completionTest), not by a class of the test's own: one node may serve under several predicates. A test of either kind is applied to one subject by the platform, never on the write path, so a test that is a SHACL shape declares no target; and a node is of one kind, never both. The query text is carried by iiplat:askQuery; the subject under test is the variable $this." .
 
 iiplat:askQuery a rdf:Property ;
     rdfs:label "askQuery" ;
@@ -158,19 +153,25 @@ iiplat:askQuery a rdf:Property ;
 
 iiplat:readinessTest a rdf:Property ;
     rdfs:label "readinessTest" ;
-    skos:definition "Identifies a workflow test (a SHACL shape or SPARQL ASK query) with which a subject's readiness to start with the workflow step is evaluated. A subject must pass every readiness test of a step before it may start the step." ;
+    skos:definition "Identifies a test — a SHACL node shape (sh:NodeShape) the subject must conform to, or a SPARQL ASK query (iiplat:SparqlAskQuery) that must answer true for it — with which a subject's readiness to start with the workflow step is evaluated. A subject must pass every readiness test of a step before it may start the step. Readiness presupposes applicability: a step's readiness tests are evaluated only for a subject the step applies to (iiplat:applicabilityTest)." ;
     schema:domainIncludes iiplat:WorkflowStep ;
-    schema:rangeIncludes iiplat:WorkflowTest .
+    schema:rangeIncludes sh:NodeShape , iiplat:SparqlAskQuery .
 
 iiplat:completionTest a rdf:Property ;
     rdfs:label "completionTest" ;
-    skos:definition "Identifies a workflow test (a SHACL shape or SPARQL ASK query) with which a subject's completion of a workflow step is evaluated. A subject must pass every completion test of a step for the step to count as completed." ;
+    skos:definition "Identifies a test — a SHACL node shape (sh:NodeShape) the subject must conform to, or a SPARQL ASK query (iiplat:SparqlAskQuery) that must answer true for it — with which a subject's completion of a workflow step is evaluated. A subject must pass every completion test of a step for the step to count as completed." ;
     schema:domainIncludes iiplat:WorkflowStep ;
-    schema:rangeIncludes iiplat:WorkflowTest .
+    schema:rangeIncludes sh:NodeShape , iiplat:SparqlAskQuery .
+
+iiplat:applicabilityTest a rdf:Property ;
+    rdfs:label "applicabilityTest" ;
+    skos:definition "Identifies a test — a SHACL node shape (sh:NodeShape) the subject must conform to, or a SPARQL ASK query (iiplat:SparqlAskQuery) that must answer true for it — with which it is evaluated whether the entity — a workflow, a workflow step, a methodology, an indicator — applies to a subject, typically an aiao:Activity or an aiao:Agent. The entity applies to a subject only if the subject passes every applicability test it names; an entity naming none applies to every subject of its class. On a workflow it is evaluated beside iiplat:subjectClass: the workflow is offered to a subject of that class only if the subject passes the tests. On a workflow step it decides whether the step is offered to the subject and counts toward the completion of its run: applicability is distinct from readiness — a step's readiness tests say whether a subject may start a step that applies to it; its applicability tests say whether the step applies to the subject at all, and a step that does not apply is neither offered nor required." ;
+    schema:domainIncludes iiplat:Workflow , iiplat:WorkflowStep , iiplat:Methodology , impact:Indicator ;
+    schema:rangeIncludes sh:NodeShape , iiplat:SparqlAskQuery .
 
 iiplat:subjectClass a rdf:Property ;
     rdfs:label "subjectClass" ;
-    skos:definition "The class of entity a workflow is run for, such as aiao:Activity or aiao:Agent. A workflow is offered to a subject only if the subject is an instance of this class." ;
+    skos:definition "The class of entity a workflow is run for, such as aiao:Activity or aiao:Agent. A workflow is offered to a subject only if the subject is an instance of this class and passes the workflow's applicability tests (iiplat:applicabilityTest), if it names any." ;
     schema:domainIncludes iiplat:Workflow ;
     schema:rangeIncludes rdfs:Class .
 
@@ -212,7 +213,7 @@ iiplat:workflowSubject a rdf:Property ;
 
 iiplat:shapesGraph a rdf:Property ;
     rdfs:label "shapesGraph" ;
-    skos:definition "The IRI of the named graph in II's Fluree ledger that holds the SHACL shapes and workflow tests that II maintains for the standard. Never the default graph: a standard's shapes are selected per transaction from this graph, and the default graph holds the platform baseline alone." ;
+    skos:definition "The IRI of the named graph in II's Fluree ledger that holds the SHACL shapes and the tests (SHACL node shapes and SPARQL ASK queries named under iiplat:applicabilityTest, iiplat:readinessTest and iiplat:completionTest) that II maintains for the standard. Never the default graph: a standard's shapes are selected per transaction from this graph, and the default graph holds the platform baseline alone." ;
     schema:domainIncludes iiplat:Standard ;
     schema:rangeIncludes rdfs:Resource .
 
