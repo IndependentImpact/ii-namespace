@@ -138,7 +138,8 @@ iiplat:hasWorkflowStep a rdf:Property ;
     rdfs:label "hasWorkflowStep" ;
     skos:definition "An ordered list of one or more steps making up the workflow. Ordered in presentation order." ;
     schema:domainIncludes iiplat:Workflow ;
-    schema:rangeIncludes iiplat:WorkflowStep .
+    schema:rangeIncludes iiplat:WorkflowStep ;
+    skos:editorialNote "Repeated triples carry no order in RDF, so a workflow that states its steps as repeated hasWorkflowStep triples gives each step its place with iiplat:stepOrder (issue #24, point 4). Whether an rdf:List object is also allowed is open there." .
 
 iiplat:WorkflowTest a rdfs:Class ;
     rdfs:label "WorkflowTest" ;
@@ -173,6 +174,27 @@ iiplat:subjectClass a rdf:Property ;
     skos:definition "The class of entity a workflow is run for, such as aiao:Activity or aiao:Agent. A workflow is offered to a subject only if the subject is an instance of this class." ;
     schema:domainIncludes iiplat:Workflow ;
     schema:rangeIncludes rdfs:Class .
+
+iiplat:stepOrder a rdf:Property ;
+    rdfs:label "stepOrder" ;
+    skos:definition "A workflow step's place in its workflow: a positive integer, unique among the steps of that workflow, giving the order in which a subject passes through them. An engine reads a subject's position as the highest-ordered step whose completion tests it passes." ;
+    schema:domainIncludes iiplat:WorkflowStep ;
+    schema:rangeIncludes xsd:positiveInteger ;
+    skos:editorialNote "Minted ahead of this term as ncgs:stepOrder (Nova Community Greening Standard) and nwss:stepOrder (Nova Waste Service Standard); both standards move to it. Because of the highest-passing reading, a later step whose own tests could hold vacuously repeats the completion tests of the steps before it. Issue #24, point 4." .
+
+iiplat:appliesWhen a rdf:Property ;
+    rdfs:label "appliesWhen" ;
+    skos:definition "Identifies a workflow test that decides whether a workflow step applies to a subject at all. Where the test fails, the step is skipped for that subject, not failed; where it passes, the step's readiness and completion tests apply as usual." ;
+    schema:domainIncludes iiplat:WorkflowStep ;
+    schema:rangeIncludes iiplat:WorkflowTest ;
+    skos:editorialNote "Covers conditional steps, such as a household survey that applies only to household sites, or a missed-service follow-up that applies only where a service was missed. An engine that cannot skip a step still passes one whose completion tests are written to hold vacuously where it does not apply. Issue #24." .
+
+iiplat:marksWith a rdf:Property ;
+    rdfs:label "marksWith" ;
+    skos:definition "Identifies a workflow test that a step runs to mark the subject's records, never to refuse them or to gate the step: for example, an evaluation matched to no scheduled visit is marked as an unscheduled observation and kept." ;
+    schema:domainIncludes iiplat:WorkflowStep ;
+    schema:rangeIncludes iiplat:WorkflowTest ;
+    skos:editorialNote "Distinct from readinessTest and completionTest: a marking test's result is reported, never enforced. Issue #24." .
 
 iiplat:issuesCredentialType a rdf:Property ;
     rdfs:label "issuesCredentialType" ;
