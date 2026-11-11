@@ -13,6 +13,7 @@
 @prefix hgo:     <https://hashgraphontology.xyz/core/> .
 @prefix time:    <http://www.w3.org/2006/time#> .
 @prefix sh:      <http://www.w3.org/ns/shacl#> .
+@prefix meth:    <http://independentimpact.org/methodology/> .
 @prefix iiplat:  <https://independentimpact.org/ns/vocab/> .
 @prefix iibount: <https://independentimpact.org/ns/vocab/bounties/> .
 
@@ -128,7 +129,7 @@ iiplat:isReviewOf a rdf:Property ;
 
 iiplat:Workflow a rdfs:Class ;
     rdfs:label "Workflow" ;
-    skos:definition "A set of actions, processes or procedures that must be executed or performed to achieve a specific outcome." ;
+    skos:definition "A set of actions, processes or procedures that must be executed or performed to achieve a specific outcome. A workflow operationalises or enforces a standard or a methodology, identified by iiplat:workflowTarget." ;
     rdfs:subClassOf aiao:Process .
 
 iiplat:WorkflowStep a rdfs:Class ;
@@ -166,7 +167,7 @@ iiplat:completionTest a rdf:Property ;
 iiplat:applicabilityTest a rdf:Property ;
     rdfs:label "applicabilityTest" ;
     skos:definition "Identifies a test — a SHACL node shape (sh:NodeShape) the subject must conform to, or a SPARQL ASK query (iiplat:SparqlAskQuery) that must answer true for it — with which it is evaluated whether the entity — a workflow, a workflow step, a methodology, an indicator — applies to a subject, typically an aiao:Activity or an aiao:Agent. The entity applies to a subject only if the subject passes every applicability test it names; an entity naming none applies to every subject of its class. On a workflow it is evaluated beside iiplat:subjectClass: the workflow is offered to a subject of that class only if the subject passes the tests. On a workflow step it decides whether the step is offered to the subject and counts toward the completion of its run: applicability is distinct from readiness — a step's readiness tests say whether a subject may start a step that applies to it; its applicability tests say whether the step applies to the subject at all, and a step that does not apply is neither offered nor required." ;
-    schema:domainIncludes iiplat:Workflow , iiplat:WorkflowStep , iiplat:Methodology , impact:Indicator ;
+    schema:domainIncludes iiplat:Workflow , iiplat:WorkflowStep , meth:Methodology , impact:Indicator ;
     schema:rangeIncludes sh:NodeShape , iiplat:SparqlAskQuery .
 
 iiplat:subjectClass a rdf:Property ;
@@ -181,17 +182,18 @@ iiplat:issuesCredentialType a rdf:Property ;
     schema:domainIncludes iiplat:Workflow ;
     schema:rangeIncludes skos:Concept .
 
-iiplat:isPrescribedBy a rdf:Property ;
-    rdfs:label "isPrescribedBy" ;
-    skos:definition "Identifies the entity (standards body, registry, certification body or other) that prescribes the workflow. There is no dedicated class for such an entity; it is simply an aiao:Agent. Distinct from aiao:isGovernedBy, which holds an entity's own information to a standard's requirements: a workflow is the procedure, with its tests, by which the prescribing body governs other entities under the standard." ;
-    schema:domainIncludes iiplat:Workflow ;
-    schema:rangeIncludes aiao:Agent .
+iiplat:prescribesWorkflow a rdf:Property ;
+    rdfs:label "prescribesWorkflow" ;
+    skos:definition "Relates a prescriber — a standard, a methodology or an agent — to a workflow it prescribes. A standard prescribes the procedures by which it is applied; a methodology those by which it is operationalised; an agent - typically a certification body - those it certifies under, whether or not it authored them. The edge is written on the prescriber's node and so by the prescriber's author, which is what makes it a prescription: a workflow's author writes the workflow and says what it targets (iiplat:workflowTarget), and the prescriber adopts it. The two may be different agents — a standard's author authors the procedure, the certification body prescribes it — and neither can write the other's edge. On the Independent Impact platform a run can be started only for a workflow that some prescriber prescribes." ;
+    schema:domainIncludes iiplat:Standard , meth:Methodology , aiao:Agent ;
+    schema:rangeIncludes iiplat:Workflow ;
+    skos:editorialNote "A workflow carries no edge back to the prescribers that prescribe it, since only its author could write one." .
 
-iiplat:isPrescribedFor a rdf:Property ;
-    rdfs:label "isPrescribedFor" ;
-    skos:definition "Identifies the standard that the workflow is prescribed for." ;
+iiplat:workflowTarget a rdf:Property ;
+    rdfs:label "workflowTarget" ;
+    skos:definition "Identifies the standard or methodology that the workflow enforces or operationalises: the requirements that a run of the workflow holds its subject to and leads it through — e.g., a standards body's registration or verification requirements, or a methodology's monitoring and reporting procedure. Written on the workflow's node by the workflow's author, as a statement of what the workflow is for; whether a standard, a methodology or an agent prescribes the workflow is that entity's author's to say (iiplat:prescribesWorkflow). On the Independent Impact platform a workflow's tests live in a named graph of the workflow's own, loaded by the workflow's author; the target's shapes graph — the targeted standard's, or that of the standard the targeted methodology is governed by — is what a test may reach by reference (sh:node), since the workflow's author need not be the target's and cannot write to the target's graph." ;
     schema:domainIncludes iiplat:Workflow ;
-    schema:rangeIncludes iiplat:Standard .
+    schema:rangeIncludes iiplat:Standard , meth:Methodology  .
 
 iiplat:bountyTemplate a rdf:Property ;
     rdfs:label "bountyTemplate" ;
@@ -213,7 +215,7 @@ iiplat:workflowSubject a rdf:Property ;
 
 iiplat:shapesGraph a rdf:Property ;
     rdfs:label "shapesGraph" ;
-    skos:definition "The IRI of the named graph in II's Fluree ledger that holds the SHACL shapes and the tests (SHACL node shapes and SPARQL ASK queries named under iiplat:applicabilityTest, iiplat:readinessTest and iiplat:completionTest) that II maintains for the standard. Never the default graph: a standard's shapes are selected per transaction from this graph, and the default graph holds the platform baseline alone." ;
+    skos:definition "The IRI of the named graph in II's Fluree ledger that holds the SHACL well-formedness shapes that II maintains for the standard. Never the default graph: a standard's shapes are selected per transaction from this graph, and the default graph holds the platform baseline alone. The tests of a workflow (the SHACL node shapes and SPARQL ASK queries named under iiplat:applicabilityTest, iiplat:readinessTest and iiplat:completionTest) are not in this graph but in a named graph of the workflow's own, derived from the workflow's identifier and named on no node (since 2026-11-11; until then they lived in the graph of the workflow's standard)." ;
     schema:domainIncludes iiplat:Standard ;
     schema:rangeIncludes rdfs:Resource .
 
@@ -224,7 +226,7 @@ iiplat:shapesGraph a rdf:Property ;
 iiplat:isSubjectOfHcsTopic a rdf:Property ;
     rdfs:label "isSubjectOfHcsTopic" ;
     skos:definition "Identifies a Hedera Consensus Service (HCS) topic which the current entity is a/the subject of." ;
-    schema:domainIncludes aiao:Agent , aiao:Project , aiao:Activity, iiplat:Methodology, iiplat:Standard ;
+    schema:domainIncludes aiao:Agent , aiao:Project , aiao:Activity, meth:Methodology, iiplat:Standard ;
     schema:rangeIncludes hgo:ConsensusTopic ;
     skos:editorialNote "Defined by #40 (2026-08-13) as the direct entity→topic predicate replacing the removed EntityXhederaTopicLink cluster; the predicate is needed now (BE ts-0016 Flow B (g)). Deliberately not a reuse of hgo:hasTopic (domain hgo:ConsensusService — service-side management) nor of hgo:controlsTopic/isTopicOf (Bhash#70, PR Bhash#71; hard rdfs:domain hgo:Actor — key control, which under ts-0016 custody rests with II, not the entity): this term asserts aboutness — the entity is the topic's subject. It therefore coexists with the Bhash terms rather than being superseded by them; the eventual record is a skos:closeMatch in ns/alignments/ (never rdfs:subPropertyOf, which would propagate the hgo:Actor domain entailment), once #41 pins the hgo: version. The domain is the non-constraining schema:domainIncludes union carried from the legacy class's 'user, project, methodology, etc.' and is extensible without breaking existing data. A topic's class and purpose live on the topic subject, not here (BE ADR-0010/0021); ts-0017's topic_class enumeration (II_SPECIFIC | DID) is tracked as #42." .
 
@@ -411,16 +413,6 @@ iiplat:additionalityJustification a rdf:Property ;
     skos:definition "A justification for why an impact is considered additional." ;
     schema:domainIncludes impact:Impact ;
     schema:rangeIncludes schema:Text .
-
-## ---------------------------------------------------------------------------
-## Methodology
-## ---------------------------------------------------------------------------
-
-iiplat:Methodology a rdfs:Class ;
-    rdfs:label "Methodology" ;
-    skos:definition "'A system of methods used in a particular area of study or activity.' (Oxford Languages)" ;
-    rdfs:subClassOf aiao:Control ;
-    skos:editorialNote "Carry-forward review: the Methodology Ontology (catalogued, under development) is this term's territory." .
 
 ## ---------------------------------------------------------------------------
 ## II system
