@@ -323,6 +323,13 @@ iiplat:monitoringReport a rdf:Property ;
     schema:domainIncludes aiao:Activity , aiao:Project ;
     schema:rangeIncludes data:Document .
 
+iiplat:appliesMethodology a rdf:Property ;
+    rdfs:label "appliesMethodology" ;
+    skos:definition "Relates an activity to a methodology it follows or applies: the formally defined set of rules and procedures by which the activity is conducted, measured or accounted for. An activity may apply several methodologies. The edge is written on the activity's node and so by the activity's author. Whether a standard admits, requires or approves of the methodology an activity applies is the standard's to say, through the applicability tests on its methodology register (iiplat:applicabilityTest) and the tests of the workflows it prescribes; on the Independent Impact platform a workflow step whose requirements differ by the methodology the subject applies names an applicability test of the form ASK { $this iiplat:appliesMethodology <methodology> }." ;
+    schema:domainIncludes aiao:Activity ;
+    schema:rangeIncludes meth:Methodology ;
+    skos:editorialNote "Which node of a versioned methodology an activity names — the enduring root or a version — follows the methodology versioning model, which ADR-0005 sketches and the platform has not fixed. On the platform the Activity Handler requires every value to name a published meth:Methodology (BE TS-0013 §6.1, 422 methodology_not_found)." .
+
 ## ---------------------------------------------------------------------------
 ## Generic properties
 ## ---------------------------------------------------------------------------
