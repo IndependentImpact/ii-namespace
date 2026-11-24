@@ -578,6 +578,16 @@ iiplat:hasReputationAccount a rdf:Property ;
     schema:rangeIncludes hgo:Account .    
 
 ## ---------------------------------------------------------------------------
+## Reputation domains
+## ---------------------------------------------------------------------------
+
+iiplat:ReputationDomain a rdfs:Class ;
+    rdfs:label "ReputationDomain" ;
+    skos:definition "A field in which reputation is held and counted: a Knowledge and Skills Reputation domain of an expertise standard, or a Conduct Reputation domain of a conduct standard. A reputation domain is both an iiplat:ReputationDomain and a skos:Concept of its standard's own concept scheme (the standard's node), with a skos:prefLabel; once the standard's reputation contract is deployed, the domain's reputation is held by one Hedera fungible token (iiplat:isReputationTokenOf)." ;
+    rdfs:subClassOf skos:Concept ;
+    skos:editorialNote "Declared 2026-11-24 so that what is said of a domain beyond its name — its token, and its score bounds and decay — has a class to hang on, and so that a rule's domain can be checked by class rather than by its use. A domain's node is typed BOTH iiplat:ReputationDomain AND skos:Concept, explicitly: the platform's validators apply no rdfs:subClassOf entailment, and the subclass axiom states the invariant for readers and reasoners rather than doing the typing." .
+
+## ---------------------------------------------------------------------------
 ## Reputation rules
 ## ---------------------------------------------------------------------------
 
@@ -588,9 +598,9 @@ iiplat:ReputationRule a rdfs:Class ;
 
 iiplat:reputationDomain a rdf:Property ;
     rdfs:label "reputationDomain" ;
-    skos:definition "Identifies the domain to which a reputation rule applies. In the case of a reputation requirement, it identifies the domain in which an agent must hold the prescribed amount of reputation; in the case of a reputation adjustment rule, it identifies the domain that will be affected by the adjustment. Domains are specified in a reputation standard's own concept scheme." ;
+    skos:definition "Identifies the domain to which a reputation rule applies. In the case of a reputation requirement, it identifies the domain in which an agent must hold the prescribed amount of reputation; in the case of a reputation adjustment rule, it identifies the domain that will be affected by the adjustment. Domains are specified in a reputation standard's own concept scheme, each an iiplat:ReputationDomain." ;
     schema:domainIncludes iiplat:ReputationRule ;
-    schema:rangeIncludes skos:Concept .
+    schema:rangeIncludes iiplat:ReputationDomain .
 
 iiplat:reputationAction a rdf:Property ;
     rdfs:label "reputationAction" ;
@@ -654,9 +664,9 @@ iiplat:isReputationContractOf a rdf:Property ;
 
 iiplat:isReputationTokenOf a rdf:Property ;
     rdfs:label "isReputationTokenOf" ;
-    skos:definition "Relates the Hedera fungible token that holds a reputation domain's reputation to that domain's concept." ;
+    skos:definition "Relates the Hedera fungible token that holds a reputation domain's reputation to that domain (an iiplat:ReputationDomain, a concept of its standard's scheme)." ;
     schema:domainIncludes hgo:Token ;
-    schema:rangeIncludes skos:Concept ;
+    schema:rangeIncludes iiplat:ReputationDomain ;
     skos:editorialNote "Asserted by II on the token's node once the standard's contract, which creates the token, has been deployed and verified (BE TS-0006 \"What II adds after deployment\")." .
 
 iiplat:hasReputationRequirement a rdf:Property ;
