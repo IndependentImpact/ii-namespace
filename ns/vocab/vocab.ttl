@@ -191,7 +191,7 @@ iiplat:prescribesWorkflow a rdf:Property ;
 
 iiplat:workflowTarget a rdf:Property ;
     rdfs:label "workflowTarget" ;
-    skos:definition "Identifies the standard or methodology that the workflow enforces or operationalises: the requirements that a run of the workflow holds its subject to and leads it through — e.g., a standards body's registration or verification requirements, or a methodology's monitoring and reporting procedure. Written on the workflow's node by the workflow's author, as a statement of what the workflow is for; whether a standard, a methodology or an agent prescribes the workflow is that entity's author's to say (iiplat:prescribesWorkflow). On the Independent Impact platform a workflow's tests live in a named graph of the workflow's own, loaded by the workflow's author; the target's shapes graph — the targeted standard's, or that of the standard the targeted methodology is governed by — is what a test may reach by reference (sh:node), since the workflow's author need not be the target's and cannot write to the target's graph." ;
+    skos:definition "Identifies the standard or methodology that the workflow enforces or operationalises: the requirements that a run of the workflow holds its subject to and leads it through — e.g., a standards body's registration or verification requirements, or a methodology's monitoring and reporting procedure. Written on the workflow's node by the workflow's author, as a statement of what the workflow is for; whether a standard, a methodology or an agent prescribes the workflow is that entity's author's to say (iiplat:prescribesWorkflow). The target plays no part in locating the workflow's tests: a test is a node of the namespace that declares it, resolved by its IRI, and reaches the shapes of any namespace — the targeted standard's among them — by reference (sh:node)." ;
     schema:domainIncludes iiplat:Workflow ;
     schema:rangeIncludes iiplat:Standard , meth:Methodology  .
 
@@ -213,11 +213,100 @@ iiplat:workflowSubject a rdf:Property ;
 ## Standards
 ## ---------------------------------------------------------------------------
 
+iiplat:hasNamespace a rdf:Property ;
+    rdfs:label "hasNamespace" ;
+    skos:definition "Relates a standard to a namespace in which the terms it defines are declared — its ontology, its vocabulary, its concept schemes and the SHACL shapes and SPARQL ASK queries that express its requirements. A standard may have several namespaces; each is identified by its namespace IRI, as II's catalogue (using DCAT, with vann:preferredNamespaceUri) records it. On the Independent Impact platform the Activity Handler reads the shapes that govern an activity conducted under the standard, and the Bounty Handler those a deliverable is held to, from the ledger graphs of the namespaces the standard names here." ;
+    schema:domainIncludes iiplat:Standard ;
+    schema:rangeIncludes rdfs:Resource ;
+    skos:editorialNote "Added 2026-11-23, replacing iiplat:shapesGraph: shapes are namespace content and live in the graph of the namespace that declares them, so a standard names its namespaces rather than a graph of its own." .
+
 iiplat:shapesGraph a rdf:Property ;
     rdfs:label "shapesGraph" ;
-    skos:definition "The IRI of the named graph in II's Fluree ledger that holds the SHACL well-formedness shapes that II maintains for the standard. Never the default graph: a standard's shapes are selected per transaction from this graph, and the default graph holds the platform baseline alone. The tests of a workflow (the SHACL node shapes and SPARQL ASK queries named under iiplat:applicabilityTest, iiplat:readinessTest and iiplat:completionTest) are not in this graph but in a named graph of the workflow's own, derived from the workflow's identifier and named on no node (since 2026-11-11; until then they lived in the graph of the workflow's standard)." ;
+    owl:deprecated true ;
+    skos:definition "Retired. The IRI of the named graph in II's Fluree ledger that held the SHACL well-formedness shapes that II maintained for the standard, selected per transaction from that graph. Superseded on 2026-11-23 by iiplat:hasNamespace: a standard's shapes live in the graph of the namespace that declares them (BE ADR-0005 \"Revision: Shapes Live in Their Namespace's Graph\"; BE TS-0030 \"Graph Layout\"), and the per-standard and per-workflow shapes graphs are retired. The tests of a workflow (the nodes named under iiplat:applicabilityTest, iiplat:readinessTest and iiplat:completionTest) likewise live in the graphs of the namespaces that declare them; between 2026-11-11 and 2026-11-23 they lived in a named graph of the workflow's own, and before that in the graph of the workflow's standard." ;
     schema:domainIncludes iiplat:Standard ;
-    schema:rangeIncludes rdfs:Resource .
+    schema:rangeIncludes rdfs:Resource ;
+    skos:editorialNote "Retired 2026-11-23 in favour of iiplat:hasNamespace. Kept, deprecated, so that records written under it remain interpretable; no platform component reads or writes it." .
+
+## ---------------------------------------------------------------------------
+## Namespaces (BE TS-0030)
+##
+## Annotations on the entries of II's semantic artefact catalogue
+## (ii-backend assets/storage-service/catalog.trig), each a dcat:Dataset
+## describing one namespace. They were used in the catalogue ahead of their
+## publication here (2026-11-19) and are published here as of 2026-11-23.
+## ---------------------------------------------------------------------------
+
+iiplat:namespaceKind a rdf:Property ;
+    rdfs:label "namespaceKind" ;
+    skos:definition "The kind of a catalogued namespace: a term namespace (iiplat:TermNamespace, the default where unsaid) defines terms — classes, properties, concepts, shapes — and is loaded into a graph of its own; an instance namespace (iiplat:InstanceNamespace) names things rather than defining terms — II's own entities, Hedera resources, DIDs — and is catalogued so that the platform's resolution check knows it and its rule (iiplat:resolutionRule), with nothing to load (BE TS-0030 \"Catalog Annotations\")." ;
+    schema:domainIncludes <http://www.w3.org/ns/dcat#Dataset> ;
+    schema:rangeIncludes iiplat:NamespaceKind .
+
+iiplat:NamespaceKind a rdfs:Class ;
+    rdfs:label "NamespaceKind" ;
+    skos:definition "The kinds of catalogued namespace: iiplat:TermNamespace and iiplat:InstanceNamespace." .
+
+iiplat:TermNamespace a iiplat:NamespaceKind ;
+    rdfs:label "TermNamespace" ;
+    skos:definition "A namespace that defines terms. An IRI under it resolves by being defined in the namespace's graph, unless the namespace is marked open-world (iiplat:openWorld)." .
+
+iiplat:InstanceNamespace a iiplat:NamespaceKind ;
+    rdfs:label "InstanceNamespace" ;
+    skos:definition "A namespace that names instances rather than defining terms. An IRI under it resolves by the namespace's rule (iiplat:resolutionRule)." .
+
+iiplat:resolutionRule a rdf:Property ;
+    rdfs:label "resolutionRule" ;
+    skos:definition "The rule by which an IRI under an instance namespace resolves on the Independent Impact platform: iiplat:LedgerNode — the ledger holds a node under the IRI; iiplat:HashgraphResource — the IRI matches the Hashgraph Ontology's canonical resource pattern on the deployment's network; iiplat:DidResolver — the IRI is a well-formed DID (BE TS-0030 \"Resolution on the Publication Path\")." ;
+    schema:domainIncludes <http://www.w3.org/ns/dcat#Dataset> ;
+    schema:rangeIncludes iiplat:ResolutionRule .
+
+iiplat:ResolutionRule a rdfs:Class ;
+    rdfs:label "ResolutionRule" ;
+    skos:definition "The resolution rules of instance namespaces: iiplat:LedgerNode, iiplat:HashgraphResource and iiplat:DidResolver." .
+
+iiplat:LedgerNode a iiplat:ResolutionRule ;
+    rdfs:label "LedgerNode" ;
+    skos:definition "An IRI resolves if II's ledger holds a node under it." .
+
+iiplat:HashgraphResource a iiplat:ResolutionRule ;
+    rdfs:label "HashgraphResource" ;
+    skos:definition "An IRI resolves if it matches the Hashgraph Ontology's canonical resource IRI pattern on the deployment's Hedera network." .
+
+iiplat:DidResolver a iiplat:ResolutionRule ;
+    rdfs:label "DidResolver" ;
+    skos:definition "An IRI resolves if it is a well-formed DID." .
+
+iiplat:openWorld a rdf:Property ;
+    rdfs:label "openWorld" ;
+    skos:definition "True of a term namespace whose artefact does not enumerate its terms, so that an IRI under it resolves once the namespace is known rather than by being defined in its graph (BE TS-0030 \"Catalog Annotations\"). False where unsaid." ;
+    schema:domainIncludes <http://www.w3.org/ns/dcat#Dataset> ;
+    schema:rangeIncludes xsd:boolean .
+
+iiplat:writeMode a rdf:Property ;
+    rdfs:label "writeMode" ;
+    skos:definition "How a term namespace's content reaches II's ledger, one of two ways and never both: iiplat:Imported — the content is the catalogued artefact's, loaded from its pinned distribution by the bootstrapper or the namespace maintainer, and nothing a publication brings is written into it; iiplat:LedgerAuthored — the namespace has no artefact to load, and its content is the definitions that publications bring (a standard's shapes, a workflow's tests), written into its graph by the platform under the namespace's authority (iiplat:namespaceAuthority). Imported where unsaid (BE TS-0030 \"Namespace Authority\")." ;
+    schema:domainIncludes <http://www.w3.org/ns/dcat#Dataset> ;
+    schema:rangeIncludes iiplat:WriteMode .
+
+iiplat:WriteMode a rdfs:Class ;
+    rdfs:label "WriteMode" ;
+    skos:definition "The write modes of a term namespace: iiplat:Imported and iiplat:LedgerAuthored." .
+
+iiplat:Imported a iiplat:WriteMode ;
+    rdfs:label "Imported" ;
+    skos:definition "The namespace's content is its catalogued artefact's, loaded from the pinned distribution; publications write nothing into it." .
+
+iiplat:LedgerAuthored a iiplat:WriteMode ;
+    rdfs:label "LedgerAuthored" ;
+    skos:definition "The namespace's content is authored on the ledger: the definitions publications bring, written into its graph under the namespace's authority. It has no distribution." .
+
+iiplat:namespaceAuthority a rdf:Property ;
+    rdfs:label "namespaceAuthority" ;
+    skos:definition "Identifies an agent, by DID, that holds authority over a ledger-authored namespace: a publication defines a node under the namespace only if it is signed by one of the namespace's authorities, and a node so defined is revised only by its author (dcterms:creator). A namespace names one or more authorities; its responsible agent is named by dcterms:publisher (BE TS-0030 \"Namespace Authority\")." ;
+    schema:domainIncludes <http://www.w3.org/ns/dcat#Dataset> ;
+    schema:rangeIncludes rdfs:Resource ;
+    skos:editorialNote "TEMPORARY (2026-11-23). A DID list on a catalogue entry is a Prototype expedient for establishing who may write under a namespace. It is to be replaced by a proper agent delegation mechanism — an agent delegating, revocably and on record, the right to write under its namespaces to the agents it chooses — in the MVE at the latest (BE TS-0030 \"Open Items\"; BE ROADMAP M3 #12). This property is then retired." .
 
 ## ---------------------------------------------------------------------------
 ## Hedera links
