@@ -587,6 +587,20 @@ iiplat:ReputationDomain a rdfs:Class ;
     rdfs:subClassOf skos:Concept ;
     skos:editorialNote "Declared 2026-11-24 so that what is said of a domain beyond its name — its token, and its score bounds and decay — has a class to hang on, and so that a rule's domain can be checked by class rather than by its use. A domain's node is typed BOTH iiplat:ReputationDomain AND skos:Concept, explicitly: the platform's validators apply no rdfs:subClassOf entailment, and the subclass axiom states the invariant for readers and reasoners rather than doing the typing." .
 
+iiplat:domainScoreLowerBound a rdf:Property ;
+    rdfs:label "domainScoreLowerBound" ;
+    skos:definition "The lowest score an agent's reputation in the domain can hold, as the domain's standard sets it: an integer, in the domain's whole units. A Knowledge and Skills Reputation domain's lower bound is 0, reputation being a token balance; a Conduct Reputation domain's may be negative (BE TS-0006 \"Conduct Reputation\")." ;
+    schema:domainIncludes iiplat:ReputationDomain ;
+    schema:rangeIncludes schema:Integer ;
+    skos:editorialNote "Stated by the standard's author on the domain's node; how the platform enforces a bound — the Prototype's reputation contract mints a domain's token with infinite supply and reads no bound (BE TS-0006 \"Tokens\") — is the platform's to specify (ii-namespace#27)." .
+
+iiplat:domainScoreUpperBound a rdf:Property ;
+    rdfs:label "domainScoreUpperBound" ;
+    skos:definition "The highest score an agent's reputation in the domain can hold, as the domain's standard sets it: an integer, in the domain's whole units, not below the domain's lower bound." ;
+    schema:domainIncludes iiplat:ReputationDomain ;
+    schema:rangeIncludes schema:Integer ;
+    skos:editorialNote "Declared 2026-11-25 with iiplat:domainScoreLowerBound, which says the rest." .
+
 ## ---------------------------------------------------------------------------
 ## Reputation triggers
 ## ---------------------------------------------------------------------------
