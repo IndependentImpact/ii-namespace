@@ -602,20 +602,20 @@ iiplat:domainScoreUpperBound a rdf:Property ;
     skos:editorialNote "Declared 2026-11-25 with iiplat:domainScoreLowerBound, which says the rest." .
 
 ## ---------------------------------------------------------------------------
-## Reputation triggers
+## Actions and events
 ## ---------------------------------------------------------------------------
 
-iiplat:ReputationAction a rdfs:Class ;
-    rdfs:label "ReputationAction" ;
-    skos:definition "Something an agent does under a reputation standard — submitting a review, claiming a seat, cancelling a seat during the mission phase — that a reputation rule names: the action a reputation requirement gates, or the action that triggers a reputation adjustment. An action is a skos:Concept of its standard's own concept scheme, with a skos:prefLabel; the kind of trigger matters to the audit trail, an action being the agent's own doing where an event is the consequence of someone else's." ;
+iiplat:Action a rdfs:Class ;
+    rdfs:label "Action" ;
+    skos:definition "Something that an agent does on the Independent Impact platform — e.g., submitting a review, claiming a seat, or cancelling a seat during the mission phase. An action is a skos:Concept of some published concept scheme — either II's or a standard's — with a skos:prefLabel. Some actions have reputation rules (requirements or adjustments) associated with them, others do not." ;
     rdfs:subClassOf skos:Concept ;
-    skos:editorialNote "Declared 2026-11-25 beside iiplat:ReputationDomain, so that a rule's action can be checked by class rather than by its use. Typed BOTH iiplat:ReputationAction AND skos:Concept, explicitly, as domains are." .
+    skos:editorialNote "Best practice: name an action with a leading verb — ccts-rr:submit-project-design, not ccts-rr:project-design — so that the name reads as what the agent does. Typed BOTH iiplat:Action AND skos:Concept, explicitly, as domains are, since the platform's validators apply no subclass entailment; a concept is a domain, an action or an event, never two of these. Declared 2026-11-25 as iiplat:ReputationAction, a class of reputation trigger; renamed iiplat:Action the same day, since an action exists whether or not a reputation rule names it — the kind of trigger still matters to the audit trail, an action being the agent's own doing where an event (iiplat:Event) is the consequence of someone else's." .
 
-iiplat:ReputationEvent a rdfs:Class ;
-    rdfs:label "ReputationEvent" ;
-    skos:definition "Something that befalls an agent under a reputation standard as the consequence of another agent's action — receiving a positive review of some provided information, an answer rejected in dispute — that a reputation adjustment rule names as its trigger. An event is a skos:Concept of its standard's own concept scheme, with a skos:prefLabel; a reputation requirement never names an event." ;
+iiplat:Event a rdfs:Class ;
+    rdfs:label "Event" ;
+    skos:definition "Something that befalls an agent on the Independent Impact platform as the consequence of another agent's action — e.g., receiving a positive review of some provided information, or having an answer rejected in dispute. An event is a skos:Concept of some published concept scheme — either II's or a standard's — with a skos:prefLabel. Some events have reputation rules (adjustments, never requirements) associated with them, others do not." ;
     rdfs:subClassOf skos:Concept ;
-    skos:editorialNote "Declared 2026-11-25 beside iiplat:ReputationDomain, so that a rule's event can be checked by class rather than by its use. Typed BOTH iiplat:ReputationEvent AND skos:Concept, explicitly, as domains are. A concept is a domain, an action or an event, never two of these." .
+    skos:editorialNote "Typed BOTH iiplat:Event AND skos:Concept, explicitly, as domains are; a concept is a domain, an action or an event, never two of these. Declared 2026-11-25 as iiplat:ReputationEvent, a class of reputation trigger; renamed iiplat:Event the same day, since an event exists whether or not a reputation rule names it." .
 
 ## ---------------------------------------------------------------------------
 ## Reputation rules
@@ -634,9 +634,9 @@ iiplat:reputationDomain a rdf:Property ;
 
 iiplat:reputationAction a rdf:Property ;
     rdfs:label "reputationAction" ;
-    skos:definition "Identifies the action to which a reputation rule applies. In the case of a reputation requirement, it identifies the action gated by the rule; in the case of a reputation adjustment rule, it identifies the action that triggers the adjustment. Actions are specified in a reputation standard's own concept scheme, each an iiplat:ReputationAction. A reputation requirement names exactly one action; a reputation adjustment rule names at most one action." ;
+    skos:definition "Identifies the action to which a reputation rule applies. In the case of a reputation requirement, it identifies the action gated by the rule; in the case of a reputation adjustment rule, it identifies the action that triggers the adjustment. Actions are concepts of a published concept scheme — the reputation standard's own, typically — each an iiplat:Action. A reputation requirement names exactly one action; a reputation adjustment rule names at most one action." ;
     schema:domainIncludes iiplat:ReputationRule ;
-    schema:rangeIncludes iiplat:ReputationAction .
+    schema:rangeIncludes iiplat:Action .
 
 iiplat:hasReputationRule a rdf:Property ;
     rdfs:label "hasReputationRule" ;
@@ -671,9 +671,9 @@ iiplat:ReputationAdjustmentRule a rdfs:Class ;
 
 iiplat:reputationEvent a rdf:Property ;
     rdfs:label "reputationEvent" ;
-    skos:definition "Identifies the event that triggers the reputation adjustment. An event (e.g., receiving a positive review) befalls an agent as the consequence of another agent's action. Events are specified in a reputation standard's own concept scheme, each an iiplat:ReputationEvent. A reputation adjustment rule names at most one event; a reputation requirement never names an event." ;
+    skos:definition "Identifies the event that triggers the reputation adjustment. An event (e.g., receiving a positive review) befalls an agent as the consequence of another agent's action. Events are concepts of a published concept scheme — the reputation standard's own, typically — each an iiplat:Event. A reputation adjustment rule names at most one event; a reputation requirement never names an event." ;
     schema:domainIncludes iiplat:ReputationAdjustmentRule ;
-    schema:rangeIncludes iiplat:ReputationEvent .
+    schema:rangeIncludes iiplat:Event .
 
 iiplat:reputationDelta a rdf:Property ;
     rdfs:label "reputationDelta" ;
