@@ -5,7 +5,7 @@ Classes and properties the platform needs that no domain ontology covers. Design
 Two vocabularies live here, both authored in Turtle (ADR-0003) and published under `https://independentimpact.org/ns/vocab/`:
 
 - [`vocab.ttl`](vocab.ttl) — the platform vocabulary, `iiplat:` (`https://independentimpact.org/ns/vocab/`). It carries forward the legacy `/ns/` JSON-LD vocabulary in governed form — all 12 classes and 48 properties entered carry-forward, and pruning has since run per-term, with `skos:editorialNote "Carry-forward review: …"` marking the terms whose retention is still open (6 at the time of writing) — and has since grown with what the platform's design needed: workflows and their tests, standards and their kinds, namespaces and the catalogue annotations (BE TS-0030), Hedera links, and reputation — domains, triggers, rules, contracts and tokens (BE TS-0006). As of 2026-11-25 it declares 23 classes and 70 properties.
-- [`bounties.ttl`](bounties.ttl) — the bounty vocabulary, `iibount:` (`https://independentimpact.org/ns/vocab/bounties/`): the bounty, its tasks, seats, rewards and the records II writes on them (BE TS-0001). As of 2026-11-25 it declares 6 classes and 30 properties.
+- [`bounties.ttl`](bounties.ttl) — the bounty vocabulary, `iibount:` (`https://independentimpact.org/ns/vocab/bounties/`): the bounty, its tasks, seats, rewards and the records II writes on them, and the bounty template a workflow step carries (BE TS-0001). As of 2026-11-25 it declares 7 classes and 34 properties.
 
 ## Conventions
 

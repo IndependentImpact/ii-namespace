@@ -45,6 +45,12 @@ iibount:Bounty a rdfs:Class ;
     skos:definition "A reward (typically monetary) locked up in a smart contract that can be claimed by completing one or more specific tasks." ;
     rdfs:subClassOf aiao:Control .
 
+iibount:BountyTemplate a rdfs:Class ;
+    rdfs:label "BountyTemplate" ;
+    skos:definition "The bounty definition, with its run-specific members left open, from which II instantiates for each run of a workflow the bounty under which a bounty-anchored step's work is done. A template is a node of its workflow's definition, nested in the step that names it (iiplat:bountyTemplate), with its tasks and seats beneath it; it carries the bounty's phases as offsets from the instant of instantiation rather than as instants, no return account and no subject, and may carry the placeholders {{subject}} and {{subjectTitle}} in its titles and descriptions." ;
+    rdfs:subClassOf owl:Thing ;
+    skos:editorialNote "Addressed beneath its step as ii:<step-uuid>/bounty-template, its tasks and seats as ii:<step-uuid>/bounty-template/tasks/<n> and /seats/<n>; the instantiation rebases every IRI under the template's onto the bounty's, ii:<bounty-uuid>, turns the offsets into instants, adds the creator's return account and the run's subject, and fills the placeholders (BE TS-0001 \"Bounty templates\"). Published with the workflow and revised with it; until 2026-11-25 a template was an IPFS object named by CID." .
+
 iibount:BountyTask a rdfs:Class ;
     rdfs:label "BountyTask" ;
     skos:definition "A unit of work within a bounty that requires exactly one deliverable, with the reputation requirements an agent must meet to perform it and the rewards paid for completing it." ;
@@ -79,7 +85,7 @@ iibount:ActionResponse a rdfs:Class ;
 iibount:bountyType a rdf:Property ;
     rdfs:label "bountyType" ;
     skos:definition "The type of a bounty, which determines the rules it follows beyond those common to every bounty." ;
-    schema:domainIncludes iibount:Bounty ;
+    schema:domainIncludes iibount:Bounty , iibount:BountyTemplate ;
     schema:rangeIncludes skos:Concept ;
     skos:editorialNote "Values are concepts of the config scheme <https://independentimpact.org/ns/config/bounty-types> (ns/config/bounty-types.ttl)." .
 
@@ -107,16 +113,41 @@ iibount:disputeResolutionPhaseStart a rdf:Property ;
     schema:domainIncludes iibount:Bounty ;
     schema:rangeIncludes time:Instant .
 
+iibount:teamAssemblyPhaseOffset a rdf:Property ;
+    rdfs:label "teamAssemblyPhaseOffset" ;
+    skos:definition "On a bounty template, the duration after the instant of instantiation at which the instantiated bounty's team assembly phase starts (iibount:teamAssemblyPhaseStart)." ;
+    schema:domainIncludes iibount:BountyTemplate ;
+    schema:rangeIncludes xsd:duration ;
+    skos:editorialNote "An xsd:duration in the XML Schema form PnYnMnDTnHnMnS, every field a whole number, added as XML Schema 1.1 adds a duration to a dateTime; strictly positive, since a bounty's team assembly phase must start after its instantiation. The four offsets of a template must put the four starts in strictly increasing order (BE TS-0001 \"Bounty templates\")." .
+
+iibount:missionPhaseOffset a rdf:Property ;
+    rdfs:label "missionPhaseOffset" ;
+    skos:definition "On a bounty template, the duration after the instant of instantiation at which the instantiated bounty's mission phase starts (iibount:missionPhaseStart)." ;
+    schema:domainIncludes iibount:BountyTemplate ;
+    schema:rangeIncludes xsd:duration .
+
+iibount:disputeLodgingPhaseOffset a rdf:Property ;
+    rdfs:label "disputeLodgingPhaseOffset" ;
+    skos:definition "On a bounty template, the duration after the instant of instantiation at which the instantiated bounty's dispute lodging phase starts (iibount:disputeLodgingPhaseStart)." ;
+    schema:domainIncludes iibount:BountyTemplate ;
+    schema:rangeIncludes xsd:duration .
+
+iibount:disputeResolutionPhaseOffset a rdf:Property ;
+    rdfs:label "disputeResolutionPhaseOffset" ;
+    skos:definition "On a bounty template, the duration after the instant of instantiation at which the instantiated bounty's dispute resolution phase starts (iibount:disputeResolutionPhaseStart)." ;
+    schema:domainIncludes iibount:BountyTemplate ;
+    schema:rangeIncludes xsd:duration .
+
 iibount:hasSeat a rdf:Property ;
     rdfs:label "hasSeat" ;
-    skos:definition "Relates a bounty to one of its seats." ;
-    schema:domainIncludes iibount:Bounty ;
+    skos:definition "Relates a bounty, or a bounty template, to one of its seats." ;
+    schema:domainIncludes iibount:Bounty , iibount:BountyTemplate ;
     schema:rangeIncludes iibount:BountySeat .
 
 iibount:hasTask a rdf:Property ;
     rdfs:label "hasTask" ;
-    skos:definition "Relates a bounty to one of its tasks." ;
-    schema:domainIncludes iibount:Bounty ;
+    skos:definition "Relates a bounty, or a bounty template, to one of its tasks." ;
+    schema:domainIncludes iibount:Bounty , iibount:BountyTemplate ;
     schema:rangeIncludes iibount:BountyTask .
 
 iibount:unspentFundsReturnAccount a rdf:Property ;
@@ -127,7 +158,7 @@ iibount:unspentFundsReturnAccount a rdf:Property ;
 
 iibount:forWorkflowStep a rdf:Property ;
     rdfs:label "forWorkflowStep" ;
-    skos:definition "Identifies the workflow step whose bounty template a bounty's definition instantiates. Given together with iiplat:workflowSubject, never alone; a bounty with neither is an ordinary bounty." ;
+    skos:definition "Identifies the workflow step whose bounty template a bounty's definition instantiates. Given together with iiplat:workflowSubject and iiplat:workflowRun, never alone; a bounty with none of them is an ordinary bounty." ;
     schema:domainIncludes iibount:Bounty ;
     schema:rangeIncludes iiplat:WorkflowStep ;
     skos:editorialNote "Added by II at the template's instantiation, never written by the bounty's author; a definition carrying it is published only as II instantiated it (BE TS-0001 \"Bounty templates\")." .

@@ -197,10 +197,10 @@ iiplat:workflowTarget a rdf:Property ;
 
 iiplat:bountyTemplate a rdf:Property ;
     rdfs:label "bountyTemplate" ;
-    skos:definition "Identifies, by its content address (an ipfs://<CID> IRI), the bounty template of a workflow step: the bounty definition, with placeholders, from which II instantiates for each run of the workflow the bounty under which the step's work is done. A step that names a bounty template is a bounty-anchored step." ;
+    skos:definition "Identifies the bounty template of a workflow step: the iibount:BountyTemplate node, nested in the step within the workflow's definition, from which II instantiates for each run of the workflow the bounty under which the step's work is done. A step that names a bounty template is a bounty-anchored step." ;
     schema:domainIncludes iiplat:WorkflowStep ;
-    schema:rangeIncludes rdfs:Resource ;
-    skos:editorialNote "The template is an IPFS object outside the ledger, and so immutable once named; a step names at most one. Its form is BE TS-0001 \"Bounty templates\"; the step side is BE TS-0003 \"Bounty-anchored steps\"." .
+    schema:rangeIncludes iibount:BountyTemplate ;
+    skos:editorialNote "A step names at most one template, addressed beneath the step as ii:<step-uuid>/bounty-template; the template is part of the workflow's definition, published and revised with it (decided 2026-11-25; until then it was an IPFS object outside the ledger, named by an ipfs://<CID> IRI). Its form is BE TS-0001 \"Bounty templates\"; the step side is BE TS-0003 \"Bounty-anchored steps\"." .
 
 iiplat:workflowSubject a rdf:Property ;
     rdfs:label "workflowSubject" ;
