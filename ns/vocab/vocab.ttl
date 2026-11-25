@@ -617,6 +617,20 @@ iiplat:Event a rdfs:Class ;
     rdfs:subClassOf skos:Concept ;
     skos:editorialNote "Typed BOTH iiplat:Event AND skos:Concept, explicitly, as domains are; a concept is a domain, an action or an event, never two of these. Declared 2026-11-25 as iiplat:ReputationEvent, a class of reputation trigger; renamed iiplat:Event the same day, since an event exists whether or not a reputation rule names it." .
 
+iiplat:triggersEventOnSuccess a rdf:Property ;
+    rdfs:label "triggersEventOnSuccess" ;
+    skos:definition "Relates an action to an event that the action's success brings about — e.g., submitting a review triggers, on the review's acceptance, the event of that review having been accepted. An action may trigger any number of events on success, and an event may be triggered by any number of actions." ;
+    schema:domainIncludes iiplat:Action ;
+    schema:rangeIncludes iiplat:Event ;
+    skos:editorialNote "What counts as the action's success or failure is the scheme's to say, typically in the events' labels and definitions. Declared 2026-11-25 with iiplat:triggersEventOnFailure; the pair replaces the untyped skos:related an event carried toward its action." .
+
+iiplat:triggersEventOnFailure a rdf:Property ;
+    rdfs:label "triggersEventOnFailure" ;
+    skos:definition "Relates an action to an event that the action's failure brings about — e.g., submitting a review triggers, on the review's rejection, the event of that review having been rejected. An action may trigger any number of events on failure, and an event may be triggered by any number of actions." ;
+    schema:domainIncludes iiplat:Action ;
+    schema:rangeIncludes iiplat:Event ;
+    skos:editorialNote "Declared 2026-11-25 with iiplat:triggersEventOnSuccess, which says the rest." .
+
 ## ---------------------------------------------------------------------------
 ## Reputation rules
 ## ---------------------------------------------------------------------------
