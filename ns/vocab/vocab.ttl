@@ -637,8 +637,9 @@ iiplat:triggersEventOnFailure a rdf:Property ;
 
 iiplat:ReputationRule a rdfs:Class ;
     rdfs:label "ReputationRule" ;
-    skos:definition "A rule of a standard of conduct or expertise. It sets either a reputation requirement for an action, or a reputation adjustment in response to an action or event." ;
-    rdfs:subClassOf aiao:Control .
+    skos:definition "A rule of a standard of conduct or expertise. It sets either a reputation requirement for an action, or a reputation adjustment in response to an action or event. A rule is carried by the action or event it is about (iiplat:hasReputationRule); an action or an event carries any number of rules, none included." ;
+    rdfs:subClassOf aiao:Control ;
+    skos:editorialNote "Addressed beneath its standard as ii:<standard-uuid>/rules/<ruleNumber>, the standard being the scheme of the action or event that carries it (BE TS-0006 \"The rule node\"). Until 2026-11-25 a standard carried its rules directly and each rule named its trigger under iiplat:reputationAction or iiplat:reputationEvent; both are retired." .
 
 iiplat:reputationDomain a rdf:Property ;
     rdfs:label "reputationDomain" ;
@@ -646,17 +647,12 @@ iiplat:reputationDomain a rdf:Property ;
     schema:domainIncludes iiplat:ReputationRule ;
     schema:rangeIncludes iiplat:ReputationDomain .
 
-iiplat:reputationAction a rdf:Property ;
-    rdfs:label "reputationAction" ;
-    skos:definition "Identifies the action to which a reputation rule applies. In the case of a reputation requirement, it identifies the action gated by the rule; in the case of a reputation adjustment rule, it identifies the action that triggers the adjustment. Actions are concepts of a published concept scheme — the reputation standard's own, typically — each an iiplat:Action. A reputation requirement names exactly one action; a reputation adjustment rule names at most one action." ;
-    schema:domainIncludes iiplat:ReputationRule ;
-    schema:rangeIncludes iiplat:Action .
-
 iiplat:hasReputationRule a rdf:Property ;
     rdfs:label "hasReputationRule" ;
-    skos:definition "Relates a standard to one of its reputation rules." ;
-    schema:domainIncludes iiplat:Standard ;
-    schema:rangeIncludes iiplat:ReputationRule .
+    skos:definition "Relates an action or an event to one of the reputation rules it carries: a reputation requirement an agent must meet to perform the action, or a reputation adjustment the action or event brings about. An action or an event carries any number of rules, none included; a reputation requirement is carried by an action only, never by an event." ;
+    schema:domainIncludes iiplat:Action , iiplat:Event ;
+    schema:rangeIncludes iiplat:ReputationRule ;
+    skos:editorialNote "A standard's rules are reached through the concepts of its scheme: ?concept skos:inScheme <standard> ; iiplat:hasReputationRule ?rule (BE TS-0006 \"The rule node\")." .
 
 ## ---------------------------------------------------------------------------
 ## Reputation rules: Reputation requirements
@@ -664,7 +660,7 @@ iiplat:hasReputationRule a rdf:Property ;
 
 iiplat:ReputationRequirement a rdfs:Class ;
     rdfs:label "ReputationRequirement" ;
-    skos:definition "A minimum amount of reputation in some domain (a Conduct Reputation domain or a Knowledge and Skills Reputation domain) that an agent must hold to perform a certain action, such as claiming a seat on a bounty." ;
+    skos:definition "A minimum amount of reputation in some domain (a Conduct Reputation domain or a Knowledge and Skills Reputation domain) that an agent must hold to perform a certain action, such as claiming a seat on a bounty. The action is the one that carries the requirement (iiplat:hasReputationRule), or, on a bounty task's requirement (iiplat:hasReputationRequirement), the task itself." ;
     rdfs:subClassOf iiplat:ReputationRule .
 
 iiplat:minimumReputationScore a rdf:Property ;
@@ -679,15 +675,9 @@ iiplat:minimumReputationScore a rdf:Property ;
 
 iiplat:ReputationAdjustmentRule a rdfs:Class ;
     rdfs:label "ReputationAdjustmentRule" ;
-    skos:definition "A rule of a reputation standard: the signed amount of reputation that one trigger — an action the agent takes, or an event that befalls the agent — earns or costs in one domain of the standard. The unit that moves reputation is always a rule, never a bare trigger." ;
+    skos:definition "A rule of a reputation standard: the signed amount of reputation that one trigger — an action the agent takes, or an event that befalls the agent — earns or costs in one domain of the standard. The trigger is the action or event that carries the rule (iiplat:hasReputationRule). The unit that moves reputation is always a rule, never a bare trigger." ;
     rdfs:subClassOf iiplat:ReputationRule ;
     skos:editorialNote "Addressed beneath its standard as ii:<standard-uuid>/rules/<ruleNumber>, and known to the standard's reputation contract by that same IRI (BE TS-0006 \"The rule node\"). A bounty task names the rules it applies (iibount:acceptanceRule, iibount:rejectionRule, iibount:noSubmissionRule)." .
-
-iiplat:reputationEvent a rdf:Property ;
-    rdfs:label "reputationEvent" ;
-    skos:definition "Identifies the event that triggers the reputation adjustment. An event (e.g., receiving a positive review) befalls an agent as the consequence of another agent's action. Events are concepts of a published concept scheme — the reputation standard's own, typically — each an iiplat:Event. A reputation adjustment rule names at most one event; a reputation requirement never names an event." ;
-    schema:domainIncludes iiplat:ReputationAdjustmentRule ;
-    schema:rangeIncludes iiplat:Event .
 
 iiplat:reputationDelta a rdf:Property ;
     rdfs:label "reputationDelta" ;
